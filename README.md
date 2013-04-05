@@ -19,7 +19,7 @@ Supported formats (audio and video):
 Usage
 ------------
 
-To use FFmpegMediaMetadataRetriever in your project simply add the library to your project and copy the prebuild libraries found at https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/library/prebuild-libs.tar.gz into your project's "libs" folder.
+To use FFmpegMediaMetadataRetriever in your project simply add the library to your project and copy the prebuild libraries found at https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/library/prebuilt-libs.tar.gz into your project's "libs" folder.
 
 Sample code:
 
