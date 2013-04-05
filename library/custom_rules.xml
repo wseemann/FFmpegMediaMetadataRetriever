@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="custom_rules">
+    
+    <!-- quick check on ndk.dir -->
+    <target name="-check-ndk">
+        <fail
+            message="ndk.dir is missing. Make sure to put it in local.properties"
+            unless="ndk.dir"
+        />
+    </target>
+    
+    <target name="native-build" depends="native-clean">
+        <exec executable="${ndk.dir}/ndk-build" failonerror="true" />
+    </target>
+    
+    <target name="native-clean">
+        <exec executable="${ndk.dir}/ndk-build" failonerror="true">
+            <arg value="clean" />
+        </exec>
+    </target>
+    
+    <target name="build-ffmpeg">
+        <exec executable="/bin/sh" dir="." failonerror="true" osfamily="unix">
+            <arg value="scripts/build-ffmpeg.sh" />
+        </exec>
+    </target>
+    
+    <target name="-pre-build">
+        <echo>Building native code...</echo>
+        <antcall target="-check-ndk" />
+        <antcall target="build-ffmpeg" />
+        <antcall target="native-build" />
+        <echo>Successfully built native code</echo>
+    </target>
+    
+</project>
