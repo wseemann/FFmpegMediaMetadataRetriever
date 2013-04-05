@@ -1,4 +1,4 @@
-'FFmpegMediaMetadataRetriever
+FFmpegMediaMetadataRetriever
 ============================
 
 Overview
