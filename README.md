@@ -46,13 +46,19 @@ directory (assuming /path/to/android_sdk/tools is in your PATH):
 
     android update project --path .
 
-Open the newly created local.properties file and add the following line:
+Open the newly created local.properties file and add the following lines:
 
     ndk.dir=<path to NDK>
+    libs.dir=<path to target libs folder>
 
 where <path to NDK> is the path to your Android NDK, for example:
 
     ndk.dir=/home/wseemann/Android/android-ndk-r8d
+
+and <path to target libs folder> is the path to the "libs" folder in the project that will use the
+library, for example:
+
+    libs.dir=/home/wseemann/Android/MyAndroidDemo/libs
 
 To compile the library, navigate to FFmpegMediaMetadataRetriever/library/ and
 execute
@@ -90,6 +96,10 @@ Sample code:
     mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
     byte [] artwork = mmr.getEmbeddedPicture();
     mmr.release();
+
+FFmpeg
+-----------
+This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/library/ffmpeg-0.11.1-android-2012-09-18.tar.gz>here</a>.
 
 License
 ------------
