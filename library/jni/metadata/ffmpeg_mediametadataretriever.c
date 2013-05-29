@@ -22,6 +22,8 @@
 #include <ffmpeg_mediametadataretriever.h>
 
 const char *DURATION = "duration";
+const char *AUDIO_CODEC = "audio_codec";
+const char *VIDEO_CODEC = "video_codec";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -36,6 +38,22 @@ void get_duration(AVFormatContext *ic, char * value) {
 	}
 
 	sprintf(value, "%d", duration); // %i
+}
+
+void set_codec(AVFormatContext *ic, int i) {
+    const char *codec_type = av_get_media_type_string(ic->streams[i]->codec->codec_type);
+
+	if (!codec_type) {
+		return;
+	}
+
+    const char *codec_name = avcodec_get_name(ic->streams[i]->codec->codec_id);
+
+	if (strcmp(codec_type, "audio") == 0) {
+		av_dict_set(&ic->metadata, AUDIO_CODEC, codec_name, 0);
+    } else if (codec_type && strcmp(codec_type, "video") == 0) {
+	   	av_dict_set(&ic->metadata, VIDEO_CODEC, codec_name, 0);
+	}
 }
 
 int stream_component_open(State *s, int stream_index) {
@@ -135,6 +153,8 @@ int set_data_source(State **ps, const char* path) {
 		if (state->pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO && audio_index < 0) {
 			audio_index = i;
 		}
+
+		set_codec(state->pFormatCtx, i);
 	}
 
 	/*if (audio_index >= 0) {

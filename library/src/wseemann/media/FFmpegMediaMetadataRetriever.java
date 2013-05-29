@@ -300,4 +300,12 @@ public class FFmpegMediaMetadataRetriever
      * The metadata key to retrieve the duration of the work in milliseconds.
      */
     public static final String METADATA_KEY_DURATION = "duration";
+    /**
+     * The metadata key to retrieve the audio codec of the work.
+     */
+    public static final String METADATA_KEY_AUDIO_CODEC = "audio_codec";
+    /**
+     * The metadata key to retrieve the video codec of the work.
+     */
+    public static final String METADATA_KEY_VIDEO_CODEC = "video_codec";
 }
