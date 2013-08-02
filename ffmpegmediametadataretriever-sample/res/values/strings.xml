@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FFmpegMediaMetadataRetriever Sample</string>
+    <string name="action_settings">Settings</string>
+    <string name="uri_hint">Enter a URI (http/mmsh/file/etc.)</string>
+    <string name="uri_error">Enter a valid URI</string>
+    <string name="go">Go</string>
+    <string name="no_metadata">No metadata</string>
+    <string name="artwork">Artwork</string>
+
+</resources>
