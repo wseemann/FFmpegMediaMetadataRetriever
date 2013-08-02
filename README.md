@@ -22,11 +22,11 @@ Installation
 FFmpegMediaMetadataRetriever relies on FFmpeg and native code. The build process
 is complex and may be confusing for those unfamiliar the Android NDK. For this
 reason I've precompiled the modules created by the build process and checked them
-in at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/ffmpegmediametadataretriever/prebuilt-libs.tar.gz.
+in at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/library/prebuilt-libs.tar.gz.
 The modules are also included with the library. If you don't want to build the modules
 you can simple unzip the prebuilt ones and copy them to your projects "libs" folder. (Note:
 copy them to YOUR projects "libs" folder, NOT the "libs" folder located in
-FFmpegMediaMetadataRetriever/ffmpegmediametadataretriever. Once this step is complete you can use the
+FFmpegMediaMetadataRetriever/library. Once this step is complete you can use the
 library (See: Installation in Eclipse (Indigo)). If you want to compile the modules yourself
 follow the Ant instructions listed below before attempting to use the library.
 
@@ -41,7 +41,7 @@ Clone/Download/Fork the repo through GitHub or via (read-only)
 Note: The build instructions and scripts assume you are running Unix or Linux. Building
 on other operating systems is currently not supported.
 
-Execute the following in the FFmpegMediaMetadataRetriever/ffmpegmediametadataretriever/
+Execute the following in the FFmpegMediaMetadataRetriever/library/
 directory (assuming /path/to/android_sdk/tools is in your PATH):
 
     android update project --path .
@@ -60,7 +60,7 @@ library, for example:
 
     libs.dir=/home/wseemann/Android/MyAndroidDemo/libs
 
-To compile the library, navigate to FFmpegMediaMetadataRetriever/ffmpegmediametadataretriever/ and
+To compile the library, navigate to FFmpegMediaMetadataRetriever/library/ and
 execute
 
     ant clean debug
@@ -78,7 +78,7 @@ from the list, and on the following page select 'Use the New Projects wizard'.
 
 From here the process is the same even if you don't use E-Git. Choose 'Android
 Project from Existing Code' and then browse to where you checked out 
-FFmpegMediaMetadataRetriever. Select the ffmpegmediametadataretriever folder and click Finish.
+FFmpegMediaMetadataRetriever. Select the library folder and click Finish.
 
 Finally, to add the library to your application project, right-click your
 project in the Package Explorer and select Properties. Pick the "Android" page,
@@ -99,7 +99,7 @@ Sample code:
 
 FFmpeg
 -----------
-This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/ffmpegmediametadataretriever/ffmpeg-0.11.1-android-2012-09-18.tar.gz>here</a>.
+This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/library/ffmpeg-0.11.1-android-2012-09-18.tar.gz>here</a>.
 
 License
 ------------
