@@ -78,7 +78,7 @@ from the list, and on the following page select 'Use the New Projects wizard'.
 
 From here the process is the same even if you don't use E-Git. Choose 'Android
 Project from Existing Code' and then browse to where you checked out 
-FFmpegMediaMetadataRetriever. Select the library folder and click Finish.
+FFmpegMediaMetadataRetriever. Select the ffmpegmediametadataretriever folder and click Finish.
 
 Finally, to add the library to your application project, right-click your
 project in the Package Explorer and select Properties. Pick the "Android" page,
