@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".FFmpegMediaMetadataRetrieverFragment" >
+    tools:context=".FMMRFragment" >
 
     <RelativeLayout 
         android:layout_width="fill_parent"
