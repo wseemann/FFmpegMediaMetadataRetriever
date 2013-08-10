@@ -7,6 +7,7 @@
     <string name="uri_error">Enter a valid URI</string>
     <string name="go">Go</string>
     <string name="no_metadata">No metadata</string>
+    <string name="error_message">Metadata could not be retrieved</string>
     <string name="artwork">Artwork</string>
 
 </resources>
