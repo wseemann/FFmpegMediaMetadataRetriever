@@ -16,6 +16,10 @@ Supported protocols:
 Supported formats (audio and video):
 * aac, flac, mp3, ogg, 3gp and more!
 
+Demo Application
+------------
+A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-demo/FMMRDemo.apk.
+
 Installation
 ------------
 
