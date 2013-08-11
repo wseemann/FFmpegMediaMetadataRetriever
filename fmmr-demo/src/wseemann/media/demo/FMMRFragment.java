@@ -19,6 +19,8 @@
 
 package wseemann.media.demo;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import wseemann.media.demo.R;
@@ -71,13 +73,17 @@ public class FMMRFragment extends ListFragment
     	
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
-    	uriText.setText("http://98.212.155.32:53042/Hepcat/Right On Time/01 - Right On Time.mp3");
+    	//uriText.setText("http://...");
     	
     	// Populate the edit text field with the intent uri, if available
     	Uri uri = getActivity().getIntent().getData();
     	
     	if (uri != null) {
-    		uriText.setText(uri.toString());
+    		try {
+				uriText.setText(URLDecoder.decode(uri.toString(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
     	}
     	
     	Button goButton = (Button) v.findViewById(R.id.go_button);
@@ -107,10 +113,13 @@ public class FMMRFragment extends ListFragment
 				String uriString = uriText.getText().toString();
 				
 				Bundle bundle = new Bundle();
-				bundle.putString("uri", uriString);
-				
-				mId++;
-				FMMRFragment.this.getLoaderManager().initLoader(mId, bundle, FMMRFragment.this);
+				try {
+					bundle.putString("uri", URLDecoder.decode(uriString, "UTF-8"));
+					mId++;
+					FMMRFragment.this.getLoaderManager().initLoader(mId, bundle, FMMRFragment.this);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
 		});
     	
@@ -125,19 +134,18 @@ public class FMMRFragment extends ListFragment
         // application this would come from a resource.
         setEmptyText(getString(R.string.no_metadata));
 
-        // We have a menu item to show in action bar.
-        setHasOptionsMenu(true);
-
+    	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.header, null);
+    	mImage = (ImageView) header.findViewById(R.id.image);
+    	
+    	getListView().addHeaderView(header);
+        
         if (mAdapter == null) {
-        	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.header, null);
-        	mImage = (ImageView) header.findViewById(R.id.image);
-        	
-        	getListView().addHeaderView(header);
-        	
         	// Create an empty adapter we will use to display the loaded data.
         	mAdapter = new MetadataListAdapter(getActivity());
         	setListAdapter(mAdapter);
         } else {
+        	setListAdapter(mAdapter);
+        	
         	// Start out with a progress indicator.
 			setListShown(false);
         	
@@ -146,6 +154,12 @@ public class FMMRFragment extends ListFragment
             getLoaderManager().initLoader(mId, new Bundle(), this);
         }
     }
+	
+	@Override
+	public void onDestroyView() {
+	    super.onDestroyView();
+	    setListAdapter(null);
+	}
 	
 	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
