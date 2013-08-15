@@ -28,6 +28,7 @@ import wseemann.media.demo.R;
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -75,17 +76,25 @@ public class FMMRFragment extends ListFragment
     	// Uncomment for debugging
     	//uriText.setText("http://...");
     	
+    	Intent intent = getActivity().getIntent();
+    	
     	// Populate the edit text field with the intent uri, if available
-    	Uri uri = getActivity().getIntent().getData();
+    	Uri uri = intent.getData();
+    	
+    	if (intent.getExtras() != null &&
+    			intent.getExtras().getCharSequence(Intent.EXTRA_TEXT) != null) {
+			uri = Uri.parse(intent.getExtras().getCharSequence(Intent.EXTRA_TEXT).toString());
+		}
     	
     	if (uri != null) {
     		try {
-				uriText.setText(URLDecoder.decode(uri.toString(), "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+    			uriText.setText(URLDecoder.decode(uri.toString(), "UTF-8"));
+    		} catch (UnsupportedEncodingException e1) {
+    		}
     	}
     	
+		getActivity().setIntent(null);
+		
     	Button goButton = (Button) v.findViewById(R.id.go_button);
     	goButton.setOnClickListener(new View.OnClickListener() {
 			
