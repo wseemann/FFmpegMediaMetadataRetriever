@@ -19,7 +19,11 @@
 
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
 #include <ffmpeg_mediametadataretriever.h>
+
+const int TARGET_IMAGE_FORMAT = PIX_FMT_RGB24;
+const int TARGET_IMAGE_CODEC = CODEC_ID_PNG;
 
 const char *DURATION = "duration";
 const char *AUDIO_CODEC = "audio_codec";
@@ -27,6 +31,18 @@ const char *VIDEO_CODEC = "video_codec";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
+
+void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr);
+
+int is_supported_format(int codec_id) {
+	if (codec_id == CODEC_ID_PNG ||
+			codec_id == CODEC_ID_MJPEG ||
+	        codec_id == CODEC_ID_BMP) {
+		return 1;
+	}
+	
+	return 0;
+}
 
 void get_duration(AVFormatContext *ic, char * value) {
 	int duration = 0;
@@ -227,6 +243,41 @@ AVPacket* get_embedded_picture(State **ps) {
         if (state->pFormatCtx->streams[i]->disposition & AV_DISPOSITION_ATTACHED_PIC) {
         	printf("Found album art\n");
         	packet = state->pFormatCtx->streams[i]->attached_pic;
+        	
+        	// Is this a packet from the video stream?
+        	if (packet.stream_index == state->video_stream) {
+        		int codec_id = state->video_st->codec->codec_id;
+        		
+        		// If the image isn't already in a supported format convert it to one
+        		if (!is_supported_format(codec_id)) {
+        			AVFrame *frame;
+        			int got_frame = 0;
+        			        	
+   			        frame = avcodec_alloc_frame();
+        			        	
+   			        if (!frame) {
+   			        	break;
+        			}
+   			        
+        			if (avcodec_decode_video2(state->video_st->codec, frame, &got_frame, &packet) < 0) {
+        				break;
+        			}
+
+        			av_init_packet(&packet);
+        			packet.data = NULL;
+        			packet.size = 0;
+        		
+        			// Did we get a video frame?
+        			if (got_frame) {
+        				int got_packet = 0;
+        				convert_image(state->video_st->codec, frame, &packet, &got_packet);
+        				if (!got_packet) {
+        					break;
+        				}
+        			}
+        		}
+        	}
+        	
         	pkt = (AVPacket *) malloc(sizeof(packet));
         	av_init_packet(pkt);
         	pkt->data = packet.data;
@@ -237,20 +288,15 @@ AVPacket* get_embedded_picture(State **ps) {
 	return pkt;
 }
 
-void convert_to_jpeg(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr) {
+void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr) {
 	AVCodecContext *codecCtx;
 	AVCodec *codec;
 	
 	*got_packet_ptr = 0;
 
-	int pix_fmt = PIX_FMT_YUVJ420P;
-	
-	//int pix_fmt = PIX_FMT_BGR24;
-	//codec = avcodec_find_encoder(CODEC_ID_BMP);
-	
-	codec = avcodec_find_encoder(CODEC_ID_MJPEG);
+	codec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
 	if (!codec) {
-	    printf("avcodec_find_decoder() failed to find video decoder\n");
+	    printf("avcodec_find_decoder() failed to find decoder\n");
 		goto fail;
 	}
 
@@ -263,7 +309,7 @@ void convert_to_jpeg(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt
 	codecCtx->bit_rate = pCodecCtx->bit_rate;
 	codecCtx->width = pCodecCtx->width;
 	codecCtx->height = pCodecCtx->height;
-	codecCtx->pix_fmt = pix_fmt;
+	codecCtx->pix_fmt = TARGET_IMAGE_FORMAT;
 	codecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
 	codecCtx->time_base.num = pCodecCtx->time_base.num;
 	codecCtx->time_base.den = pCodecCtx->time_base.den;
@@ -273,16 +319,70 @@ void convert_to_jpeg(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt
 		goto fail;
 	}
 
-	int ret = avcodec_encode_video2(codecCtx, avpkt, pFrame, got_packet_ptr);
+	int src_width = pCodecCtx->width;
+	int src_height = pCodecCtx->height;
+	enum PixelFormat src_pixfmt = pCodecCtx->pix_fmt;
+	int dst_width = pCodecCtx->width;
+	int dst_height = pCodecCtx->height;
+		
+	struct SwsContext *scalerCtx;
+
+	scalerCtx = sws_getContext(src_width,
+			src_height,
+			src_pixfmt,
+			dst_width,
+			dst_height,
+			TARGET_IMAGE_FORMAT,
+			SWS_BILINEAR,
+			NULL, NULL, NULL);
+
+	if (!scalerCtx) {
+		printf("sws_getContext() failed\n");
+		goto fail;
+	}
+	
+	AVFrame *pFrameRGB = avcodec_alloc_frame();
+	
+	if (!pFrameRGB) {
+		goto fail;
+	}
+
+	int numBytes = avpicture_get_size(TARGET_IMAGE_FORMAT, src_width, src_height);
+	uint8_t *buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
+
+	if (avpicture_fill((AVPicture *) pFrameRGB,
+			buffer,
+			TARGET_IMAGE_FORMAT,
+	        src_width,
+	        src_height) < 0) {
+		printf("avpicture_fill() failed\n");
+	    goto fail;
+	}
+
+	sws_scale(scalerCtx,
+			  (const uint8_t * const *) pFrame->data, 
+	    	  pFrame->linesize,
+	          0,
+	          src_height, 
+	          pFrameRGB->data, 
+	          pFrameRGB->linesize);
+	
+	int ret = avcodec_encode_video2(codecCtx, avpkt, pFrameRGB, got_packet_ptr);
 	
 	if (ret < 0) {
 		*got_packet_ptr = 0;
 	}
 	
-	avcodec_close(codecCtx);
-	
 	// TODO is this right?
 	fail:
+	if (codecCtx) {
+		avcodec_close(codecCtx);
+	}
+	
+	if (scalerCtx) {
+		sws_freeContext(scalerCtx);
+	}
+	
 	if (ret < 0 || !*got_packet_ptr) {
 		av_free_packet(avpkt);
 	}
@@ -314,7 +414,7 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 
 			// Did we get a video frame?
 			if (got_frame) {
-				convert_to_jpeg(state->video_st->codec, frame, avpkt, got_frame);
+				convert_image(state->video_st->codec, frame, avpkt, got_frame);
 				break;
 			}
 		}
@@ -325,7 +425,7 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 
 	// Free the frame
 	av_freep(&frame);
- }
+}
 
 AVPacket* get_frame_at_time(State **ps, long timeUs) {
 	printf("get_frame_at_time\n");
@@ -362,7 +462,7 @@ AVPacket* get_frame_at_time(State **ps, long timeUs) {
     decode_frame(state, &packet, &got_packet);
     
     if (got_packet) {
-    	//const char *JPEGFName = "/home/seemann/Desktop/one.jpg";
+    	//const char *JPEGFName = "/Users/wseemann/Desktop/one.png";
     	//FILE *picture = fopen(JPEGFName, "wb");
     	//fwrite(packet.data, packet.size, 1, picture);
     	//fclose(picture);
