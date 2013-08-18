@@ -39,6 +39,7 @@ public class FFmpegMediaMetadataRetriever
 	
 	private static final String [] JNI_LIBRARIES = {
 		"libavutil.so",
+		"libswscale.so",
 		"libavcodec.so",
 		"libavformat.so",
 		"libffmpeg_mediametadataretriever_jni.so"		
