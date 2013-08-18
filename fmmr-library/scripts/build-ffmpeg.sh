@@ -27,14 +27,6 @@ if [ ! -d ffmpeg ]; then
     ./extract.sh
 
     cd $WORKING_DIR
-
-    # Move the build scripts to the FFmpeg build folder
-    cp $SCRIPTS_DIR/*.sh $FFMPEG_BUILD_DIR  
-
-    # Make the build scripts executable
-    chmod +x $FFMPEG_BUILD_DIR/arm-build.sh
-    chmod +x $FFMPEG_BUILD_DIR/x86-build.sh
-    chmod +x $FFMPEG_BUILD_DIR/mips-build.sh
 fi
 
 # Make the target JNI folder if it doesn't exist
@@ -59,7 +51,7 @@ if [ ! -d $TARGET_X86_DIR ]; then
     cd $FFMPEG_BUILD_DIR
     ./x86-build.sh
     cd $WORKING_DIR
-    echo "Copying FFmpeg .so files from $SO_DIR to $TARGET_MIPS_DIR"
+    echo "Copying FFmpeg .so files from $SO_DIR to $TARGET_X86_DIR"
     cp -r $SO_DIR/x86 $TARGET_X86_DIR
 fi
 

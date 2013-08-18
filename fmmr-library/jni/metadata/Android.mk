@@ -7,7 +7,7 @@ LOCAL_CFLAGS :=
 LOCAL_SRC_FILES := wseemann_media_MediaMetadataRetriever.cpp \
 	mediametadataretriever.cpp \
         ffmpeg_mediametadataretriever.c
-LOCAL_SHARED_LIBRARIES := libavcodec libavformat libavutil
+LOCAL_SHARED_LIBRARIES := libswscale libavcodec libavformat libavutil
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../ffmpeg/ffmpeg/$(TARGET_ARCH_ABI)/include
 LOCAL_LDLIBS := -llog
 
