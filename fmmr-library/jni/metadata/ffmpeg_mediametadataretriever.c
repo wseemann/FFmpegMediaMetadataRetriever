@@ -225,6 +225,7 @@ AVPacket* get_embedded_picture(State **ps) {
 	int i = 0;
 	AVPacket packet;
 	AVPacket *pkt = NULL;
+	AVFrame *frame = NULL;
 	
 	State *state = *ps;
 	
@@ -250,16 +251,15 @@ AVPacket* get_embedded_picture(State **ps) {
         		
         		// If the image isn't already in a supported format convert it to one
         		if (!is_supported_format(codec_id)) {
-        			AVFrame *frame;
         			int got_frame = 0;
-        			        	
+        			
    			        frame = avcodec_alloc_frame();
-        			        	
+        			    	
    			        if (!frame) {
    			        	break;
         			}
    			        
-        			if (avcodec_decode_video2(state->video_st->codec, frame, &got_frame, &packet) < 0) {
+        			if (avcodec_decode_video2(state->video_st->codec, frame, &got_frame, &packet) <= 0) {
         				break;
         			}
 
@@ -285,6 +285,8 @@ AVPacket* get_embedded_picture(State **ps) {
         }
     }
 
+	av_free(frame);
+    
 	return pkt;
 }
 
@@ -361,7 +363,7 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 
 	sws_scale(scalerCtx,
 			  (const uint8_t * const *) pFrame->data, 
-	    	  pFrame->linesize,
+			  pFrame->linesize,
 	          0,
 	          src_height, 
 	          pFrameRGB->data, 
@@ -406,16 +408,29 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 
 		// Is this a packet from the video stream?
 		if (packet.stream_index == state->video_stream) {
-			// Decode video frame
-			if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, &packet) < 0) {
-				*got_frame = 0;
-				break;
-			}
+			int codec_id = state->video_st->codec->codec_id;
+			        		
+			// If the image isn't already in a supported format convert it to one
+			if (!is_supported_format(codec_id)) {
+			
+				// Decode video frame
+				if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, &packet) <= 0) {
+					*got_frame = 0;
+					break;
+				}
 
-			// Did we get a video frame?
-			if (got_frame) {
-				convert_image(state->video_st->codec, frame, avpkt, got_frame);
-				break;
+				// Did we get a video frame?
+				if (got_frame) {
+					convert_image(state->video_st->codec, frame, avpkt, got_frame);
+					break;
+				}
+			} else {
+				*got_frame = 1;
+				
+	        	av_init_packet(avpkt);
+	        	avpkt->data = packet.data;
+	        	avpkt->size = packet.size;
+	        	break;
 			}
 		}
 
@@ -440,9 +455,10 @@ AVPacket* get_frame_at_time(State **ps, long timeUs) {
 	}
 
     if (timeUs != -1) {
-    	int64_t seek_target = timeUs * 1000;
-
-    	if (avformat_seek_file(state->pFormatCtx, -1, INT64_MIN, seek_target, INT64_MAX, 0) < 0) {
+ 	    int stream_index = state->video_stream;
+    	int64_t seek_target = av_rescale(timeUs, state->pFormatCtx->streams[stream_index]->time_base.den, state->pFormatCtx->streams[stream_index]->time_base.num);
+ 	    
+    	if (avformat_seek_file(state->pFormatCtx, stream_index, INT64_MIN, seek_target, INT64_MAX, 0) < 0) {
     		return pkt;
     	} else {
             if (state->audio_stream >= 0) {
