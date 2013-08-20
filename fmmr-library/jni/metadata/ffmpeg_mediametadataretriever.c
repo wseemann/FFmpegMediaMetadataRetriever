@@ -321,53 +321,37 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 		goto fail;
 	}
 
-	int src_width = pCodecCtx->width;
-	int src_height = pCodecCtx->height;
-	enum PixelFormat src_pixfmt = pCodecCtx->pix_fmt;
-	int dst_width = pCodecCtx->width;
-	int dst_height = pCodecCtx->height;
-		
-	struct SwsContext *scalerCtx;
-
-	scalerCtx = sws_getContext(src_width,
-			src_height,
-			src_pixfmt,
-			dst_width,
-			dst_height,
-			TARGET_IMAGE_FORMAT,
-			SWS_BILINEAR,
-			NULL, NULL, NULL);
-
-	if (!scalerCtx) {
-		printf("sws_getContext() failed\n");
-		goto fail;
-	}
-	
 	AVFrame *pFrameRGB = avcodec_alloc_frame();
 	
 	if (!pFrameRGB) {
 		goto fail;
 	}
 
-	int numBytes = avpicture_get_size(TARGET_IMAGE_FORMAT, src_width, src_height);
-	uint8_t *buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
-
-	if (avpicture_fill((AVPicture *) pFrameRGB,
-			buffer,
-			TARGET_IMAGE_FORMAT,
-	        src_width,
-	        src_height) < 0) {
-		printf("avpicture_fill() failed\n");
-	    goto fail;
+    avpicture_alloc((AVPicture *) pFrameRGB,
+    		TARGET_IMAGE_FORMAT,
+    		codecCtx->width,
+    		codecCtx->height);
+    
+	struct SwsContext *scalerCtx = sws_getContext(pCodecCtx->width, 
+			pCodecCtx->height, 
+			pCodecCtx->pix_fmt, 
+			pCodecCtx->width, 
+			pCodecCtx->height, 
+			TARGET_IMAGE_FORMAT, 
+	        SWS_FAST_BILINEAR, 0, 0, 0);
+	
+	if (!scalerCtx) {
+		printf("sws_getContext() failed\n");
+		goto fail;
 	}
-
-	sws_scale(scalerCtx,
-			  (const uint8_t * const *) pFrame->data, 
-			  pFrame->linesize,
-	          0,
-	          src_height, 
-	          pFrameRGB->data, 
-	          pFrameRGB->linesize);
+    
+    sws_scale(scalerCtx,
+    		(const uint8_t * const *) pFrame->data,
+    		pFrame->linesize,
+    		0,
+    		pFrame->height,
+    		pFrameRGB->data,
+    		pFrameRGB->linesize);
 	
 	int ret = avcodec_encode_video2(codecCtx, avpkt, pFrameRGB, got_packet_ptr);
 	
@@ -377,8 +361,11 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 	
 	// TODO is this right?
 	fail:
+	av_free(pFrameRGB);
+	
 	if (codecCtx) {
 		avcodec_close(codecCtx);
+	    av_free(codecCtx);
 	}
 	
 	if (scalerCtx) {
@@ -391,17 +378,10 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 }
 
 void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
-	AVFrame *frame;
+	AVFrame *frame = NULL;
 	AVPacket packet;
 
 	*got_frame = 0;
-	
-	// Allocate video frame
-	frame = avcodec_alloc_frame();
-
-	if (!frame) {
-		return;
-	}
 	
 	// Read frames and return the first one found
 	while (av_read_frame(state->pFormatCtx, &packet) >= 0) {
@@ -412,7 +392,15 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 			        		
 			// If the image isn't already in a supported format convert it to one
 			if (!is_supported_format(codec_id)) {
-			
+	            *got_frame = 0;
+	            
+	        	// Allocate video frame
+	            frame = avcodec_alloc_frame();
+
+	            if (!frame) {
+	            	break;
+	            }
+	            
 				// Decode video frame
 				if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, &packet) <= 0) {
 					*got_frame = 0;
@@ -420,7 +408,7 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 				}
 
 				// Did we get a video frame?
-				if (got_frame) {
+				if (*got_frame) {
 					convert_image(state->video_st->codec, frame, avpkt, got_frame);
 					break;
 				}
@@ -439,7 +427,7 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 	}
 
 	// Free the frame
-	av_freep(&frame);
+	av_free(frame);
 }
 
 AVPacket* get_frame_at_time(State **ps, long timeUs) {
@@ -478,8 +466,8 @@ AVPacket* get_frame_at_time(State **ps, long timeUs) {
     decode_frame(state, &packet, &got_packet);
     
     if (got_packet) {
-    	//const char *JPEGFName = "/Users/wseemann/Desktop/one.png";
-    	//FILE *picture = fopen(JPEGFName, "wb");
+    	//const char *filename = "/Users/wseemann/Desktop/one.png";
+    	//FILE *picture = fopen(filename, "wb");
     	//fwrite(packet.data, packet.size, 1, picture);
     	//fclose(picture);
     	
