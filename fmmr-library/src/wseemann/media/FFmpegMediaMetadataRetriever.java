@@ -126,6 +126,56 @@ public class FFmpegMediaMetadataRetriever
 
     /**
      * Call this method after setDataSource(). This method finds a
+     * representative frame close to the given time position by considering
+     * the given option if possible, and returns it as a bitmap. This is
+     * useful for generating a thumbnail for an input data source or just
+     * obtain and display a frame at the given time position.
+     *
+     * @param timeUs The time position where the frame will be retrieved.
+     * When retrieving the frame at the given time position, there is no
+     * guarantee that the data source has a frame located at the position.
+     * When this happens, a frame nearby will be returned. If timeUs is
+     * negative, time position and option will ignored, and any frame
+     * that the implementation considers as representative may be returned.
+     *
+     * @param option a hint on how the frame is found. Use
+     * {@link #OPTION_PREVIOUS_SYNC} if one wants to retrieve a sync frame
+     * that has a timestamp earlier than or the same as timeUs. Use
+     * {@link #OPTION_NEXT_SYNC} if one wants to retrieve a sync frame
+     * that has a timestamp later than or the same as timeUs. Use
+     * {@link #OPTION_CLOSEST_SYNC} if one wants to retrieve a sync frame
+     * that has a timestamp closest to or the same as timeUs. Use
+     * {@link #OPTION_CLOSEST} if one wants to retrieve a frame that may
+     * or may not be a sync frame but is closest to or the same as timeUs.
+     * {@link #OPTION_CLOSEST} often has larger performance overhead compared
+     * to the other options if there is no sync frame located at timeUs.
+     *
+     * @return A Bitmap containing a representative video frame, which
+     *         can be null, if such a frame cannot be retrieved.
+     */
+    public Bitmap getFrameAtTime(long timeUs, int option) {
+        if (option < OPTION_PREVIOUS_SYNC ||
+                option > OPTION_CLOSEST) {
+            throw new IllegalArgumentException("Unsupported option: " + option);
+        }
+
+    	Bitmap b = null;
+    	
+        BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
+        bitmapOptionsCache.inPreferredConfig = Bitmap.Config.RGB_565;
+        bitmapOptionsCache.inDither = false;
+    	
+        byte [] picture = _getFrameAtTime(timeUs, option);
+        
+        if (picture != null) {
+        	b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
+        }
+        
+        return b;
+    }
+
+    /**
+     * Call this method after setDataSource(). This method finds a
      * representative frame close to the given time position if possible,
      * and returns it as a bitmap. This is useful for generating a thumbnail
      * for an input data source. Call this method if one does not care
@@ -151,7 +201,7 @@ public class FFmpegMediaMetadataRetriever
         bitmapOptionsCache.inPreferredConfig = Bitmap.Config.RGB_565;
         bitmapOptionsCache.inDither = false;
     	
-        byte [] picture = _getFrameAtTime(timeUs);
+        byte [] picture = _getFrameAtTime(timeUs, OPTION_CLOSEST_SYNC);
         
         if (picture != null) {
         	b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
@@ -175,10 +225,10 @@ public class FFmpegMediaMetadataRetriever
      * @see #getFrameAtTime(long, int)
      */
     public Bitmap getFrameAtTime() {
-        return getFrameAtTime(-1);
+        return getFrameAtTime(-1, OPTION_CLOSEST_SYNC);
     }
     
-    private native byte [] _getFrameAtTime(long timeUs);
+    private native byte [] _getFrameAtTime(long timeUs, int option);
     
     /**
      * Call this method after setDataSource(). This method finds the optional
@@ -207,6 +257,48 @@ public class FFmpegMediaMetadataRetriever
             super.finalize();
         }
     }
+
+    /**
+     * Option used in method {@link #getFrameAtTime(long, int)} to get a
+     * frame at a specified location.
+     *
+     * @see #getFrameAtTime(long, int)
+     */
+    /* Do not change these option values without updating their counterparts
+     * in jni/metadata/ffmpeg_mediametadataretriever.h!
+     */
+    /**
+     * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
+     * a sync (or key) frame associated with a data source that is located
+     * right before or at the given time.
+     *
+     * @see #getFrameAtTime(long, int)
+     */
+    public static final int OPTION_PREVIOUS_SYNC    = 0x00;
+    /**
+     * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
+     * a sync (or key) frame associated with a data source that is located
+     * right after or at the given time.
+     *
+     * @see #getFrameAtTime(long, int)
+     */
+    public static final int OPTION_NEXT_SYNC        = 0x01;
+    /**
+     * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
+     * a sync (or key) frame associated with a data source that is located
+     * closest to (in time) or at the given time.
+     *
+     * @see #getFrameAtTime(long, int)
+     */
+    public static final int OPTION_CLOSEST_SYNC     = 0x02;
+    /**
+     * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
+     * a frame (not necessarily a key frame) associated with a data source that
+     * is located closest to or at the given time.
+     *
+     * @see #getFrameAtTime(long, int)
+     */
+    public static final int OPTION_CLOSEST          = 0x03;
 
     /**
      * The metadata key to retrieve the name of the set this work belongs to.
