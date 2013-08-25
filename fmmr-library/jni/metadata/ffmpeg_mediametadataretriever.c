@@ -430,7 +430,7 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 	av_free(frame);
 }
 
-AVPacket* get_frame_at_time(State **ps, long timeUs) {
+AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
 	printf("get_frame_at_time\n");
 	int got_packet;
 	AVPacket packet;
@@ -441,12 +441,37 @@ AVPacket* get_frame_at_time(State **ps, long timeUs) {
 	if (!state || !state->pFormatCtx || state->video_stream < 0) {
 		return pkt;
 	}
-
+	
     if (timeUs != -1) {
- 	    int stream_index = state->video_stream;
-    	int64_t seek_target = av_rescale(timeUs, state->pFormatCtx->streams[stream_index]->time_base.den, state->pFormatCtx->streams[stream_index]->time_base.num);
- 	    
-    	if (avformat_seek_file(state->pFormatCtx, stream_index, INT64_MIN, seek_target, INT64_MAX, 0) < 0) {
+        int default_stream_index = av_find_default_stream_index(state->pFormatCtx);
+        int stream_index = (state->video_stream != -1)? state->video_stream : default_stream_index;
+        int64_t seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
+        //int64_t seek_stream_duration = state->pFormatCtx->streams[stream_index]->duration;
+
+        int flags = 0;
+        int ret = -1;
+        
+        /*if (seek_time > 0 && seek_time < seek_stream_duration) {
+        	flags |= AVSEEK_FLAG_ANY; // H.264 I frames don't always register as "key frames" in FFmpeg
+       	}*/
+        
+        if (option == 0) {
+        	flags = AVSEEK_FLAG_ANY;
+        } else if (option == 1) {
+        	flags = 0;
+        } else if (option == 2) {
+        	flags = 0;
+        } else if (3) {
+        	flags = AVSEEK_FLAG_BACKWARD;
+        }
+        
+        if (option == 0) {
+        	ret = avformat_seek_file(state->pFormatCtx, stream_index, INT64_MIN, seek_time, INT64_MAX, flags);
+        } else {
+        	ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
+        }
+        
+    	if (ret < 0) {
     		return pkt;
     	} else {
             if (state->audio_stream >= 0) {

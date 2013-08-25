@@ -23,6 +23,17 @@
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 
+// Keep these in synch with the constants defined in FFmpegMediaMetadataRetriever.java
+// class.
+typedef enum {
+	OPTION_CLOSEST = 0,
+	OPTION_CLOSEST_SYNC = 1,
+	OPTION_NEXT_SYNC = 2,
+	OPTION_PREVIOUS_SYNC = 3,
+
+    // Add more here...
+} Options;
+
 typedef struct State {
 	AVFormatContext *pFormatCtx;
 	int             audio_stream;
@@ -34,7 +45,7 @@ typedef struct State {
 int set_data_source(State **ps, const char* path);
 const char* extract_metadata(State **ps, const char* key);
 AVPacket* get_embedded_picture(State **ps);
-AVPacket* get_frame_at_time(State **ps, long timeUs);
+AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option);
 void release(State **ps);
 
 #endif /*FFMPEG_MEDIAMETADATARETRIEVER_H_*/

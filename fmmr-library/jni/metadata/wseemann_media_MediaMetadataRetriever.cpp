@@ -120,7 +120,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *env, jobj
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs)
+Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
 {
    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime");
    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
@@ -129,7 +129,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, j
        return NULL;
    }
 
-   AVPacket* packet = retriever->getFrameAtTime(timeUs);
+   AVPacket* packet = retriever->getFrameAtTime(timeUs, option);
    jbyteArray array = NULL;
 
    if (packet) {
