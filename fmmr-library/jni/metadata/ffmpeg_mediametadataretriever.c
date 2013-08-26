@@ -452,20 +452,18 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
         int ret = -1;
         
         /*if (seek_time > 0 && seek_time < seek_stream_duration) {
-        	flags |= AVSEEK_FLAG_ANY; // H.264 I frames don't always register as "key frames" in FFmpeg
+        	flags |= AVSEEK_FLAG_ANY;
        	}*/
         
-        if (option == 0) {
+        Options opt = option;
+        
+        if (opt == OPTION_CLOSEST) {
         	flags = AVSEEK_FLAG_ANY;
-        } else if (option == 1) {
-        	flags = 0;
-        } else if (option == 2) {
-        	flags = 0;
-        } else if (3) {
+        } else if (opt == OPTION_PREVIOUS_SYNC) {
         	flags = AVSEEK_FLAG_BACKWARD;
         }
         
-        if (option == 0) {
+        if (opt == OPTION_CLOSEST) {
         	ret = avformat_seek_file(state->pFormatCtx, stream_index, INT64_MIN, seek_time, INT64_MAX, flags);
         } else {
         	ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
