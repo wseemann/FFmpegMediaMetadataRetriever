@@ -377,7 +377,8 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 	}
 }
 
-void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
+void decode_frame(State *state, AVPacket *avpkt, int *got_frame, int64_t desired_frame_number) {
+	int64_t frame_count = 0;
 	AVFrame *frame = NULL;
 	AVPacket packet;
 
@@ -409,8 +410,12 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame) {
 
 				// Did we get a video frame?
 				if (*got_frame) {
-					convert_image(state->video_st->codec, frame, avpkt, got_frame);
-					break;
+					frame_count++;
+					if (desired_frame_number == -1 ||
+							(desired_frame_number != -1 && frame_count >= desired_frame_number)) {
+						convert_image(state->video_st->codec, frame, avpkt, got_frame);
+						break;
+					}
 				}
 			} else {
 				*got_frame = 1;
@@ -438,6 +443,9 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
 	
     State *state = *ps;
 
+    Options opt = option;
+    int64_t seek_time;
+    
 	if (!state || !state->pFormatCtx || state->video_stream < 0) {
 		return pkt;
 	}
@@ -445,7 +453,7 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
     if (timeUs != -1) {
         int default_stream_index = av_find_default_stream_index(state->pFormatCtx);
         int stream_index = (state->video_stream != -1)? state->video_stream : default_stream_index;
-        int64_t seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
+        seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
         //int64_t seek_stream_duration = state->pFormatCtx->streams[stream_index]->duration;
 
         int flags = 0;
@@ -455,16 +463,15 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
         	flags |= AVSEEK_FLAG_ANY;
        	}*/
         
-        Options opt = option;
-        
         if (opt == OPTION_CLOSEST) {
         	flags = AVSEEK_FLAG_ANY;
+         	seek_time /= 1000;
         } else if (opt == OPTION_PREVIOUS_SYNC) {
         	flags = AVSEEK_FLAG_BACKWARD;
         }
         
         if (opt == OPTION_CLOSEST) {
-        	ret = avformat_seek_file(state->pFormatCtx, stream_index, INT64_MIN, seek_time, INT64_MAX, flags);
+        	ret = av_seek_frame(state->pFormatCtx, stream_index, 0, flags);
         } else {
         	ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
         }
@@ -486,7 +493,11 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
     packet.data = NULL;
     packet.size = 0;
     
-    decode_frame(state, &packet, &got_packet);
+    if (opt == OPTION_CLOSEST) {
+    	decode_frame(state, &packet, &got_packet, seek_time);
+    } else {
+    	decode_frame(state, &packet, &got_packet, -1);
+    }
     
     if (got_packet) {
     	//const char *filename = "/Users/wseemann/Desktop/one.png";
