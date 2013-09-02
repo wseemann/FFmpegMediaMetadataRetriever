@@ -26,10 +26,10 @@
 // Keep these in synch with the constants defined in FFmpegMediaMetadataRetriever.java
 // class.
 typedef enum {
-	OPTION_CLOSEST = 0,
-	OPTION_CLOSEST_SYNC = 1,
-	OPTION_NEXT_SYNC = 2,
-	OPTION_PREVIOUS_SYNC = 3,
+	OPTION_PREVIOUS_SYNC = 0,
+	OPTION_NEXT_SYNC = 1,
+	OPTION_CLOSEST_SYNC = 2,
+	OPTION_CLOSEST = 3,
 
     // Add more here...
 } Options;
