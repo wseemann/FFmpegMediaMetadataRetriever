@@ -440,41 +440,46 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
 	int got_packet;
 	AVPacket packet;
 	AVPacket *pkt = NULL;
+    int64_t desired_frame_number = -1;
 	
     State *state = *ps;
 
     Options opt = option;
-    int64_t seek_time;
     
 	if (!state || !state->pFormatCtx || state->video_stream < 0) {
 		return pkt;
 	}
 	
     if (timeUs != -1) {
-        int default_stream_index = av_find_default_stream_index(state->pFormatCtx);
-        int stream_index = (state->video_stream != -1)? state->video_stream : default_stream_index;
-        seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
-        //int64_t seek_stream_duration = state->pFormatCtx->streams[stream_index]->duration;
+        int stream_index = state->video_stream;
+        int64_t seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
+        int64_t seek_stream_duration = state->pFormatCtx->streams[stream_index]->duration;
 
         int flags = 0;
         int ret = -1;
         
-        /*if (seek_time > 0 && seek_time < seek_stream_duration) {
-        	flags |= AVSEEK_FLAG_ANY;
-       	}*/
+        if (seek_time > seek_stream_duration) {
+        	seek_time = seek_stream_duration;
+        }
+        
+        if (seek_time < 0) {
+        	return pkt;
+       	}
         
         if (opt == OPTION_CLOSEST) {
+        	seek_time /= 1000;
+        	desired_frame_number = seek_time;
+        	seek_time = 0;
         	flags = AVSEEK_FLAG_ANY;
-         	seek_time /= 1000;
+        } else if (opt == OPTION_CLOSEST_SYNC) {
+        	flags = 0;
+        } else if (opt == OPTION_NEXT_SYNC) {
+        	flags = 0;
         } else if (opt == OPTION_PREVIOUS_SYNC) {
         	flags = AVSEEK_FLAG_BACKWARD;
         }
         
-        if (opt == OPTION_CLOSEST) {
-        	ret = av_seek_frame(state->pFormatCtx, stream_index, 0, flags);
-        } else {
-        	ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
-        }
+        ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
         
     	if (ret < 0) {
     		return pkt;
@@ -493,11 +498,7 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
     packet.data = NULL;
     packet.size = 0;
     
-    if (opt == OPTION_CLOSEST) {
-    	decode_frame(state, &packet, &got_packet, seek_time);
-    } else {
-    	decode_frame(state, &packet, &got_packet, -1);
-    }
+    decode_frame(state, &packet, &got_packet, desired_frame_number);
     
     if (got_packet) {
     	//const char *filename = "/Users/wseemann/Desktop/one.png";
