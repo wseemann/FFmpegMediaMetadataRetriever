@@ -73,11 +73,20 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
     			}
     		}
 
-    		// Retrieve the album art, if available
-    		Bitmap b = fmmr.getFrameAtTime();
+    		Bitmap b = fmmr.getFrameAtTime();;
+    		
+    		if (b != null) {
+    			Bitmap b2 = fmmr.getFrameAtTime(1000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+    			if (b2 != null) {
+    				b = b2;
+    			}
+    		}
+    		
     		if (b != null) {
     			metadata.add(new Metadata("image", b));
-    			Log.i(MetadataLoader.class.getName(), "Found album art");
+    			Log.i(MetadataLoader.class.getName(), "Extracted frame");
+    		} else {
+    			Log.e(MetadataLoader.class.getName(), "Failed to extract frame");
     		}
     	} catch (IllegalArgumentException ex) {
     		ex.printStackTrace();
