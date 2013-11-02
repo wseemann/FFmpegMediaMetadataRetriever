@@ -458,7 +458,10 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
         int flags = 0;
         int ret = -1;
         
-        if (seek_time > seek_stream_duration) {
+        // For some reason the seek_stream_duration is sometimes a negative value,
+        // make sure to check that it is greater than 0 before adjusting the
+        // seek_time
+        if (seek_stream_duration > 0 && seek_time > seek_stream_duration) {
         	seek_time = seek_stream_duration;
         }
         
