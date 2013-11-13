@@ -103,7 +103,7 @@ Sample code:
 
 FFmpeg
 -----------
-This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-library/ffmpeg-0.11.1-android-2012-09-18.tar.gz>here</a>.
+This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-library/ffmpeg-2.1-android-2013-11-13.tar.gz>here</a>.
 
 License
 ------------
