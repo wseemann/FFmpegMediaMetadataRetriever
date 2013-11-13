@@ -401,4 +401,9 @@ public class FFmpegMediaMetadataRetriever
      * The metadata key to retrieve the video codec of the work.
      */
     public static final String METADATA_KEY_VIDEO_CODEC = "video_codec";
+    /**
+     * This key retrieves the video rotation angle in degrees, if available.
+     * The video rotation angle may be 0, 90, 180, or 270 degrees.
+     */
+    public static final String METADATA_KEY_VIDEO_ROTATION = "rotation";
 }
