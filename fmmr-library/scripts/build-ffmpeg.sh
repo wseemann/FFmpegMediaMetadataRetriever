@@ -18,9 +18,9 @@ fi
 
 if [ ! -d ffmpeg ]; then
     # Unpackage the FFmpeg archive
-    tar -xvf ffmpeg-0.11.1-android-2012-09-18.tar.gz
-    rm ffmpeg-0.11.1-android-2012-09-18.tar.gz
-    mv ffmpeg-0.11.1-android-2012-09-18 $FFMPEG_BUILD_DIR
+    tar -xvf ffmpeg-2.1-android-2013-11-13.tar.gz
+    # rm ffmpeg-0.11.1-android-2012-09-18.tar.gz
+    mv ffmpeg-2.1-android-2013-11-13 $FFMPEG_BUILD_DIR
 
     # Prepare the FFmpeg archive for building
     cd $FFMPEG_BUILD_DIR
