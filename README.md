@@ -6,7 +6,9 @@ Donate
 
 Donations can be made via PayPal:
 
-[![PayPal Button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "PayPal")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY "FFmpegMediaMetadataRetriever") 
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY" alt="PayPal - The safer, easier way to pay online!">
+  <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif">
+</a>
 
 Overview
 --------
