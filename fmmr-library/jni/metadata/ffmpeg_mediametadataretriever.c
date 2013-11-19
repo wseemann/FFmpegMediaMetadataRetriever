@@ -20,6 +20,7 @@
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
+#include <libavutil/opt.h>
 #include <ffmpeg_mediametadataretriever.h>
 
 const int TARGET_IMAGE_FORMAT = PIX_FMT_RGB24;
@@ -28,6 +29,8 @@ const int TARGET_IMAGE_CODEC = CODEC_ID_PNG;
 const char *DURATION = "duration";
 const char *AUDIO_CODEC = "audio_codec";
 const char *VIDEO_CODEC = "video_codec";
+const char *ARTIST = "artist";
+const char *ALBUM = "album";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -42,6 +45,51 @@ int is_supported_format(int codec_id) {
 	}
 	
 	return 0;
+}
+
+size_t first_char_pos(const char *value, const char ch) {
+    char *chptr = strchr(value, ch);
+    return chptr - value;
+}
+
+size_t last_char_pos(const char *value, const char ch) {
+    char *chptr = strrchr(value, ch);
+    return chptr - value;
+}
+
+void get_shoutcast_metadata(AVFormatContext *ic) {
+    char *value;
+    
+    if (av_opt_get(ic, "icy_metadata_packet", 1, (uint8_t **) &value) < 0) {
+        value = NULL;
+    }
+	
+    if (value) {
+    	int first_pos = first_char_pos(value, '\'');
+        int last_pos = first_char_pos(value, ';') - 2;
+        int pos = last_pos - first_pos;
+        
+        char temp[pos];
+        memcpy(temp, value + first_pos + 1 , pos);
+        temp[pos] = '\0';
+        value = temp;
+
+    	first_pos = first_char_pos(value, '-') - 1;
+        
+        char artist[first_pos];
+        memcpy(artist, value, first_pos);
+        artist[first_pos] = '\0';
+        
+		av_dict_set(&ic->metadata, ARTIST, artist, 0);
+        
+        pos = strlen(value) - first_char_pos(value, '-') + 2;
+         
+        char album[pos];
+        memcpy(album, value + first_char_pos(value, '-') + 2, pos);
+        album[pos] = '\0';
+        
+		av_dict_set(&ic->metadata, ALBUM, album, 0);
+    }
 }
 
 void get_duration(AVFormatContext *ic, char * value) {
@@ -142,7 +190,11 @@ int set_data_source(State **ps, const char* path) {
 
     printf("Path: %s\n", path);
 
-    if (avformat_open_input(&state->pFormatCtx, path, NULL, NULL) != 0) {
+    AVDictionary *options = NULL;
+    av_dict_set(&options, "icy", "1", 0);
+    av_dict_set(&options, "user-agent", "FFmpegMediaMetadataRetriever", 0);
+    
+    if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
 	    printf("Metadata could not be retrieved\n");
 		*ps = NULL;
     	return FAILURE;
@@ -157,6 +209,8 @@ int set_data_source(State **ps, const char* path) {
 
 	get_duration(state->pFormatCtx, duration);
 	av_dict_set(&state->pFormatCtx->metadata, DURATION, duration, 0);
+	
+	get_shoutcast_metadata(state->pFormatCtx);
 
 	//av_dump_format(state->pFormatCtx, 0, path, 0);
 	
