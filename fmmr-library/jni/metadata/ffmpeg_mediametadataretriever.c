@@ -58,13 +58,13 @@ size_t last_char_pos(const char *value, const char ch) {
 }
 
 void get_shoutcast_metadata(AVFormatContext *ic) {
-    char *value;
+    char *value = NULL;
     
     if (av_opt_get(ic, "icy_metadata_packet", 1, (uint8_t **) &value) < 0) {
         value = NULL;
     }
 	
-    if (value) {
+    if (value && value[0]) {
     	int first_pos = first_char_pos(value, '\'');
         int last_pos = first_char_pos(value, ';') - 2;
         int pos = last_pos - first_pos;
