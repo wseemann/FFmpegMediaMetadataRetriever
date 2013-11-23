@@ -30,7 +30,7 @@ const char *DURATION = "duration";
 const char *AUDIO_CODEC = "audio_codec";
 const char *VIDEO_CODEC = "video_codec";
 const char *ARTIST = "artist";
-const char *ALBUM = "album";
+const char *TITLE = "title";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -69,6 +69,10 @@ void get_shoutcast_metadata(AVFormatContext *ic) {
         int last_pos = first_char_pos(value, ';') - 2;
         int pos = last_pos - first_pos;
         
+        if (pos == 0) {
+        	return;
+        }
+        
         char temp[pos];
         memcpy(temp, value + first_pos + 1 , pos);
         temp[pos] = '\0';
@@ -88,7 +92,7 @@ void get_shoutcast_metadata(AVFormatContext *ic) {
         memcpy(album, value + first_char_pos(value, '-') + 2, pos);
         album[pos] = '\0';
         
-		av_dict_set(&ic->metadata, ALBUM, album, 0);
+		av_dict_set(&ic->metadata, TITLE, album, 0);
     }
 }
 
