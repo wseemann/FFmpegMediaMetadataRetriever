@@ -107,7 +107,9 @@ Sample code:
     mmr.setDataSource(mUri);
     mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
     mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+    Bitmap b = mmr.(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
     byte [] artwork = mmr.getEmbeddedPicture();
+    
     mmr.release();
 
 FFmpeg
