@@ -436,7 +436,6 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 }
 
 void decode_frame(State *state, AVPacket *avpkt, int *got_frame, int64_t desired_frame_number) {
-	int64_t frame_count = 0;
 	AVFrame *frame = NULL;
 	AVPacket packet;
 
@@ -468,9 +467,8 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame, int64_t desired
 
 				// Did we get a video frame?
 				if (*got_frame) {
-					frame_count++;
 					if (desired_frame_number == -1 ||
-							(desired_frame_number != -1 && frame_count >= desired_frame_number)) {
+							(desired_frame_number != -1 && frame->pkt_pts >= desired_frame_number)) {
 						convert_image(state->video_st->codec, frame, avpkt, got_frame);
 						break;
 					}
@@ -528,10 +526,8 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
        	}
         
         if (opt == OPTION_CLOSEST) {
-        	seek_time /= 1000;
         	desired_frame_number = seek_time;
-        	seek_time = 0;
-        	flags = AVSEEK_FLAG_ANY;
+        	flags = AVSEEK_FLAG_BACKWARD; 
         } else if (opt == OPTION_CLOSEST_SYNC) {
         	flags = 0;
         } else if (opt == OPTION_NEXT_SYNC) {
