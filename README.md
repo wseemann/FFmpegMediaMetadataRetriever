@@ -20,14 +20,17 @@ Key Features:
 * URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
 Supported protocols:
-* file, http, https and mmsh
+* file, http, mms and mmsh
 
 Supported formats (audio and video):
-* aac, flac, mp3, ogg, 3gp and more!
+* aac, acc+, flac, mp2, mp3, mp4, ogg, 3gp and more!
+
+Supported metadata:
+* ICY Metadata (SHOUTcast metadata)
 
 Demo Application
 ------------
-A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-demo/FMMRDemo.apk.
+A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-demo/FMMRDemo.apk. Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
 
 Installation
 ------------
@@ -66,7 +69,7 @@ Open the newly created local.properties file and add the following lines:
 
 where <path to NDK> is the path to your Android NDK, for example:
 
-    ndk.dir=/home/wseemann/Android/android-ndk-r8d
+    ndk.dir=/home/wseemann/Android/android-ndk-r8e
 
 and <path to target libs folder> is the path to the "libs" folder in the project that will use the
 library, for example:
