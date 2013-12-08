@@ -34,6 +34,13 @@ public class FFmpegMediaMetadataRetriever
 {
 	private final static String TAG = "FFmpegMediaMetadataRetriever";
 	
+	/**
+	 * User defined bitmap configuration. A bitmap configuration describes how pixels are
+	 * stored. This affects the quality (color depth) as well as the ability to display
+	 * transparent/translucent colors. 
+	 */
+	public static Bitmap.Config IN_PREFERRED_CONFIG;
+	
 	@SuppressLint("SdCardPath")
 	private static final String LIBRARY_PATH = "/data/data/";
 	
@@ -162,7 +169,7 @@ public class FFmpegMediaMetadataRetriever
     	Bitmap b = null;
     	
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        bitmapOptionsCache.inPreferredConfig = Bitmap.Config.RGB_565;
+        bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
     	
         byte [] picture = _getFrameAtTime(timeUs, option);
@@ -198,7 +205,7 @@ public class FFmpegMediaMetadataRetriever
     	Bitmap b = null;
     	
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        bitmapOptionsCache.inPreferredConfig = Bitmap.Config.RGB_565;
+        bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
     	
         byte [] picture = _getFrameAtTime(timeUs, OPTION_CLOSEST_SYNC);
@@ -258,6 +265,14 @@ public class FFmpegMediaMetadataRetriever
         }
     }
 
+    private Bitmap.Config getInPreferredConfig() {
+    	if (IN_PREFERRED_CONFIG != null) {
+    		return IN_PREFERRED_CONFIG;
+    	}
+    	
+    	return Bitmap.Config.RGB_565;
+    }
+    
     /**
      * Option used in method {@link #getFrameAtTime(long, int)} to get a
      * frame at a specified location.
