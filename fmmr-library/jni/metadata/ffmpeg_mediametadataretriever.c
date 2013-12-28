@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2013 William Seemann
+ * Copyright 2014 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -264,7 +264,7 @@ const char* extract_metadata(State **ps, const char* key) {
 	State *state = *ps;
     
 	if (!state || !state->pFormatCtx) {
-		goto fail;
+		return value;
 	}
 
 	if (key) {
@@ -273,43 +273,42 @@ const char* extract_metadata(State **ps, const char* key) {
 		}
 	}
 
-	fail:
-
 	return value;
 }
 
-AVPacket* get_embedded_picture(State **ps) {
+int get_embedded_picture(State **ps, AVPacket *pkt) {
 	printf("get_embedded_picture\n");
 	int i = 0;
-	AVPacket packet;
-	AVPacket *pkt = NULL;
+	int got_packet = 0;
 	AVFrame *frame = NULL;
 	
 	State *state = *ps;
-	
+
 	if (!state || !state->pFormatCtx) {
-		return pkt;
+		return FAILURE;
 	}
 
     // read the format headers
     if (state->pFormatCtx->iformat->read_header(state->pFormatCtx) < 0) {
     	printf("Could not read the format header\n");
-    	return pkt;
+    	return FAILURE;
     }
 
     // find the first attached picture, if available
     for (i = 0; i < state->pFormatCtx->nb_streams; i++) {
         if (state->pFormatCtx->streams[i]->disposition & AV_DISPOSITION_ATTACHED_PIC) {
         	printf("Found album art\n");
-        	packet = state->pFormatCtx->streams[i]->attached_pic;
+        	*pkt = state->pFormatCtx->streams[i]->attached_pic;
         	
         	// Is this a packet from the video stream?
-        	if (packet.stream_index == state->video_stream) {
+        	if (pkt->stream_index == state->video_stream) {
         		int codec_id = state->video_st->codec->codec_id;
         		
         		// If the image isn't already in a supported format convert it to one
         		if (!is_supported_format(codec_id)) {
         			int got_frame = 0;
+        			
+                    av_init_packet(pkt);
         			
    			        frame = avcodec_alloc_frame();
         			    	
@@ -317,35 +316,32 @@ AVPacket* get_embedded_picture(State **ps) {
    			        	break;
         			}
    			        
-        			if (avcodec_decode_video2(state->video_st->codec, frame, &got_frame, &packet) <= 0) {
+        			if (avcodec_decode_video2(state->video_st->codec, frame, &got_frame, pkt) <= 0) {
         				break;
         			}
 
-        			av_init_packet(&packet);
-        			packet.data = NULL;
-        			packet.size = 0;
-        		
         			// Did we get a video frame?
         			if (got_frame) {
-        				int got_packet = 0;
-        				convert_image(state->video_st->codec, frame, &packet, &got_packet);
-        				if (!got_packet) {
-        					break;
-        				}
+        	  			av_free_packet(pkt);
+        	            av_init_packet(pkt);
+        				convert_image(state->video_st->codec, frame, pkt, &got_packet);
+        				break;
         			}
+        		} else {
+        			got_packet = 1;
+        			break;
         		}
         	}
-        	
-        	pkt = (AVPacket *) malloc(sizeof(packet));
-        	av_init_packet(pkt);
-        	pkt->data = packet.data;
-        	pkt->size = packet.size;
         }
     }
 
 	av_free(frame);
-    
-	return pkt;
+
+	if (got_packet) {
+		return SUCCESS;
+	} else {
+		return FAILURE;
+	}
 }
 
 void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr) {
@@ -435,17 +431,16 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 	}
 }
 
-void decode_frame(State *state, AVPacket *avpkt, int *got_frame, int64_t desired_frame_number) {
+void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number) {
 	AVFrame *frame = NULL;
-	AVPacket packet;
-
+	
 	*got_frame = 0;
 	
 	// Read frames and return the first one found
-	while (av_read_frame(state->pFormatCtx, &packet) >= 0) {
+	while (av_read_frame(state->pFormatCtx, pkt) >= 0) {
 
 		// Is this a packet from the video stream?
-		if (packet.stream_index == state->video_stream) {
+		if (pkt->stream_index == state->video_stream) {
 			int codec_id = state->video_st->codec->codec_id;
 			        		
 			// If the image isn't already in a supported format convert it to one
@@ -460,7 +455,7 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame, int64_t desired
 	            }
 	            
 				// Decode video frame
-				if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, &packet) <= 0) {
+				if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, pkt) <= 0) {
 					*got_frame = 0;
 					break;
 				}
@@ -469,33 +464,26 @@ void decode_frame(State *state, AVPacket *avpkt, int *got_frame, int64_t desired
 				if (*got_frame) {
 					if (desired_frame_number == -1 ||
 							(desired_frame_number != -1 && frame->pkt_pts >= desired_frame_number)) {
-						convert_image(state->video_st->codec, frame, avpkt, got_frame);
+						av_free_packet(pkt);
+						av_init_packet(pkt);
+						convert_image(state->video_st->codec, frame, pkt, got_frame);
 						break;
 					}
 				}
 			} else {
 				*got_frame = 1;
-				
-	        	av_init_packet(avpkt);
-	        	avpkt->data = packet.data;
-	        	avpkt->size = packet.size;
 	        	break;
 			}
 		}
-
-		// Free the packet that was allocated by av_read_frame
-		av_free_packet(&packet);
 	}
-
+	
 	// Free the frame
 	av_free(frame);
 }
 
-AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
+int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
 	printf("get_frame_at_time\n");
-	int got_packet;
-	AVPacket packet;
-	AVPacket *pkt = NULL;
+	int got_packet = 0;
     int64_t desired_frame_number = -1;
 	
     State *state = *ps;
@@ -503,7 +491,7 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
     Options opt = option;
     
 	if (!state || !state->pFormatCtx || state->video_stream < 0) {
-		return pkt;
+		return FAILURE;
 	}
 	
     if (timeUs != -1) {
@@ -522,7 +510,7 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
         }
         
         if (seek_time < 0) {
-        	return pkt;
+        	return FAILURE;
        	}
         
         if (opt == OPTION_CLOSEST) {
@@ -539,7 +527,7 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
         ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
         
     	if (ret < 0) {
-    		return pkt;
+    		return FAILURE;
     	} else {
             if (state->audio_stream >= 0) {
             	avcodec_flush_buffers(state->audio_st->codec);
@@ -551,27 +539,20 @@ AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option) {
     	}
     }
     
-    av_init_packet(&packet);
-    packet.data = NULL;
-    packet.size = 0;
-    
-    decode_frame(state, &packet, &got_packet, desired_frame_number);
+    decode_frame(state, pkt, &got_packet, desired_frame_number);
     
     if (got_packet) {
     	//const char *filename = "/Users/wseemann/Desktop/one.png";
     	//FILE *picture = fopen(filename, "wb");
-    	//fwrite(packet.data, packet.size, 1, picture);
+    	//fwrite(pkt->data, pkt->size, 1, picture);
     	//fclose(picture);
-    	
-    	pkt = (AVPacket *) malloc(sizeof(packet));
-    	av_init_packet(pkt);
-    	pkt->data = packet.data;
-    	pkt->size = packet.size;
-    	
-    	//av_free_packet(&packet);
     }
     
-    return pkt;
+	if (got_packet) {
+		return SUCCESS;
+	} else {
+		return FAILURE;
+	}
 }
 
 void release(State **ps) {

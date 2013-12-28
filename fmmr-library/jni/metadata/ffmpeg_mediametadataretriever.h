@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2013 William Seemann
+ * Copyright 2014 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,8 +44,8 @@ typedef struct State {
 
 int set_data_source(State **ps, const char* path);
 const char* extract_metadata(State **ps, const char* key);
-AVPacket* get_embedded_picture(State **ps);
-AVPacket* get_frame_at_time(State **ps, int64_t timeUs, int option);
+int get_embedded_picture(State **ps, AVPacket *pkt);
+int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);
 void release(State **ps);
 
 #endif /*FFMPEG_MEDIAMETADATARETRIEVER_H_*/
