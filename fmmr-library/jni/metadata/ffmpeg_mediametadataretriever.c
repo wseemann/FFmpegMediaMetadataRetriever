@@ -322,9 +322,12 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
 
         			// Did we get a video frame?
         			if (got_frame) {
-        	  			av_free_packet(pkt);
-        	            av_init_packet(pkt);
-        				convert_image(state->video_st->codec, frame, pkt, &got_packet);
+        				AVPacket packet;
+        	            av_init_packet(&packet);
+        	            packet.data = NULL;
+        	            packet.size = 0;
+        				convert_image(state->video_st->codec, frame, &packet, &got_packet);
+        				*pkt = packet;
         				break;
         			}
         		} else {
@@ -464,9 +467,12 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 				if (*got_frame) {
 					if (desired_frame_number == -1 ||
 							(desired_frame_number != -1 && frame->pkt_pts >= desired_frame_number)) {
-						av_free_packet(pkt);
-						av_init_packet(pkt);
-						convert_image(state->video_st->codec, frame, pkt, got_frame);
+						AVPacket packet;
+					    av_init_packet(&packet);
+        	            packet.data = NULL;
+        	            packet.size = 0;
+						convert_image(state->video_st->codec, frame, &packet, got_frame);
+						*pkt = packet;
 						break;
 					}
 				}
