@@ -133,7 +133,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, j
    av_init_packet(&packet);
    jbyteArray array = NULL;
 
-   if (retriever->extractAlbumArt(&packet) == 0) {
+   if (retriever->getFrameAtTime(timeUs, option, &packet) == 0) {
 	   int size = packet.size;
 	   uint8_t* data = packet.data;
 	   array = env->NewByteArray(size);
