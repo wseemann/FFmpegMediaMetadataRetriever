@@ -513,10 +513,6 @@ int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
         	return FAILURE;
        	}
         
-        if (get_embedded_picture(ps, pkt) == SUCCESS) {
-        	return SUCCESS;
-        }
-        
         if (opt == OPTION_CLOSEST) {
         	desired_frame_number = seek_time;
         	flags = AVSEEK_FLAG_BACKWARD; 
