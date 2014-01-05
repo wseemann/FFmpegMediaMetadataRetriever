@@ -22,7 +22,7 @@ Key Features:
 * URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
 Supported protocols:
-* file, http, mms and mmsh
+* file, http, https, mms and mmsh
 
 Supported formats (audio and video):
 * aac, acc+, flac, mp2, mp3, mp4, ogg, 3gp and more!
