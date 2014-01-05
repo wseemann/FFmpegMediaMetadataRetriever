@@ -33,11 +33,20 @@
         </exec>
     </target>
     
+    <target name="build-ffmpeg-with-ssl">
+        <exec executable="/bin/sh" dir="." failonerror="true" osfamily="unix">
+            <arg value="scripts/build-ffmpeg.sh" />
+            <arg value="--enable-openssl" />
+        </exec>
+        <antcall target="native-build" />
+        <antcall target="copy-files" />
+    </target>
+    
     <target name="copy-files">
     	<copy todir="${libs.dir}" failonerror="true">
        		<fileset dir="libs" />
     	</copy>
-    	<delete dir="libs" failonerror="true" />
+    	<!-- delete dir="libs" failonerror="true" /-->
     </target>
     
     <target name="-pre-build">
