@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2013 William Seemann
+ * Copyright 2014 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
     		Bitmap b = fmmr.getFrameAtTime();;
     		
     		if (b != null) {
-    			Bitmap b2 = fmmr.getFrameAtTime(1000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+    			Bitmap b2 = fmmr.getFrameAtTime(4000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST_SYNC);
     			if (b2 != null) {
     				b = b2;
     			}

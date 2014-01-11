@@ -29,8 +29,9 @@ const int TARGET_IMAGE_CODEC = CODEC_ID_PNG;
 const char *DURATION = "duration";
 const char *AUDIO_CODEC = "audio_codec";
 const char *VIDEO_CODEC = "video_codec";
-const char *ARTIST = "artist";
-const char *TITLE = "title";
+const char *ICY_METADATA = "icy_metadata";
+//const char *ICY_ARTIST = "icy_artist";
+//const char *ICY_TITLE = "icy_title";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -65,7 +66,9 @@ void get_shoutcast_metadata(AVFormatContext *ic) {
     }
 	
     if (value && value[0]) {
-    	int first_pos = first_char_pos(value, '\'');
+    	av_dict_set(&ic->metadata, ICY_METADATA, value, 0);
+    	
+    	/*int first_pos = first_char_pos(value, '\'');
         int last_pos = first_char_pos(value, ';') - 2;
         int pos = last_pos - first_pos;
         
@@ -84,7 +87,7 @@ void get_shoutcast_metadata(AVFormatContext *ic) {
         memcpy(artist, value, first_pos);
         artist[first_pos] = '\0';
         
-		av_dict_set(&ic->metadata, ARTIST, artist, 0);
+		av_dict_set(&ic->metadata, ICY_ARTIST, artist, 0);
         
         pos = strlen(value) - first_char_pos(value, '-') + 2;
          
@@ -92,7 +95,7 @@ void get_shoutcast_metadata(AVFormatContext *ic) {
         memcpy(album, value + first_char_pos(value, '-') + 2, pos);
         album[pos] = '\0';
         
-		av_dict_set(&ic->metadata, TITLE, album, 0);
+		av_dict_set(&ic->metadata, ICY_TITLE, album, 0);*/
     }
 }
 

@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2013 William Seemann
+ * Copyright 2014 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ public class Constants {
 		FFmpegMediaMetadataRetriever.METADATA_KEY_DURATION,
 		FFmpegMediaMetadataRetriever.METADATA_KEY_AUDIO_CODEC,
 		FFmpegMediaMetadataRetriever.METADATA_KEY_VIDEO_CODEC,
+		FFmpegMediaMetadataRetriever.METADATA_KEY_ICY_METADATA
 	};
 	
 }

@@ -25,9 +25,9 @@ Supported protocols:
 * file, http, https, mms and mmsh
 
 Supported formats (audio and video):
-* aac, acc+, flac, mp2, mp3, mp4, ogg, 3gp and more!
+* aac, acc+, avi, flac, mp2, mp3, mp4, ogg, 3gp and more!
 
-Supported metadata:
+Additional support for:
 * ICY Metadata (SHOUTcast metadata)
 
 Demo Application

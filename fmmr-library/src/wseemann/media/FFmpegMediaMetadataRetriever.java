@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2013 William Seemann
+ * Copyright 2014 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -421,4 +421,16 @@ public class FFmpegMediaMetadataRetriever
      * The video rotation angle may be 0, 90, 180, or 270 degrees.
      */
     public static final String METADATA_KEY_VIDEO_ROTATION = "rotation";
+    /**
+     * The metadata key to retrieve the main creator of the work.
+     */
+    public static final String METADATA_KEY_ICY_METADATA = "icy_metadata";
+    /**
+     * The metadata key to retrieve the main creator of the work.
+     */
+    //private static final String METADATA_KEY_ICY_ARTIST = "icy_artist";
+    /**
+     * The metadata key to retrieve the name of the work.
+     */
+   // private static final String METADATA_KEY_ICY_TITLE = "icy_title";
 }
