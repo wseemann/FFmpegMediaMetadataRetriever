@@ -1,7 +1,7 @@
 FFmpegMediaMetadataRetriever
 ============================
 
-View the project page here <a href=http://wseemann.github.io/FFmpegMediaMetadataRetriever/>here</a>.
+View the project page <a href=http://wseemann.github.io/FFmpegMediaMetadataRetriever/>here</a>.
 
 Donate
 ------------
