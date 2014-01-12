@@ -334,6 +334,10 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
         				break;
         			}
         		} else {
+                	av_init_packet(pkt);
+                	pkt->data = state->pFormatCtx->streams[i]->attached_pic.data;
+                	pkt->size = state->pFormatCtx->streams[i]->attached_pic.size;
+        			
         			got_packet = 1;
         			break;
         		}
