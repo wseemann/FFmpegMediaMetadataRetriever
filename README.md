@@ -30,7 +30,7 @@ Supported formats (audio and video):
 Additional support for:
 * ICY Metadata (SHOUTcast metadata)
 
-Using FFmpegMediaMetadataRetriever in your application
+Using FMMR in your application
 ------------
 
 Extract and copy the following JAR file and prebuilt native libraries into your projects "libs" folder:
