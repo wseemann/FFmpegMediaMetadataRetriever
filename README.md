@@ -30,8 +30,16 @@ Supported formats (audio and video):
 Additional support for:
 * ICY Metadata (SHOUTcast metadata)
 
+Using FFmpegMediaMetadataRetriever in your application
+------------
+
+Extract and copy the following JAR file and prebuilt native libraries into your projects "libs" folder:
+
+https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-library/prebuilt-libs.tar.gz.
+
 Demo Application
 ------------
+
 A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-demo/FMMRDemo.apk. Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
 
 Installation
@@ -128,7 +136,7 @@ License
 FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
 and meta data from an input media file.
 
-Copyright 2013 William Seemann
+Copyright 2014 William Seemann
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
