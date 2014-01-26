@@ -147,13 +147,14 @@ public class FFmpegMediaMetadataRetriever
         Cursor cursor = null;
         try { 
         	String[] proj = { MediaStore.MediaColumns.DATA };
-        	cursor = context.getContentResolver().query(uri,  proj, null, null, null);
-        	int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        	if (cursor.moveToFirst()) {
-        		setDataSource(cursor.getString(column_index));
-        	}
-        	
+        	cursor = context.getContentResolver().query(uri, proj, null, null, null);
         	if (cursor != null) {
+        		int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        	
+        		if (cursor.moveToFirst()) {
+        			setDataSource(cursor.getString(column_index));
+        		}
+        	
         		cursor.close();
         	}
         	return;
