@@ -156,8 +156,8 @@ public class FFmpegMediaMetadataRetriever
         		}
         	
         		cursor.close();
+        		return;
         	}
-        	return;
         } catch (SecurityException ex) {
         }
         setDataSource(uri.toString());
