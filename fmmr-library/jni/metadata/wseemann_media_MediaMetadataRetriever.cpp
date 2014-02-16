@@ -39,6 +39,8 @@ struct fields_t {
 static fields_t fields;
 static const char* const kClassPathName = "wseemann/media/FFmpegMediaMetadataRetriever";
 
+static JavaVM *m_vm;
+
 void jniThrowException(JNIEnv* env, const char* className,
     const char* msg) {
     jclass exception = env->FindClass(className);
@@ -76,8 +78,7 @@ static void setRetriever(JNIEnv* env, jobject thiz, int retriever)
     env->SetIntField(thiz, fields.context, retriever);
 }
 
-extern "C" JNIEXPORT void JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *env, jobject thiz, jstring path) {
+static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *env, jobject thiz, jstring path) {
 	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "setDataSource");
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
     if (retriever == 0) {
@@ -119,7 +120,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *env, jobj
     tmp = NULL;
 }
 
-int jniGetFDFromFileDescriptor(JNIEnv * env, jobject fileDescriptor) {
+static int jniGetFDFromFileDescriptor(JNIEnv * env, jobject fileDescriptor) {
     jint fd = -1;
     jclass fdClass = env->FindClass("java/io/FileDescriptor");
     
@@ -133,8 +134,7 @@ int jniGetFDFromFileDescriptor(JNIEnv * env, jobject fileDescriptor) {
     return fd;
 }
 
-extern "C" JNIEXPORT void JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *env, jobject thiz, jobject fileDescriptor, jlong offset, jlong length)
+static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *env, jobject thiz, jobject fileDescriptor, jlong offset, jlong length)
 {
     __android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "setDataSource");
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
@@ -163,8 +163,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *env, jo
     process_media_retriever_call(env, retriever->setDataSource(fd, offset, length), "java/lang/RuntimeException", "setDataSource failed");
 }
 
-extern "C" JNIEXPORT jbyteArray JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
+static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
 {
    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime");
    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
@@ -198,8 +197,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, j
    return array;
 }
 
-extern "C" JNIEXPORT jbyteArray JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture(JNIEnv *env, jobject thiz)
+static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture(JNIEnv *env, jobject thiz)
 {
    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getEmbeddedPicture");
    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
@@ -233,8 +231,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture(JNIEnv *env,
    return array;
 }
 
-extern "C" JNIEXPORT jobject JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata(JNIEnv *env, jobject thiz, jstring jkey)
+static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata(JNIEnv *env, jobject thiz, jstring jkey)
 {
 	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "extractMetadata");
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
@@ -263,8 +260,8 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata(JNIEnv *env, jo
     return env->NewStringUTF(value);
 }
 
-extern "C" JNIEXPORT void JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, jobject thiz)
+
+static void wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, jobject thiz)
 {
     __android_log_write(ANDROID_LOG_INFO, LOG_TAG, "release");
     //Mutex::Autolock lock(sLock);
@@ -273,16 +270,14 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, jobject th
     setRetriever(env, thiz, 0);
 }
 
-extern "C" JNIEXPORT void JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_native_1finalize(JNIEnv *env, jobject thiz)
+static void wseemann_media_FFmpegMediaMetadataRetriever_native_finalize(JNIEnv *env, jobject thiz)
 {
 	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "native_finalize");
     // No lock is needed, since Java_wseemann_media_FFmpegMediaMetadataRetriever_release() is protected
-	Java_wseemann_media_FFmpegMediaMetadataRetriever_release(env, thiz);
+	wseemann_media_FFmpegMediaMetadataRetriever_release(env, thiz);
 }
 
-extern "C" JNIEXPORT void JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_native_1init(JNIEnv *env, jobject thiz)
+static void wseemann_media_FFmpegMediaMetadataRetriever_native_init(JNIEnv *env, jobject thiz)
 {
     __android_log_write(ANDROID_LOG_INFO, LOG_TAG, "native_init");
     jclass clazz = env->FindClass(kClassPathName);
@@ -300,8 +295,7 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_native_1init(JNIEnv *env, jobje
 	avformat_network_init();
 }
 
-extern "C" JNIEXPORT void JNICALL
-Java_wseemann_media_FFmpegMediaMetadataRetriever_native_1setup(JNIEnv *env, jobject thiz)
+static void wseemann_media_FFmpegMediaMetadataRetriever_native_setup(JNIEnv *env, jobject thiz)
 {
     __android_log_write(ANDROID_LOG_INFO, LOG_TAG, "native_setup");
     MediaMetadataRetriever* retriever = new MediaMetadataRetriever();
@@ -310,4 +304,52 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_native_1setup(JNIEnv *env, jobj
         return;
     }
     setRetriever(env, thiz, (int)retriever);
+}
+
+// JNI mapping between Java methods and native methods
+static JNINativeMethod nativeMethods[] = {
+    {"setDataSource", "(Ljava/lang/String;)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSource},
+    {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
+    {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
+    {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},
+    {"getEmbeddedPicture", "()[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture},
+    {"release", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_release},
+    {"native_finalize", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_finalize},
+    {"native_setup", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_setup},
+    {"native_init", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_init},
+};
+
+// This function only registers the native methods, and is called from
+// JNI_OnLoad in wseemann_media_FFmpegMediaMetadataRetriever.cpp
+int register_wseemann_media_FFmpegMediaMetadataRetriever(JNIEnv *env)
+{
+    int numMethods = (sizeof(nativeMethods) / sizeof( (nativeMethods)[0]));
+    jclass clazz = env->FindClass("wseemann/media/FFmpegMediaMetadataRetriever");
+    jint ret = env->RegisterNatives(clazz, nativeMethods, numMethods);
+    env->DeleteLocalRef(clazz);
+    return ret;
+}
+
+jint JNI_OnLoad(JavaVM* vm, void* reserved)
+{
+    m_vm = vm;
+    JNIEnv* env = NULL;
+    jint result = -1;
+    
+    if (vm->GetEnv((void**) &env, JNI_VERSION_1_6) != JNI_OK) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "ERROR: GetEnv failed\n");
+        goto bail;
+    }
+    assert(env != NULL);
+    
+    if (register_wseemann_media_FFmpegMediaMetadataRetriever(env) < 0) {
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "ERROR: FFmpegMediaMetadataRetriever native registration failed\n");
+        goto bail;
+    }
+    
+    /* success -- return valid version number */
+    result = JNI_VERSION_1_6;
+    
+bail:
+    return result;
 }
