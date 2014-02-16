@@ -45,6 +45,11 @@ int MediaMetadataRetriever::setDataSource(const char *srcUrl)
 	return ::set_data_source(&state, srcUrl);
 }
 
+int MediaMetadataRetriever::setDataSource(int fd, int64_t offset, int64_t length)
+{
+    return ::set_data_source_fd(&state, fd, offset, length);
+}
+
 int MediaMetadataRetriever::getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt)
 {
     return ::get_frame_at_time(&state, timeUs, option, pkt);

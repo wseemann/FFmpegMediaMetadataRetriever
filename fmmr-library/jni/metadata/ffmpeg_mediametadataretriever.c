@@ -23,6 +23,8 @@
 #include <libavutil/opt.h>
 #include <ffmpeg_mediametadataretriever.h>
 
+#include <stdio.h>
+
 const int TARGET_IMAGE_FORMAT = PIX_FMT_RGB24;
 const int TARGET_IMAGE_CODEC = CODEC_ID_PNG;
 
@@ -259,6 +261,21 @@ int set_data_source(State **ps, const char* path) {
 	return SUCCESS;
 }
 
+int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
+    char path[256] = "";
+
+    //int myfd = dup(fd);
+    FILE *file = fdopen(fd, "rb");
+    
+    if (file && (fseek(file, offset, SEEK_SET) == 0)) {
+        //int fdd = fileno(file);
+        char str[20];
+        sprintf(str, "pipe:%d", fd);
+        strcat(path, str);
+    }
+    
+    return set_data_source(ps, path);
+}
 
 const char* extract_metadata(State **ps, const char* key) {
 	printf("extract_metadata\n");

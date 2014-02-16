@@ -43,6 +43,7 @@ typedef struct State {
 } State;
 
 int set_data_source(State **ps, const char* path);
+int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length);
 const char* extract_metadata(State **ps, const char* key);
 int get_embedded_picture(State **ps, AVPacket *pkt);
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);

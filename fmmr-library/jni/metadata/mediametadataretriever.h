@@ -36,6 +36,7 @@ public:
     ~MediaMetadataRetriever();
     void disconnect();
     int setDataSource(const char* dataSourceUrl);
+    int setDataSource(int fd, int64_t offset, int64_t length);
     int getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt);
     int extractAlbumArt(AVPacket *pkt);
     const char* extractMetadata(const char* key);

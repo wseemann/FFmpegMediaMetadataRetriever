@@ -119,6 +119,50 @@ Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *env, jobj
     tmp = NULL;
 }
 
+int jniGetFDFromFileDescriptor(JNIEnv * env, jobject fileDescriptor) {
+    jint fd = -1;
+    jclass fdClass = env->FindClass("java/io/FileDescriptor");
+    
+    if (fdClass != NULL) {
+        jfieldID fdClassDescriptorFieldID = env->GetFieldID(fdClass, "descriptor", "I");
+        if (fdClassDescriptorFieldID != NULL && fileDescriptor != NULL) {
+            fd = env->GetIntField(fileDescriptor, fdClassDescriptorFieldID);
+        }
+    }
+    
+    return fd;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *env, jobject thiz, jobject fileDescriptor, jlong offset, jlong length)
+{
+    __android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "setDataSource");
+    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+    if (retriever == 0) {
+        jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
+        return;
+    }
+    if (!fileDescriptor) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return;
+    }
+    int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
+    if (offset < 0 || length < 0 || fd < 0) {
+        if (offset < 0) {
+            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "negative offset (%lld)", offset);
+        }
+        if (length < 0) {
+            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "negative length (%lld)", length);
+        }
+        if (fd < 0) {
+            __android_log_write(ANDROID_LOG_ERROR, LOG_TAG, "invalid file descriptor");
+        }
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return;
+    }
+    process_media_retriever_call(env, retriever->setDataSource(fd, offset, length), "java/lang/RuntimeException", "setDataSource failed");
+}
+
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_wseemann_media_FFmpegMediaMetadataRetriever__1getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
 {
