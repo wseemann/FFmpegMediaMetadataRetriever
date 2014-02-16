@@ -20,14 +20,17 @@
 package wseemann.media;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 
 /**
@@ -123,6 +126,37 @@ public class FFmpegMediaMetadataRetriever
     public native void setDataSource(String path) throws IllegalArgumentException;
     
     /**
+     * Sets the data source (FileDescriptor) to use.  It is the caller's
+     * responsibility to close the file descriptor. It is safe to do so as soon
+     * as this call returns. Call this method before the rest of the methods in
+     * this class. This method may be time-consuming.
+     * 
+     * @param fd the FileDescriptor for the file you want to play
+     * @param offset the offset into the file where the data to be played starts,
+     * in bytes. It must be non-negative
+     * @param length the length in bytes of the data to be played. It must be
+     * non-negative.
+     * @throws IllegalArgumentException if the arguments are invalid
+     */
+    public native void setDataSource(FileDescriptor fd, long offset, long length)
+            throws IllegalArgumentException;
+    
+    /**
+     * Sets the data source (FileDescriptor) to use. It is the caller's
+     * responsibility to close the file descriptor. It is safe to do so as soon
+     * as this call returns. Call this method before the rest of the methods in
+     * this class. This method may be time-consuming.
+     * 
+     * @param fd the FileDescriptor for the file you want to play
+     * @throws IllegalArgumentException if the FileDescriptor is invalid
+     */
+    public void setDataSource(FileDescriptor fd)
+            throws IllegalArgumentException {
+        // intentionally less than LONG_MAX
+        setDataSource(fd, 0, 0x7ffffffffffffffL);
+    }
+    
+    /**
      * Sets the data source as a content Uri. Call this method before 
      * the rest of the methods in this class. This method may be time-consuming.
      * 
@@ -144,21 +178,38 @@ public class FFmpegMediaMetadataRetriever
             return;
         }
 
-        Cursor cursor = null;
-        try { 
-        	String[] proj = { MediaStore.MediaColumns.DATA };
-        	cursor = context.getContentResolver().query(uri, proj, null, null, null);
-        	if (cursor != null) {
-        		int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        	
-        		if (cursor.moveToFirst()) {
-        			setDataSource(cursor.getString(column_index));
-        		}
-        	
-        		cursor.close();
-        		return;
-        	}
+        AssetFileDescriptor fd = null;
+        try {
+            ContentResolver resolver = context.getContentResolver();
+            try {
+                fd = resolver.openAssetFileDescriptor(uri, "r");
+            } catch(FileNotFoundException e) {
+                throw new IllegalArgumentException();
+            }
+            if (fd == null) {
+                throw new IllegalArgumentException();
+            }
+            FileDescriptor descriptor = fd.getFileDescriptor();
+            if (!descriptor.valid()) {
+                throw new IllegalArgumentException();
+            }
+            // Note: using getDeclaredLength so that our behavior is the same
+            // as previous versions when the content provider is returning
+            // a full file.
+            if (fd.getDeclaredLength() < 0) {
+                setDataSource(descriptor);
+            } else {
+                setDataSource(descriptor, fd.getStartOffset(), fd.getDeclaredLength());
+            }
+            return;
         } catch (SecurityException ex) {
+        } finally {
+            try {
+                if (fd != null) {
+                    fd.close();
+                }
+            } catch(IOException ioEx) {
+            }
         }
         setDataSource(uri.toString());
     }
