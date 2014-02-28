@@ -555,7 +555,7 @@ public class FFmpegMediaMetadataRetriever
      * This key retrieves the video rotation angle in degrees, if available.
      * The video rotation angle may be 0, 90, 180, or 270 degrees.
      */
-    public static final String METADATA_KEY_VIDEO_ROTATION = "rotation";
+    public static final String METADATA_KEY_VIDEO_ROTATION = "rotate";
     /**
      * The metadata key to retrieve the main creator of the work.
      */
