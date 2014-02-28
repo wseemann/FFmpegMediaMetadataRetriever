@@ -21,16 +21,14 @@ package wseemann.media;
 
 import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 /**
@@ -166,7 +164,7 @@ public class FFmpegMediaMetadataRetriever
      * @throws SecurityException if the Uri cannot be used due to lack of
      * permission.
      */
-    public void setDataSource(Context context, Uri uri)
+    /*public void setDataSource(Context context, Uri uri)
         throws IllegalArgumentException, SecurityException {
         if (uri == null) {
             throw new IllegalArgumentException();
@@ -210,6 +208,47 @@ public class FFmpegMediaMetadataRetriever
                 }
             } catch(IOException ioEx) {
             }
+        }
+        setDataSource(uri.toString());
+    }*/
+    
+    /**
+     * Sets the data source as a content Uri. Call this method before 
+     * the rest of the methods in this class. This method may be time-consuming.
+     * 
+     * @param context the Context to use when resolving the Uri
+     * @param uri the Content URI of the data you want to play
+     * @throws IllegalArgumentException if the Uri is invalid
+     * @throws SecurityException if the Uri cannot be used due to lack of
+     * permission.
+     */
+    public void setDataSource(Context context, Uri uri)
+        throws IllegalArgumentException, SecurityException {
+        if (uri == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        String scheme = uri.getScheme();
+        if(scheme == null || scheme.equals("file")) {
+            setDataSource(uri.getPath());
+            return;
+        }
+
+        Cursor cursor = null;
+        try { 
+        	String[] proj = { MediaStore.MediaColumns.DATA };
+        	cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        	if (cursor != null) {
+        		int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        	
+        		if (cursor.moveToFirst()) {
+        			setDataSource(cursor.getString(column_index));
+        		}
+        	
+        		cursor.close();
+        	}
+        	return;
+        } catch (SecurityException ex) {
         }
         setDataSource(uri.toString());
     }

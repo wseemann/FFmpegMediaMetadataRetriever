@@ -34,6 +34,7 @@ const char *VIDEO_CODEC = "video_codec";
 const char *ICY_METADATA = "icy_metadata";
 //const char *ICY_ARTIST = "icy_artist";
 //const char *ICY_TITLE = "icy_title";
+const char *ROTATE = "rotate";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -126,6 +127,15 @@ void set_codec(AVFormatContext *ic, int i) {
 		av_dict_set(&ic->metadata, AUDIO_CODEC, codec_name, 0);
     } else if (codec_type && strcmp(codec_type, "video") == 0) {
 	   	av_dict_set(&ic->metadata, VIDEO_CODEC, codec_name, 0);
+	}
+}
+
+void set_rotation(State *s) {
+	char* rotation = extract_metadata(&s, ROTATE);
+	
+	if (!rotation && s->video_st && s->video_st->metadata) {
+		rotation = av_dict_get(s->video_st->metadata, ROTATE, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+	   	av_dict_set(&s->pFormatCtx->metadata, ROTATE, rotation, 0);
 	}
 }
 
@@ -250,6 +260,8 @@ int set_data_source(State **ps, const char* path) {
 		return FAILURE;
 	}*/
 
+    set_rotation(state);
+    
 	/*printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
 	while ((tag = av_dict_get(state->pFormatCtx->metadata, "", tag, AV_DICT_IGNORE_SUFFIX))) {
