@@ -135,7 +135,10 @@ void set_rotation(State *s) {
 	
 	if (!rotation && s->video_st && s->video_st->metadata) {
 		rotation = av_dict_get(s->video_st->metadata, ROTATE, NULL, AV_DICT_IGNORE_SUFFIX)->value;
-	   	av_dict_set(&s->pFormatCtx->metadata, ROTATE, rotation, 0);
+        
+        if (rotation) {
+            av_dict_set(&s->pFormatCtx->metadata, ROTATE, rotation, 0);
+        }
 	}
 }
 
