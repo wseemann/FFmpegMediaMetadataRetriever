@@ -130,12 +130,13 @@ void set_codec(AVFormatContext *ic, int i) {
 	}
 }
 
-void set_rotation(State *s) {	
+void set_rotation(State *s) {
+    
 	if (!extract_metadata(&s, ROTATE) && s->video_st && s->video_st->metadata) {
-		char* rotation = av_dict_get(s->video_st->metadata, ROTATE, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+		AVDictionaryEntry *entry = av_dict_get(s->video_st->metadata, ROTATE, NULL, AV_DICT_IGNORE_SUFFIX);
         
-        if (rotation) {
-            av_dict_set(&s->pFormatCtx->metadata, ROTATE, rotation, 0);
+        if (entry && entry->value) {
+            av_dict_set(&s->pFormatCtx->metadata, ROTATE, entry->value, 0);
         }
 	}
 }
