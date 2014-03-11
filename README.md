@@ -6,11 +6,13 @@ View the project page <a href=http://wseemann.github.io/FFmpegMediaMetadataRetri
 Donate
 ------------
 
-Donations can be made via PayPal:
+Donations can be made via PayPal or Flattr:
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY" alt="PayPal - The safer, easier way to pay online!">
   <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif">
 </a>
+
+<a href="http://flattr.com/thing/2667714/wseemannFFmpegMediaMetadataRetriever-on-GitHub" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
 
 Overview
 --------
