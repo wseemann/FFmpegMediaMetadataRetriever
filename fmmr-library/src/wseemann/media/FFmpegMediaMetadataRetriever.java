@@ -21,6 +21,7 @@ package wseemann.media;
 
 import java.io.File;
 import java.io.FileDescriptor;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

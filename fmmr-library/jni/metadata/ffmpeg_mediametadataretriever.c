@@ -185,7 +185,7 @@ int stream_component_open(State *s, int stream_index) {
 	return SUCCESS;
 }
 
-int set_data_source(State **ps, const char* path) {
+int set_data_source(State **ps, const char* path, const char* headers) {
 	printf("set_data_source\n");
 	int audio_index = -1;
 	int video_index = -1;
@@ -214,6 +214,10 @@ int set_data_source(State **ps, const char* path) {
     AVDictionary *options = NULL;
     av_dict_set(&options, "icy", "1", 0);
     av_dict_set(&options, "user-agent", "FFmpegMediaMetadataRetriever", 0);
+    
+    if (headers) {
+        av_dict_set(&options, "headers", headers, 0);
+    }
     
     if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
 	    printf("Metadata could not be retrieved\n");
@@ -288,7 +292,7 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
         strcat(path, str);
     }
     
-    return set_data_source(ps, path);
+    return set_data_source(ps, path, NULL);
 }
 
 const char* extract_metadata(State **ps, const char* key) {

@@ -114,9 +114,42 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
     	puts(tmp);
     }
 
+    char *headers = NULL;
+    
+    if (keys && values != NULL) {
+        int keysCount = env->GetArrayLength(keys);
+        int valuesCount = env->GetArrayLength(values);
+        
+        if (keysCount != valuesCount) {
+            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "keys and values arrays have different length");
+            jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+            return;
+        }
+        
+        int i = 0;
+        const char *rawString = NULL;
+        char hdrs[2048];
+        
+        for (i = 0; i < keysCount; i++) {
+            jstring key = (jstring) env->GetObjectArrayElement(keys, i);
+            rawString = env->GetStringUTFChars(key, NULL);
+            strcat(hdrs, rawString);
+            strcat(hdrs, ": ");
+            env->ReleaseStringUTFChars(key, rawString);
+            
+            jstring value = (jstring) env->GetObjectArrayElement(values, i);
+            rawString = env->GetStringUTFChars(value, NULL);
+            strcat(hdrs, rawString);
+            strcat(hdrs, "\r\n");
+            env->ReleaseStringUTFChars(value, rawString);
+        }
+        
+        headers = &hdrs[0];
+    }
+
     process_media_retriever_call(
             env,
-            retriever->setDataSource(tmp),
+            retriever->setDataSource(tmp, headers),
             "java/lang/IllegalArgumentException",
             "setDataSource failed");
 
@@ -324,7 +357,7 @@ static JNINativeMethod nativeMethods[] = {
          "_setDataSource",
          "(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V",
          (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders
-     },
+    },
     
     {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
