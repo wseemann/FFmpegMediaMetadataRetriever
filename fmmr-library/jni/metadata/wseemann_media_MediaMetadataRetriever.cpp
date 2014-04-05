@@ -78,8 +78,12 @@ static void setRetriever(JNIEnv* env, jobject thiz, int retriever)
     env->SetIntField(thiz, fields.context, retriever);
 }
 
-static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *env, jobject thiz, jstring path) {
-	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "setDataSource");
+static void
+wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
+        JNIEnv *env, jobject thiz, jstring path,
+        jobjectArray keys, jobjectArray values) {
+	
+	__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "setDataSource");
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
     if (retriever == 0) {
         jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
@@ -118,6 +122,12 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(JNIEnv *en
 
     env->ReleaseStringUTFChars(path, tmp);
     tmp = NULL;
+}
+
+static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(
+        JNIEnv *env, jobject thiz, jstring path) {
+    wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
+            env, thiz, path, NULL, NULL);
 }
 
 static int jniGetFDFromFileDescriptor(JNIEnv * env, jobject fileDescriptor) {
@@ -309,6 +319,13 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_native_setup(JNIEnv *env
 // JNI mapping between Java methods and native methods
 static JNINativeMethod nativeMethods[] = {
     {"setDataSource", "(Ljava/lang/String;)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSource},
+    
+    {
+         "_setDataSource",
+         "(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V",
+         (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders
+     },
+    
     {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
     {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},
