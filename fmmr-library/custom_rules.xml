@@ -34,12 +34,32 @@
     </target>
     
     <target name="build-ffmpeg-with-ssl">
+        <echo>Building native code with openssl...</echo>
+        <antcall target="-check-ndk" />
+        <antcall target="-check-libs" />
+        <delete dir="./obj" failonerror="true" />
+        <delete dir="./libs" failonerror="true" />
+        <delete dir="./jni/openssl-android/obj" failonerror="true" />
+        <delete dir="./jni/openssl-android/libs" failonerror="true" />
+        <gunzip src="openssl-android.tar.gz" />
+        <untar src="openssl-android.tar" dest="jni"/>
+        <exec executable="${ndk.dir}/ndk-build" failonerror="true">
+            <arg value="NDK_PROJECT_PATH=./jni/openssl-android" />
+            <arg value="APP_BUILD_SCRIPT=./jni/openssl-android/Android.mk" />
+            <arg value="NDK_APPLICATION_MK=./jni/Application.mk" />
+            <arg value="APP_PLATFORM=android-8" />
+            <!--arg value="NDK_APP_OUT=./libs"" /-->
+        </exec>
+        <copy todir="./obj" failonerror="true">
+            <fileset dir="./jni/openssl-android/obj" />
+        </copy>
+        <copy todir="./libs" failonerror="true">
+            <fileset dir="./jni/openssl-android/libs" />
+        </copy>
         <exec executable="/bin/sh" dir="." failonerror="true" osfamily="unix">
             <arg value="scripts/build-ffmpeg.sh" />
             <arg value="--enable-openssl" />
         </exec>
-        <antcall target="native-build" />
-        <antcall target="copy-files" />
     </target>
     
     <target name="copy-files">

@@ -88,6 +88,10 @@ library, for example:
 
     libs.dir=/home/wseemann/Android/MyAndroidDemo/libs
 
+**Note:** If you wish to enable https support (for use with API 8+ only) navigate to FFmpegMediaMetadataRetriever/fmmr-library/ and execute
+
+    ant build-ffmpeg-with-ssl
+
 To compile the library, navigate to FFmpegMediaMetadataRetriever/fmmr-library/ and
 execute
 
