@@ -252,9 +252,9 @@ int set_data_source(State **ps, const char* path, const char* headers) {
 		set_codec(state->pFormatCtx, i);
 	}
 
-	/*if (audio_index >= 0) {
+	if (audio_index >= 0) {
 		stream_component_open(state, audio_index);
-	}*/
+	}
 
 	if (video_index >= 0) {
 		stream_component_open(state, video_index);
@@ -308,6 +308,10 @@ const char* extract_metadata(State **ps, const char* key) {
 	if (key) {
 		if (av_dict_get(state->pFormatCtx->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
 			value = av_dict_get(state->pFormatCtx->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+		} else if (state->audio_st && av_dict_get(state->audio_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
+			value = av_dict_get(state->audio_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+		} else if (state->video_st && av_dict_get(state->video_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
+			value = av_dict_get(state->video_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
 		}
 	}
 
