@@ -424,13 +424,10 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 		goto fail;
 	}
 
-	AVFrame *pFrameRGB = avcodec_alloc_frame();
+	//AVFrame *pFrameRGB = avcodec_alloc_frame();
+	AVFrame pFrameRGB;
 	
-	if (!pFrameRGB) {
-		goto fail;
-	}
-
-    avpicture_alloc((AVPicture *) pFrameRGB,
+    avpicture_alloc((AVPicture *) &pFrameRGB,
     		TARGET_IMAGE_FORMAT,
     		codecCtx->width,
     		codecCtx->height);
@@ -453,18 +450,20 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
     		pFrame->linesize,
     		0,
     		pFrame->height,
-    		pFrameRGB->data,
-    		pFrameRGB->linesize);
-	
-	int ret = avcodec_encode_video2(codecCtx, avpkt, pFrameRGB, got_packet_ptr);
+    		pFrameRGB.data,
+    		pFrameRGB.linesize);
+
+	int ret = avcodec_encode_video2(codecCtx, avpkt, &pFrameRGB, got_packet_ptr);
 	
 	if (ret < 0) {
 		*got_packet_ptr = 0;
 	}
 	
 	// TODO is this right?
+    //avcodec_free_frame(pFrameRGB);
 	fail:
-	av_free(pFrameRGB);
+	avpicture_free((AVPicture *)&pFrameRGB);
+	//av_free(pFrameRGB);
 	
 	if (codecCtx) {
 		avcodec_close(codecCtx);
@@ -483,7 +482,13 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number) {
 	AVFrame *frame = NULL;
 	
+        // Allocate video frame
+	frame = avcodec_alloc_frame();
+
 	*got_frame = 0;
+	if (!frame) {
+	    return;
+	}
 	
 	// Read frames and return the first one found
 	while (av_read_frame(state->pFormatCtx, pkt) >= 0) {
@@ -496,12 +501,7 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 			if (!is_supported_format(codec_id)) {
 	            *got_frame = 0;
 	            
-	        	// Allocate video frame
-	            frame = avcodec_alloc_frame();
 
-	            if (!frame) {
-	            	break;
-	            }
 	            
 				// Decode video frame
 				if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, pkt) <= 0) {
@@ -513,12 +513,19 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 				if (*got_frame) {
 					if (desired_frame_number == -1 ||
 							(desired_frame_number != -1 && frame->pkt_pts >= desired_frame_number)) {
+						/*
 						AVPacket packet;
 					    av_init_packet(&packet);
         	            packet.data = NULL;
         	            packet.size = 0;
 						convert_image(state->video_st->codec, frame, &packet, got_frame);
 						*pkt = packet;
+						*/
+						// think this means we manage the memory?
+					    av_init_packet(pkt);
+						pkt->data = NULL;
+      	            	pkt->size = 0;
+						convert_image(state->video_st->codec, frame, pkt, got_frame);
 						break;
 					}
 				}
@@ -526,11 +533,13 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 				*got_frame = 1;
 	        	break;
 			}
+
 		}
 	}
-	
 	// Free the frame
-	av_free(frame);
+	avcodec_free_frame(&frame);
+    av_free(frame);
+	
 }
 
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {

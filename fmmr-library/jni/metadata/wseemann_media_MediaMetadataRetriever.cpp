@@ -208,7 +208,7 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *
 
 static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
 {
-   //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime");
+   __android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime");
    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
    if (retriever == 0) {
        jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
@@ -216,7 +216,7 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
    }
 
    AVPacket packet;
-   av_init_packet(&packet);
+   //av_init_packet(&packet);
    jbyteArray array = NULL;
 
    if (retriever->getFrameAtTime(timeUs, option, &packet) == 0) {
@@ -232,10 +232,11 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
         	   memcpy(bytes, data, size);
                env->ReleaseByteArrayElements(array, bytes, 0);
            }
+           //env->DeleteLocalRef(array);
        }
+       av_free_packet(&packet);
    }
 
-   av_free_packet(&packet);
    
    return array;
 }
