@@ -396,6 +396,8 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
 void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr) {
 	AVCodecContext *codecCtx;
 	AVCodec *codec;
+	AVPicture dst_picture;
+	AVFrame *frame;
 	
 	*got_packet_ptr = 0;
 
@@ -424,16 +426,19 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 		goto fail;
 	}
 
-	AVFrame *pFrameRGB = avcodec_alloc_frame();
+	frame = avcodec_alloc_frame();
 	
-	if (!pFrameRGB) {
+	if (!frame) {
 		goto fail;
 	}
-
-    avpicture_alloc((AVPicture *) pFrameRGB,
+	
+    avpicture_alloc(&dst_picture,
     		TARGET_IMAGE_FORMAT,
     		codecCtx->width,
     		codecCtx->height);
+    
+    /* copy data and linesize picture pointers to frame */
+    *((AVPicture *)frame) = dst_picture;
     
 	struct SwsContext *scalerCtx = sws_getContext(pCodecCtx->width, 
 			pCodecCtx->height, 
@@ -453,18 +458,20 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
     		pFrame->linesize,
     		0,
     		pFrame->height,
-    		pFrameRGB->data,
-    		pFrameRGB->linesize);
+    		frame->data,
+    		frame->linesize);
 	
-	int ret = avcodec_encode_video2(codecCtx, avpkt, pFrameRGB, got_packet_ptr);
+	int ret = avcodec_encode_video2(codecCtx, avpkt, frame, got_packet_ptr);
 	
 	if (ret < 0) {
 		*got_packet_ptr = 0;
 	}
 	
+    av_free(dst_picture.data[0]);
+	
 	// TODO is this right?
 	fail:
-	av_free(pFrameRGB);
+    av_free(frame);
 	
 	if (codecCtx) {
 		avcodec_close(codecCtx);
