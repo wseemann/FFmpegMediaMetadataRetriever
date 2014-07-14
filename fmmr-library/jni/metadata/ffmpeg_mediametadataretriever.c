@@ -282,13 +282,15 @@ int set_data_source(State **ps, const char* path, const char* headers) {
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     char path[256] = "";
 
-    //int myfd = dup(fd);
-    FILE *file = fdopen(fd, "rb");
+    int myfd = dup(fd);
+    FILE *file = fdopen(myfd, "rb");
     
     if (file && (fseek(file, offset, SEEK_SET) == 0)) {
         //int fdd = fileno(file);
+        int filenum = fileno(file);
+
         char str[20];
-        sprintf(str, "pipe:%d", fd);
+        sprintf(str, "pipe:%d", filenum);
         strcat(path, str);
     }
     
