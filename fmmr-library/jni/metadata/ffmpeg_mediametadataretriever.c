@@ -185,27 +185,13 @@ int stream_component_open(State *s, int stream_index) {
 	return SUCCESS;
 }
 
-int set_data_source(State **ps, const char* path, const char* headers, int64_t offset) {
+int set_data_source_l(State **ps, const char* path) {
 	printf("set_data_source\n");
 	int audio_index = -1;
 	int video_index = -1;
 	int i;
 
 	State *state = *ps;
-	
-	if (state && state->pFormatCtx) {
-		avformat_close_input(&state->pFormatCtx);
-	}
-
-	if (!state) {
-		state = av_mallocz(sizeof(State));
-	}
-
-	state->pFormatCtx = NULL;
-	state->audio_stream = -1;
-	state->video_stream = -1;
-	state->audio_st = NULL;
-	state->video_st = NULL;
 	
 	char duration[30] = "0";
 
@@ -215,13 +201,13 @@ int set_data_source(State **ps, const char* path, const char* headers, int64_t o
     av_dict_set(&options, "icy", "1", 0);
     av_dict_set(&options, "user-agent", "FFmpegMediaMetadataRetriever", 0);
     
-    if (headers) {
-        av_dict_set(&options, "headers", headers, 0);
+    if (state->headers) {
+        av_dict_set(&options, "headers", state->headers, 0);
     }
     
-    if (offset > 0) {
+    if (state->offset > 0) {
         state->pFormatCtx = avformat_alloc_context();
-        state->pFormatCtx->skip_initial_bytes = offset;
+        state->pFormatCtx->skip_initial_bytes = state->offset;
     }
     
     if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
@@ -284,22 +270,64 @@ int set_data_source(State **ps, const char* path, const char* headers, int64_t o
 	return SUCCESS;
 }
 
+void init(State **ps) {
+	State *state = *ps;
+
+	if (state && state->pFormatCtx) {
+		avformat_close_input(&state->pFormatCtx);
+	}
+
+	if (state && state->fd != -1) {
+		close(state->fd);
+	}
+	
+	if (!state) {
+		state = av_mallocz(sizeof(State));
+	}
+
+	state->pFormatCtx = NULL;
+	state->audio_stream = -1;
+	state->video_stream = -1;
+	state->audio_st = NULL;
+	state->video_st = NULL;
+	state->fd = -1;
+	state->offset = 0;
+	state->headers = NULL;
+
+	*ps = state;
+}
+
+int set_data_source_uri(State **ps, const char* path, const char* headers) {
+	State *state = *ps;
+	
+	init(&state);
+	
+	state->headers = headers;
+	
+	*ps = state;
+	
+	return set_data_source_l(ps, path);
+}
+
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     char path[256] = "";
 
+	State *state = *ps;
+	
+	init(&state);
+    	
     int myfd = dup(fd);
-    //FILE *file = fdopen(myfd, "rb");
-    
-    //if (file && (fseek(file, offset, SEEK_SET) == 0)) {
-        //int fdd = fileno(file);
-    //    int filenum = fileno(file);
 
-        char str[20];
-        sprintf(str, "pipe:%d", myfd);
-        strcat(path, str);
-    //}
+    char str[20];
+    sprintf(str, "pipe:%d", myfd);
+    strcat(path, str);
     
-    return set_data_source(ps, path, NULL, offset);
+    state->fd = myfd;
+    state->offset = offset;
+    
+	*ps = state;
+    
+    return set_data_source_l(ps, path);
 }
 
 const char* extract_metadata(State **ps, const char* key) {
@@ -625,6 +653,10 @@ void release(State **ps) {
     if (state) {
     	if (state->pFormatCtx) {
     		avformat_close_input(&state->pFormatCtx);
+    	}
+    	
+    	if (state->fd != -1) {
+    		close(state->fd);
     	}
     	
     	av_freep(&state);
