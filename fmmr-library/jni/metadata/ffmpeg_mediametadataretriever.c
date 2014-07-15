@@ -185,7 +185,7 @@ int stream_component_open(State *s, int stream_index) {
 	return SUCCESS;
 }
 
-int set_data_source(State **ps, const char* path, const char* headers) {
+int set_data_source(State **ps, const char* path, const char* headers, int64_t offset) {
 	printf("set_data_source\n");
 	int audio_index = -1;
 	int video_index = -1;
@@ -217,6 +217,11 @@ int set_data_source(State **ps, const char* path, const char* headers) {
     
     if (headers) {
         av_dict_set(&options, "headers", headers, 0);
+    }
+    
+    if (offset > 0) {
+        state->pFormatCtx = avformat_alloc_context();
+        state->pFormatCtx->skip_initial_bytes = offset;
     }
     
     if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
@@ -283,18 +288,18 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     char path[256] = "";
 
     int myfd = dup(fd);
-    FILE *file = fdopen(myfd, "rb");
+    //FILE *file = fdopen(myfd, "rb");
     
-    if (file && (fseek(file, offset, SEEK_SET) == 0)) {
+    //if (file && (fseek(file, offset, SEEK_SET) == 0)) {
         //int fdd = fileno(file);
-        int filenum = fileno(file);
+    //    int filenum = fileno(file);
 
         char str[20];
-        sprintf(str, "pipe:%d", filenum);
+        sprintf(str, "pipe:%d", myfd);
         strcat(path, str);
-    }
+    //}
     
-    return set_data_source(ps, path, NULL);
+    return set_data_source(ps, path, NULL, offset);
 }
 
 const char* extract_metadata(State **ps, const char* key) {

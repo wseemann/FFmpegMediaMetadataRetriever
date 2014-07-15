@@ -42,7 +42,7 @@ typedef struct State {
 	AVStream        *video_st;
 } State;
 
-int set_data_source(State **ps, const char* path, const char* headers);
+int set_data_source(State **ps, const char* path, const char* headers, int64_t offset);
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length);
 const char* extract_metadata(State **ps, const char* key);
 int get_embedded_picture(State **ps, AVPacket *pkt);

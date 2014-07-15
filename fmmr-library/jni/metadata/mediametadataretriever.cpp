@@ -42,7 +42,7 @@ MediaMetadataRetriever::~MediaMetadataRetriever()
 
 int MediaMetadataRetriever::setDataSource(const char *srcUrl, const char *headers)
 {
-	return ::set_data_source(&state, srcUrl, headers);
+	return ::set_data_source(&state, srcUrl, headers, 0);
 }
 
 int MediaMetadataRetriever::setDataSource(int fd, int64_t offset, int64_t length)
