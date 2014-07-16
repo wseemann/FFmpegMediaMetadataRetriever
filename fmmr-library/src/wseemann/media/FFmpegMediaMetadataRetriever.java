@@ -8,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,18 +19,20 @@
 
 package wseemann.media;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * FFmpegMediaMetadataRetriever class provides a unified interface for retrieving
@@ -191,7 +193,7 @@ public class FFmpegMediaMetadataRetriever
      * @throws SecurityException if the Uri cannot be used due to lack of
      * permission.
      */
-    /*public void setDataSource(Context context, Uri uri)
+    public void setDataSource(Context context, Uri uri)
         throws IllegalArgumentException, SecurityException {
         if (uri == null) {
             throw new IllegalArgumentException();
@@ -237,47 +239,6 @@ public class FFmpegMediaMetadataRetriever
             }
         }
         setDataSource(uri.toString());
-    }*/
-    
-    /**
-     * Sets the data source as a content Uri. Call this method before 
-     * the rest of the methods in this class. This method may be time-consuming.
-     * 
-     * @param context the Context to use when resolving the Uri
-     * @param uri the Content URI of the data you want to play
-     * @throws IllegalArgumentException if the Uri is invalid
-     * @throws SecurityException if the Uri cannot be used due to lack of
-     * permission.
-     */
-    public void setDataSource(Context context, Uri uri)
-        throws IllegalArgumentException, SecurityException {
-        if (uri == null) {
-            throw new IllegalArgumentException();
-        }
-        
-        String scheme = uri.getScheme();
-        if(scheme == null || scheme.equals("file")) {
-            setDataSource(uri.getPath());
-            return;
-        }
-
-        Cursor cursor = null;
-        try { 
-        	String[] proj = { MediaStore.MediaColumns.DATA };
-        	cursor = context.getContentResolver().query(uri, proj, null, null, null);
-        	if (cursor != null) {
-        		int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        	
-        		if (cursor.moveToFirst()) {
-        			setDataSource(cursor.getString(column_index));
-        		}
-        	
-        		cursor.close();
-        	}
-        	return;
-        } catch (SecurityException ex) {
-        }
-        setDataSource(uri.toString());
     }
     
     /**
@@ -287,7 +248,7 @@ public class FFmpegMediaMetadataRetriever
      * The keyCode currently supported is listed below as METADATA_XXX
      * constants. With any other value, it returns a null pointer.
      * 
-     * @param key One of the constants listed below at the end of the class.
+     * @param keyCode One of the constants listed below at the end of the class.
      * @return The meta data value associate with the given keyCode on success; 
      * null on failure.
      */
@@ -319,12 +280,12 @@ public class FFmpegMediaMetadataRetriever
      * {@link #OPTION_CLOSEST} often has larger performance overhead compared
      * to the other options if there is no sync frame located at timeUs.
      *
-     * @return A Bitmap containing a representative video frame, which
+     * @return A Bitmap containing a representative video frame, which 
      *         can be null, if such a frame cannot be retrieved.
      */
     public Bitmap getFrameAtTime(long timeUs, int option) {
         if (option < OPTION_PREVIOUS_SYNC ||
-                option > OPTION_CLOSEST) {
+            option > OPTION_CLOSEST) {
             throw new IllegalArgumentException("Unsupported option: " + option);
         }
 
