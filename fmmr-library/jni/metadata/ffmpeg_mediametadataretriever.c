@@ -35,6 +35,7 @@ const char *ICY_METADATA = "icy_metadata";
 //const char *ICY_ARTIST = "icy_artist";
 //const char *ICY_TITLE = "icy_title";
 const char *ROTATE = "rotate";
+const char *FRAMERATE = "framerate";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -138,6 +139,24 @@ void set_rotation(State *s) {
         if (entry && entry->value) {
             av_dict_set(&s->pFormatCtx->metadata, ROTATE, entry->value, 0);
         }
+	}
+}
+
+void set_framerate(State *s) {
+	char value[30] = "0";
+	
+	if (s->video_st && s->video_st->avg_frame_rate.den && s->video_st->avg_frame_rate.num) {
+		double d = av_q2d(s->video_st->avg_frame_rate);
+		uint64_t v = lrintf(d * 100);
+		if (v % 100) {
+			sprintf(value, "%3.2f fps", d);
+		} else if (v % (100 * 1000)) {
+			sprintf(value,  "%1.0f fps", d);
+		} else {
+			sprintf(value, "%1.0fk fps", d / 1000);
+		}
+		
+	    av_dict_set(&s->pFormatCtx->metadata, FRAMERATE, value, 0);
 	}
 }
 
@@ -258,6 +277,7 @@ int set_data_source_l(State **ps, const char* path) {
 	}*/
 
     set_rotation(state);
+    set_framerate(state);
     
 	/*printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
