@@ -49,7 +49,8 @@ public class Constants {
 		FFmpegMediaMetadataRetriever.METADATA_KEY_AUDIO_CODEC,
 		FFmpegMediaMetadataRetriever.METADATA_KEY_VIDEO_CODEC,
 		FFmpegMediaMetadataRetriever.METADATA_KEY_ICY_METADATA,
-		FFmpegMediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION
+		FFmpegMediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION,
+		FFmpegMediaMetadataRetriever.METADATA_KEY_FRAMERATE
 	};
 	
 }
