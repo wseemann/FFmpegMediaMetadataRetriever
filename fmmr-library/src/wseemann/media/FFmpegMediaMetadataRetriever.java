@@ -555,5 +555,9 @@ public class FFmpegMediaMetadataRetriever
     /**
      * The metadata key to retrieve the name of the work.
      */
-   // private static final String METADATA_KEY_ICY_TITLE = "icy_title";
+    //private static final String METADATA_KEY_ICY_TITLE = "icy_title";
+    /**
+     * This metadata key retrieves the average framerate (in frames/sec), if available.
+     */
+    public static final String METADATA_KEY_FRAMERATE = "framerate";
 }

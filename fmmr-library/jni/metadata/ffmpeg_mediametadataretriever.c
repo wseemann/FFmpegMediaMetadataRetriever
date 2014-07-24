@@ -149,11 +149,11 @@ void set_framerate(State *s) {
 		double d = av_q2d(s->video_st->avg_frame_rate);
 		uint64_t v = lrintf(d * 100);
 		if (v % 100) {
-			sprintf(value, "%3.2f fps", d);
+			sprintf(value, "%3.2f", d);
 		} else if (v % (100 * 1000)) {
-			sprintf(value,  "%1.0f fps", d);
+			sprintf(value,  "%1.0f", d);
 		} else {
-			sprintf(value, "%1.0fk fps", d / 1000);
+			sprintf(value, "%1.0fk", d / 1000);
 		}
 		
 	    av_dict_set(&s->pFormatCtx->metadata, FRAMERATE, value, 0);
