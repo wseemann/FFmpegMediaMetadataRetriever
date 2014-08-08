@@ -16,7 +16,7 @@ if [ "$NDK" = "" ] || [ ! -d $NDK ]; then
 	exit 1
 fi
 
-if [ "$#" -eq 1 ] && [ "$1" == "--enable-openssl" ]; then
+if [ "$#" -eq 1 ] && [ "$1" = "--enable-openssl" ]; then
     export SSL="$WORKING_DIR/jni/openssl-android"
     export SSL_LD="$WORKING_DIR"
     rm -rf $WORKING_DIR/jni/ffmpeg/ffmpeg/*
