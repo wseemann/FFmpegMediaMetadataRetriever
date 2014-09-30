@@ -373,6 +373,30 @@ const char* extract_metadata(State **ps, const char* key) {
 	return value;
 }
 
+const char* extract_metadata_at_chapter(State **ps, const char* key, int chapter) {
+	printf("extract_metadata_at_chapter\n");
+    char* value = NULL;
+	
+	State *state = *ps;
+    
+	chapter--;
+	
+	if (!state || !state->pFormatCtx || state->pFormatCtx->nb_chapters <= 0) {
+		return value;
+	}
+
+	if (chapter < 0 || chapter >= state->pFormatCtx->nb_chapters) {
+		return value;
+	}
+	
+	AVChapter *ch = state->pFormatCtx->chapters[chapter];
+	if (av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
+		value = av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+	}
+
+	return value;
+}
+
 int get_embedded_picture(State **ps, AVPacket *pkt) {
 	printf("get_embedded_picture\n");
 	int i = 0;
