@@ -36,6 +36,8 @@ const char *ICY_METADATA = "icy_metadata";
 //const char *ICY_TITLE = "icy_title";
 const char *ROTATE = "rotate";
 const char *FRAMERATE = "framerate";
+const char *CHAPTER_START_TIME = "chapter_start_time";
+const char *CHAPTER_END_TIME = "chapter_end_time";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -373,8 +375,8 @@ const char* extract_metadata(State **ps, const char* key) {
 	return value;
 }
 
-const char* extract_metadata_at_chapter(State **ps, const char* key, int chapter) {
-	printf("extract_metadata_at_chapter\n");
+const char* extract_metadata_from_chapter(State **ps, const char* key, int chapter) {
+	printf("extract_metadata_from_chapter\n");
     char* value = NULL;
 	
 	State *state = *ps;
@@ -390,7 +392,20 @@ const char* extract_metadata_at_chapter(State **ps, const char* key, int chapter
 	}
 	
 	AVChapter *ch = state->pFormatCtx->chapters[chapter];
-	if (av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
+	
+	if (strcmp(key, CHAPTER_START_TIME) == 0) {
+		char time[30];
+		int start_time = ch->start * av_q2d(ch->time_base) * 1000;
+		sprintf(time, "%d", start_time);
+		value = malloc(strlen(time));
+		sprintf(value, "%s", time);
+	} else if (strcmp(key, CHAPTER_END_TIME) == 0) {
+		char time[30];
+		int end_time = ch->end * av_q2d(ch->time_base) * 1000;
+		sprintf(time, "%d", end_time);
+		value = malloc(strlen(time));
+		sprintf(value, "%s", time);
+	} else if (av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
 		value = av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
 	}
 

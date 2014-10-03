@@ -40,6 +40,7 @@ public:
     int getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt);
     int extractAlbumArt(AVPacket *pkt);
     const char* extractMetadata(const char* key);
+    const char* extractMetadataFromChapter(const char* key, int chapter);
 };
 
 #endif // MEDIAMETADATARETRIEVER_H

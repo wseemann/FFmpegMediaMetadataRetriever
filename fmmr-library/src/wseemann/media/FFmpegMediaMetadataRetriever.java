@@ -255,6 +255,21 @@ public class FFmpegMediaMetadataRetriever
     public native String extractMetadata(String key);
 
     /**
+     * Call this method after setDataSource(). This method retrieves the 
+     * meta data value associated with the keyCode from a specific chapter,
+     * if available.
+     * 
+     * The keyCode currently supported is listed below as METADATA_XXX
+     * constants. With any other value, it returns a null pointer.
+     * 
+     * @param keyCode One of the constants listed below at the end of the class.
+     * @param chapter The chapter from where the metadata will be retrieved.
+     * @return The meta data value associate with the given keyCode on success; 
+     * null on failure.
+     */
+    public native String extractMetadataFromChapter(String key, int chapter);
+    
+    /**
      * Call this method after setDataSource(). This method finds a
      * representative frame close to the given time position by considering
      * the given option if possible, and returns it as a bitmap. This is
@@ -560,4 +575,12 @@ public class FFmpegMediaMetadataRetriever
      * This metadata key retrieves the average framerate (in frames/sec), if available.
      */
     public static final String METADATA_KEY_FRAMERATE = "framerate";
+    /**
+     * The metadata key to retrieve the chapter start time in milliseconds.
+     */
+    public static final String METADATA_KEY_CHAPTER_START_TIME = "chapter_start_time";
+    /**
+     * The metadata key to retrieve the chapter end time in milliseconds.
+     */
+    public static final String METADATA_KEY_CHAPTER_END_TIME = "chapter_end_time";
 }

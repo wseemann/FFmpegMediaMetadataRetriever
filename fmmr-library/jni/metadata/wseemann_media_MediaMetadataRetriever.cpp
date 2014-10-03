@@ -303,6 +303,38 @@ static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata(JNIEn
     return env->NewStringUTF(value);
 }
 
+static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromChapter(JNIEnv *env, jobject thiz, jstring jkey, jint chapter)
+{
+	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "extractMetadataFromChapter");
+    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+    if (retriever == 0) {
+        jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
+        return NULL;
+    }
+
+    if (!jkey) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", "Null pointer");
+        return NULL;
+    }
+
+    const char *key = env->GetStringUTFChars(jkey, NULL);
+    if (!key) {  // OutOfMemoryError exception already thrown
+        return NULL;
+    }
+
+    if (chapter <= 0) {
+    	return NULL;
+    }
+    
+    const char* value = retriever->extractMetadataFromChapter(key, chapter);
+    if (!value) {
+    	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "extractMetadata: Metadata is not found");
+        return NULL;
+    }
+    //__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "extractMetadata: value (%s) for keyCode(%s)", value, key);
+    env->ReleaseStringUTFChars(jkey, key);
+    return env->NewStringUTF(value);
+}
 
 static void wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, jobject thiz)
 {
@@ -362,6 +394,7 @@ static JNINativeMethod nativeMethods[] = {
     {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
     {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},
+    {"extractMetadataFromChapter", "(Ljava/lang/String;I)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromChapter},
     {"getEmbeddedPicture", "()[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture},
     {"release", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_release},
     {"native_finalize", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_finalize},

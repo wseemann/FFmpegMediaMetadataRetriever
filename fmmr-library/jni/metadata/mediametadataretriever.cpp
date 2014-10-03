@@ -60,6 +60,11 @@ const char* MediaMetadataRetriever::extractMetadata(const char *key)
     return ::extract_metadata(&state, key);
 }
 
+const char* MediaMetadataRetriever::extractMetadataFromChapter(const char *key, int chapter)
+{
+    return ::extract_metadata_from_chapter(&state, key, chapter);
+}
+
 int MediaMetadataRetriever::extractAlbumArt(AVPacket *pkt)
 {
     return ::get_embedded_picture(&state, pkt);
