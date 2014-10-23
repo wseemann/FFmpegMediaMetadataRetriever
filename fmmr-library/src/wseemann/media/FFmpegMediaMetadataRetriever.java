@@ -19,16 +19,13 @@
 
 package wseemann.media;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.util.Log;
 
-import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,7 +46,7 @@ public class FFmpegMediaMetadataRetriever
 	 */
 	public static Bitmap.Config IN_PREFERRED_CONFIG;
 	
-	@SuppressLint("SdCardPath")
+	/*@SuppressLint("SdCardPath")
 	private static final String LIBRARY_PATH = "/data/data/";
 	
 	private static final String [] JNI_LIBRARIES = {
@@ -60,7 +57,7 @@ public class FFmpegMediaMetadataRetriever
 		"libffmpeg_mediametadataretriever_jni.so"		
 	};
 	
-    static {
+	static {
     	StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
     	
     	StringBuffer path = null;
@@ -104,6 +101,22 @@ public class FFmpegMediaMetadataRetriever
     	
     	for (int i = 0; i < JNI_LIBRARIES.length; i++) {
     		System.load(path.toString() + JNI_LIBRARIES[i]);
+    	}
+    	
+        native_init();
+    }*/
+	
+	private static final String [] JNI_LIBRARIES = {
+		"avutil",
+		"swscale",
+		"avcodec",
+		"avformat",
+		"ffmpeg_mediametadataretriever_jni"		
+	};
+	
+	static {
+    	for (int i = 0; i < JNI_LIBRARIES.length; i++) {
+    		System.loadLibrary(JNI_LIBRARIES[i]);
     	}
     	
         native_init();
