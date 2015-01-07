@@ -26,8 +26,7 @@
 #include "jni.h"
 
 extern "C" {
-	#include "libavcodec/avcodec.h"
-	#include "libavformat/avformat.h"
+	#include "ffmpeg_mediametadataretriever.h"
 }
 
 using namespace std;
@@ -336,6 +335,51 @@ static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromCh
     return env->NewStringUTF(value);
 }
 
+
+static jobject
+wseemann_media_FFmpegMediaMetadataRetriever_getMetadata(JNIEnv *env, jobject thiz, jboolean update_only,
+                                      jboolean apply_filter, jobject reply)
+{
+    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getMetadata");
+    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+    if (retriever == NULL ) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return JNI_FALSE;
+    }
+    
+    // On return metadata is positioned at the beginning of the
+    // metadata. Note however that the parcel actually starts with the
+    // return code so you should not rewind the parcel using
+    // setDataPosition(0).
+    AVDictionary *metadata = NULL;
+
+    if (retriever->getMetadata(update_only, apply_filter, &metadata) == 0) {
+        jclass hashMap_Clazz = env->FindClass("java/util/HashMap");
+        jmethodID gHashMap_initMethodID = env->GetMethodID(hashMap_Clazz, "<init>", "()V");
+        jobject map = env->NewObject(hashMap_Clazz, gHashMap_initMethodID);
+        jmethodID gHashMap_putMethodID = env->GetMethodID(hashMap_Clazz, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+        
+        int i = 0;
+        
+        for (i = 0; i < metadata->count; i++) {
+            jstring jKey = env->NewStringUTF(metadata->elems[i].key);
+            jstring jValue = env->NewStringUTF(metadata->elems[i].value);
+            (jobject) env->CallObjectMethod(map, gHashMap_putMethodID, jKey, jValue);
+            env->DeleteLocalRef(jKey);
+            env->DeleteLocalRef(jValue);
+        }
+        
+        if (metadata) {
+            av_dict_free(&metadata);
+            
+        }
+        
+        return map;
+    } else {
+        return reply;
+    }
+}
+
 static void wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, jobject thiz)
 {
     __android_log_write(ANDROID_LOG_INFO, LOG_TAG, "release");
@@ -395,6 +439,7 @@ static JNINativeMethod nativeMethods[] = {
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
     {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},
     {"extractMetadataFromChapter", "(Ljava/lang/String;I)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromChapter},
+    {"native_getMetadata", "(ZZLjava/util/HashMap;)Ljava/util/HashMap;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getMetadata},
     {"getEmbeddedPicture", "()[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture},
     {"release", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_release},
     {"native_finalize", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_finalize},

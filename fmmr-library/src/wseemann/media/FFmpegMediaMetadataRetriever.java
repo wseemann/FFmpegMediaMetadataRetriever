@@ -29,6 +29,7 @@ import android.net.Uri;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -281,6 +282,36 @@ public class FFmpegMediaMetadataRetriever
      * null on failure.
      */
     public native String extractMetadataFromChapter(String key, int chapter);
+    
+    public Metadata getMetadata(final boolean update_only,
+    		final boolean apply_filter) {
+    	Metadata data = new Metadata();
+    	HashMap<String, String> metadata = null;
+        if ((metadata = native_getMetadata(update_only, apply_filter, metadata)) == null) {
+            return null;
+        }
+    	if (!data.parse(metadata)) {
+    		return null;
+    	}
+    	return data;
+    }
+    
+    /*
+     * @param update_only If true fetch only the set of metadata that have
+     *                    changed since the last invocation of getMetadata.
+     *                    The set is built using the unfiltered
+     *                    notifications the native player sent to the
+     *                    MediaPlayerService during that period of
+     *                    time. If false, all the metadatas are considered.
+     * @param apply_filter  If true, once the metadata set has been built based on
+     *                     the value update_only, the current filter is applied.
+     * @param reply[out] On return contains the serialized
+     *                   metadata. Valid only if the call was successful.
+     * @return The status code.
+     */
+    private native final HashMap<String, String> native_getMetadata(boolean update_only,
+                                                    boolean apply_filter,
+                                                    HashMap<String, String> reply);
     
     /**
      * Call this method after setDataSource(). This method finds a

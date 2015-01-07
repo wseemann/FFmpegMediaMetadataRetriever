@@ -22,6 +22,7 @@
 
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
+#include <libavutil/dict.h>
 
 // Keep these in synch with the constants defined in FFmpegMediaMetadataRetriever.java
 // class.
@@ -45,10 +46,16 @@ typedef struct State {
 	const char      *headers;
 } State;
 
+struct AVDictionary {
+	int count;
+	AVDictionaryEntry *elems;
+};
+
 int set_data_source_uri(State **ps, const char* path, const char* headers);
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length);
 const char* extract_metadata(State **ps, const char* key);
 const char* extract_metadata_from_chapter(State **ps, const char* key, int chapter);
+int get_metadata(State **ps, AVDictionary **metadata);
 int get_embedded_picture(State **ps, AVPacket *pkt);
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);
 void release(State **ps);

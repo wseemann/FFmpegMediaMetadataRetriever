@@ -21,8 +21,6 @@
 #define MEDIAMETADATARETRIEVER_H
 
 extern "C" {
-	#include "libavcodec/avcodec.h"
-	#include "libavformat/avformat.h"
     #include "ffmpeg_mediametadataretriever.h"
 }
 
@@ -41,6 +39,7 @@ public:
     int extractAlbumArt(AVPacket *pkt);
     const char* extractMetadata(const char* key);
     const char* extractMetadataFromChapter(const char* key, int chapter);
+    int getMetadata(bool update_only, bool apply_filter, AVDictionary **metadata);
 };
 
 #endif // MEDIAMETADATARETRIEVER_H

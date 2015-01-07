@@ -412,6 +412,20 @@ const char* extract_metadata_from_chapter(State **ps, const char* key, int chapt
 	return value;
 }
 
+int get_metadata(State **ps, AVDictionary **metadata) {
+    printf("get_metadata\n");
+    
+    State *state = *ps;
+    
+    if (!state || !state->pFormatCtx) {
+        return FAILURE;
+    }
+    
+    av_dict_copy(metadata, state->pFormatCtx->metadata, 0);
+    
+    return SUCCESS;
+}
+
 int get_embedded_picture(State **ps, AVPacket *pkt) {
 	printf("get_embedded_picture\n");
 	int i = 0;

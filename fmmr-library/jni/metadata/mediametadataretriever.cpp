@@ -23,8 +23,6 @@
 #include <mediametadataretriever.h>
 
 extern "C" {
-	#include "libavcodec/avcodec.h"
-	#include "libavformat/avformat.h"
 	#include "ffmpeg_mediametadataretriever.h"
 }
 
@@ -68,4 +66,9 @@ const char* MediaMetadataRetriever::extractMetadataFromChapter(const char *key, 
 int MediaMetadataRetriever::extractAlbumArt(AVPacket *pkt)
 {
     return ::get_embedded_picture(&state, pkt);
+}
+
+int MediaMetadataRetriever::getMetadata(bool update_only, bool apply_filter, AVDictionary **metadata)
+{
+    return get_metadata(&state, metadata);
 }
