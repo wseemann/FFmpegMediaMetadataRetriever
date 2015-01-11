@@ -421,6 +421,7 @@ int get_metadata(State **ps, AVDictionary **metadata) {
         return FAILURE;
     }
     
+    get_shoutcast_metadata(state->pFormatCtx);
     av_dict_copy(metadata, state->pFormatCtx->metadata, 0);
     
     return SUCCESS;
