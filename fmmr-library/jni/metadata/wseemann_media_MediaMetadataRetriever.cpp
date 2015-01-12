@@ -335,7 +335,6 @@ static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromCh
     return env->NewStringUTF(value);
 }
 
-
 static jobject
 wseemann_media_FFmpegMediaMetadataRetriever_getMetadata(JNIEnv *env, jobject thiz, jboolean update_only,
                                       jboolean apply_filter, jobject reply)
