@@ -36,8 +36,8 @@ import java.util.TimeZone;
    The caller is expected to know the type of the metadata and call
    the right get* method to fetch its value.
    
-   @hide
-   @deprecated Use {@link MediaMetadata}.
+   //@hide
+   //@deprecated Use {@link MediaMetadata}.
  */
 public class Metadata
 {
@@ -84,9 +84,9 @@ public class Metadata
     public static final int BYTE_ARRAY_VAL = 7;
     // FIXME: misses a type for shared heap is missing (MemoryFile).
     // FIXME: misses a type for bitmaps.
-    private static final int LAST_TYPE = 7;
+    //private static final int LAST_TYPE = 7;
     
-    private static final String TAG = "media.Metadata";
+    //private static final String TAG = "media.Metadata";
 
     // After a successful parsing, set the parcel with the serialized metadata.
     //private Parcel mParcel;

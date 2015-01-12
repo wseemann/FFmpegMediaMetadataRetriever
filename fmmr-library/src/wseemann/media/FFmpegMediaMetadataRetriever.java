@@ -283,13 +283,33 @@ public class FFmpegMediaMetadataRetriever
      */
     public native String extractMetadataFromChapter(String key, int chapter);
     
-    public Metadata getMetadata(final boolean update_only,
-    		final boolean apply_filter) {
+    /**
+     * Gets the media metadata.
+     *
+     //* @param update_only controls whether the full set of available
+     //* metadata is returned or just the set that changed since the
+     //* last call. See {@see #METADATA_UPDATE_ONLY} and {@see
+     //* #METADATA_ALL}.
+     //*
+     //* @param apply_filter if true only metadata that matches the
+     //* filter is returned. See {@see #APPLY_METADATA_FILTER} and {@see
+     //* #BYPASS_METADATA_FILTER}.
+     //*
+     * @return The metadata, possibly empty. null if an error occured.
+     */    
+    public Metadata getMetadata() {//final boolean update_only,
+    	//	final boolean apply_filter) {
+    	boolean update_only = false;
+    	boolean apply_filter = false;
+    	
     	Metadata data = new Metadata();
     	HashMap<String, String> metadata = null;
         if ((metadata = native_getMetadata(update_only, apply_filter, metadata)) == null) {
             return null;
         }
+
+        // Metadata takes over the parcel, don't recycle it unless
+        // there is an error.
     	if (!data.parse(metadata)) {
     		return null;
     	}
