@@ -647,4 +647,8 @@ public class FFmpegMediaMetadataRetriever
      * The metadata key to retrieve the chapter end time in milliseconds.
      */
     public static final String METADATA_KEY_CHAPTER_END_TIME = "chapter_end_time";
+    /**
+     * The metadata key to retrieve the file size in bytes.
+     */
+    public static final String METADATA_KEY_FILESIZE = "filesize";
 }

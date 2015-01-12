@@ -38,6 +38,7 @@ const char *ROTATE = "rotate";
 const char *FRAMERATE = "framerate";
 const char *CHAPTER_START_TIME = "chapter_start_time";
 const char *CHAPTER_END_TIME = "chapter_end_time";
+const char *FILESIZE = "filesize";
 
 const int SUCCESS = 0;
 const int FAILURE = -1;
@@ -162,6 +163,14 @@ void set_framerate(State *s) {
 	}
 }
 
+void set_filesize(State *s) {
+	char value[30] = "0";
+	
+	int64_t size = s->pFormatCtx->pb ? avio_size(s->pFormatCtx->pb) : -1;
+	sprintf(value, "%"PRId64, size);
+	av_dict_set(&s->pFormatCtx->metadata, FILESIZE, value, 0);
+}
+
 int stream_component_open(State *s, int stream_index) {
 	AVFormatContext *pFormatCtx = s->pFormatCtx;
 	AVCodecContext *codecCtx;
@@ -280,6 +289,7 @@ int set_data_source_l(State **ps, const char* path) {
 
     set_rotation(state);
     set_framerate(state);
+    set_filesize(state);
     
 	/*printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
