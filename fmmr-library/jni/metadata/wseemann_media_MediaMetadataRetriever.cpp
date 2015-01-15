@@ -40,6 +40,35 @@ static const char* const kClassPathName = "wseemann/media/FFmpegMediaMetadataRet
 
 static JavaVM *m_vm;
 
+static jstring NewStringUTF(JNIEnv* env, const char * data) {
+    jstring str = NULL;
+    
+    int size = strlen(data);
+    
+    jbyteArray array = NULL;
+    array = env->NewByteArray(size);
+    if (!array) {  // OutOfMemoryError exception has already been thrown.
+        __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "convertString: OutOfMemoryError is thrown.");
+    } else {
+        jbyte* bytes = env->GetByteArrayElements(array, NULL);
+        if (bytes != NULL) {
+            memcpy(bytes, data, size);
+            env->ReleaseByteArrayElements(array, bytes, 0);
+            
+            jclass string_Clazz = env->FindClass("java/lang/String");
+            jmethodID string_initMethodID = env->GetMethodID(string_Clazz, "<init>", "([BLjava/lang/String;)V");
+            jstring utf = env->NewStringUTF("UTF-8");
+            str = (jstring) env->NewObject(string_Clazz, string_initMethodID, array, utf);
+            
+            env->DeleteLocalRef(utf);
+            env->DeleteLocalRef(str);
+        }
+    }
+    env->DeleteLocalRef(array);
+    
+    return str;
+}
+
 void jniThrowException(JNIEnv* env, const char* className,
     const char* msg) {
     jclass exception = env->FindClass(className);
@@ -299,7 +328,7 @@ static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata(JNIEn
     }
     //__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "extractMetadata: value (%s) for keyCode(%s)", value, key);
     env->ReleaseStringUTFChars(jkey, key);
-    return env->NewStringUTF(value);
+    return NewStringUTF(env, value);
 }
 
 static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromChapter(JNIEnv *env, jobject thiz, jstring jkey, jint chapter)
@@ -361,8 +390,8 @@ wseemann_media_FFmpegMediaMetadataRetriever_getMetadata(JNIEnv *env, jobject thi
         int i = 0;
         
         for (i = 0; i < metadata->count; i++) {
-            jstring jKey = env->NewStringUTF(metadata->elems[i].key);
-            jstring jValue = env->NewStringUTF(metadata->elems[i].value);
+            jstring jKey = NewStringUTF(env, metadata->elems[i].key);
+            jstring jValue = NewStringUTF(env, metadata->elems[i].value);
             (jobject) env->CallObjectMethod(map, gHashMap_putMethodID, jKey, jValue);
             env->DeleteLocalRef(jKey);
             env->DeleteLocalRef(jValue);
