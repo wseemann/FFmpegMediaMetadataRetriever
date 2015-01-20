@@ -183,7 +183,10 @@ int stream_component_open(State *s, int stream_index) {
 	// Get a pointer to the codec context for the stream
 	codecCtx = pFormatCtx->streams[stream_index]->codec;
 
-	printf("avcodec_find_decoder %s\n", codecCtx->codec_name);
+    const AVCodecDescriptor *codesc = avcodec_descriptor_get(codecCtx->codec_id);
+    if (codesc) {
+        printf("avcodec_find_decoder %s\n", codesc->name);
+    }
 
 	// Find the decoder for the audio stream
 	codec = avcodec_find_decoder(codecCtx->codec_id);
@@ -471,7 +474,7 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
         			
                     av_init_packet(pkt);
         			
-   			        frame = avcodec_alloc_frame();
+   			        frame = av_frame_alloc();
         			    	
    			        if (!frame) {
    			        	break;
@@ -545,7 +548,7 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 		goto fail;
 	}
 
-	frame = avcodec_alloc_frame();
+	frame = av_frame_alloc();
 	
 	if (!frame) {
 		goto fail;
@@ -608,7 +611,7 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 
 void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number) {
 	// Allocate video frame
-	AVFrame *frame = avcodec_alloc_frame();
+	AVFrame *frame = av_frame_alloc();
 
 	*got_frame = 0;
 	
@@ -652,7 +655,7 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 	}
 	
 	// Free the frame
-	avcodec_free_frame(&frame);
+	av_frame_free(&frame);
 }
 
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
