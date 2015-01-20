@@ -61,7 +61,7 @@ static jstring NewStringUTF(JNIEnv* env, const char * data) {
             str = (jstring) env->NewObject(string_Clazz, string_initMethodID, array, utf);
             
             env->DeleteLocalRef(utf);
-            env->DeleteLocalRef(str);
+            //env->DeleteLocalRef(str);
         }
     }
     env->DeleteLocalRef(array);
