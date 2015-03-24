@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/gradle/library/src/main/res"/><source path="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/gradle/library/build/generated/res/rs/debug"/><source path="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/gradle/library/build/generated/res/generated/debug"/></dataSet><dataSet config="debug"><source path="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/gradle/library/src/debug/res"/></dataSet><mergedItems/></merger>

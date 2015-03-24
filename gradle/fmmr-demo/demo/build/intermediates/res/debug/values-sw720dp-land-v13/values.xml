@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/gradle/fmmr-demo/demo/src/main/res/values-sw720dp-land/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">128dp</dimen>
+</resources>

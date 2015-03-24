@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/wseemann/Android/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-v4/18.0.0/support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/fmmr-demo1/fmmr-demo/build/intermediates/pre-dexed/debug/support-v4-18.0.0-398cfac9769f0a5c0daaa21e90a96e67a275b01a.jar" />
+    </item>
+    <item
+        jar="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/fmmr-demo1/fmmr-demo/libs/fmmr.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0970f1f9339032aca4dbf297b5e5f6d3abd7b285">
+        <dex dex="/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/fmmr-demo1/fmmr-demo/build/intermediates/pre-dexed/debug/fmmr-04efd6991d15fc8fc4469b544da09136fa9fcab3.jar" />
+    </item>
+
+</items>
