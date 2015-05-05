@@ -32,7 +32,16 @@ Supported formats (audio and video):
 Additional support for:
 * ICY Metadata (SHOUTcast metadata)
 
-Using FMMR in your application
+Using FMMR in your application (Android Studio)
+------------
+
+Add the following maven dependency to your project's `build.gradle` file:
+
+    dependencies {
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.1'
+    }
+
+Using FMMR in your application (Eclipse/Legacy)
 ------------
 
 Extract and copy the following JAR file and prebuilt native libraries into your projects "libs" folder:
