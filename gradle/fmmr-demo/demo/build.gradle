@@ -20,5 +20,5 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:18.0.0'
-    compile files('libs/fmmr.jar')
+    compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.1'
 }
