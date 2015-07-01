@@ -33,6 +33,7 @@ static const char *ROTATE = "rotate";
 static const char *FRAMERATE = "framerate";
 static const char *CHAPTER_START_TIME = "chapter_start_time";
 static const char *CHAPTER_END_TIME = "chapter_end_time";
+static const char *CHAPTER_COUNT = "chapter_count";
 static const char *FILESIZE = "filesize";
 
 static const int SUCCESS = 0;
@@ -44,6 +45,7 @@ void set_codec(AVFormatContext *ic, int i);
 void set_rotation(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st);
 void set_framerate(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st);
 void set_filesize(AVFormatContext *ic);
+void set_chapter_count(AVFormatContext *ic);
 const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key);
 int get_metadata_internal(AVFormatContext *ic, AVDictionary **metadata);
 const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key, int chapter);    

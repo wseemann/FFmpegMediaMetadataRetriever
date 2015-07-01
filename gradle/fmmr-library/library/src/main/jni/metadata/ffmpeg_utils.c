@@ -103,6 +103,20 @@ void set_filesize(AVFormatContext *ic) {
 	av_dict_set(&ic->metadata, FILESIZE, value, 0);
 }
 
+void set_chapter_count(AVFormatContext *ic) {
+	char value[30] = "0";
+	int count = 0;
+
+	if (ic) {
+		if (ic->nb_chapters) {
+			count = ic->nb_chapters;
+		}
+	}
+
+	sprintf(value, "%d", count); // %i
+	av_dict_set(&ic->metadata, CHAPTER_COUNT, value, 0);
+}
+
 const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key) {
     char* value = NULL;
     
@@ -136,8 +150,6 @@ int get_metadata_internal(AVFormatContext *ic, AVDictionary **metadata) {
 
 const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key, int chapter) {
     char* value = NULL;
-    
-	chapter--;
 	
 	if (!ic || ic->nb_chapters <= 0) {
 		return value;
@@ -149,6 +161,13 @@ const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream
 	
 	AVChapter *ch = ic->chapters[chapter];
 	
+	printf("Found metadata\n");
+	AVDictionaryEntry *tag = NULL;
+	while ((tag = av_dict_get(ch->metadata, "", tag, AV_DICT_IGNORE_SUFFIX))) {
+    	printf("Key %s: \n", tag->key);
+    	printf("Value %s: \n", tag->value);
+    }
+
 	if (strcmp(key, CHAPTER_START_TIME) == 0) {
 		char time[30];
 		int start_time = ch->start * av_q2d(ch->time_base) * 1000;

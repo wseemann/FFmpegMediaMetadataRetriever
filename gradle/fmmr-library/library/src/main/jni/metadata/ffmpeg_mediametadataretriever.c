@@ -27,15 +27,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
-const int TARGET_IMAGE_FORMAT = PIX_FMT_RGB24;
-const int TARGET_IMAGE_CODEC = CODEC_ID_PNG;
+const int TARGET_IMAGE_FORMAT = AV_PIX_FMT_RGB24;
+const int TARGET_IMAGE_CODEC = AV_CODEC_ID_PNG;
 
 void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr);
 
 int is_supported_format(int codec_id) {
-	if (codec_id == CODEC_ID_PNG ||
-			codec_id == CODEC_ID_MJPEG ||
-	        codec_id == CODEC_ID_BMP) {
+	if (codec_id == AV_CODEC_ID_PNG ||
+			codec_id == AV_CODEC_ID_MJPEG ||
+	        codec_id == AV_CODEC_ID_BMP) {
 		return 1;
 	}
 	
@@ -161,6 +161,7 @@ int set_data_source_l(State **ps, const char* path) {
     set_rotation(state->pFormatCtx, state->audio_st, state->video_st);
     set_framerate(state->pFormatCtx, state->audio_st, state->video_st);
     set_filesize(state->pFormatCtx);
+    set_chapter_count(state->pFormatCtx);
     
 	/*printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
@@ -251,8 +252,6 @@ const char* extract_metadata_from_chapter(State **ps, const char* key, int chapt
     char* value = NULL;
 	
 	State *state = *ps;
-    
-	chapter--;
 	
 	if (!state || !state->pFormatCtx || state->pFormatCtx->nb_chapters <= 0) {
 		return value;
