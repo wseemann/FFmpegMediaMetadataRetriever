@@ -34,6 +34,7 @@ public:
     int setDataSource(const char* dataSourceUrl, const char* headers);
     int setDataSource(int fd, int64_t offset, int64_t length);
     int getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt);
+    int getScaledFrameAtTime(int64_t timeUs, int option, AVPacket *pkt, int width, int height);
     int extractAlbumArt(AVPacket *pkt);
     const char* extractMetadata(const char* key);
     const char* extractMetadataFromChapter(const char* key, int chapter);

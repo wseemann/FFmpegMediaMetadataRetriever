@@ -58,6 +58,7 @@ const char* extract_metadata_from_chapter(State **ps, const char* key, int chapt
 int get_metadata(State **ps, AVDictionary **metadata);
 int get_embedded_picture(State **ps, AVPacket *pkt);
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);
+int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt, int width, int height);
 void release(State **ps);
 
 #endif /*FFMPEG_MEDIAMETADATARETRIEVER_H_*/

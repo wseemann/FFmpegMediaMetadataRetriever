@@ -30,7 +30,7 @@
 const int TARGET_IMAGE_FORMAT = AV_PIX_FMT_RGB24;
 const int TARGET_IMAGE_CODEC = AV_CODEC_ID_PNG;
 
-void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr);
+void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height);
 
 int is_supported_format(int codec_id) {
 	if (codec_id == AV_CODEC_ID_PNG ||
@@ -328,7 +328,7 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
         	            av_init_packet(&packet);
         	            packet.data = NULL;
         	            packet.size = 0;
-        				convert_image(state->video_st->codec, frame, &packet, &got_packet);
+        				convert_image(state->video_st->codec, frame, &packet, &got_packet, -1, -1);
         				*pkt = packet;
         				break;
         			}
@@ -353,13 +353,21 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
 	}
 }
 
-void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr) {
+void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height) {
 	AVCodecContext *codecCtx;
 	AVCodec *codec;
 	AVPicture dst_picture;
 	AVFrame *frame;
 	
 	*got_packet_ptr = 0;
+
+	if (width == -1) {
+		width = pCodecCtx->width;
+	}
+
+	if (height == -1) {
+		height = pCodecCtx->height;
+	}
 
 	codec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
 	if (!codec) {
@@ -374,8 +382,10 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 	}
 
 	codecCtx->bit_rate = pCodecCtx->bit_rate;
-	codecCtx->width = pCodecCtx->width;
-	codecCtx->height = pCodecCtx->height;
+	//codecCtx->width = pCodecCtx->width;
+	//codecCtx->height = pCodecCtx->height;
+	codecCtx->width = width;
+	codecCtx->height = height;
 	codecCtx->pix_fmt = TARGET_IMAGE_FORMAT;
 	codecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
 	codecCtx->time_base.num = pCodecCtx->time_base.num;
@@ -402,9 +412,11 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
     
 	struct SwsContext *scalerCtx = sws_getContext(pCodecCtx->width, 
 			pCodecCtx->height, 
-			pCodecCtx->pix_fmt, 
-			pCodecCtx->width, 
-			pCodecCtx->height, 
+			pCodecCtx->pix_fmt,
+			//pCodecCtx->width,
+			//pCodecCtx->height,
+			width,
+			height,
 			TARGET_IMAGE_FORMAT, 
 	        SWS_FAST_BILINEAR, 0, 0, 0);
 	
@@ -447,7 +459,7 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 	}
 }
 
-void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number) {
+void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number, int width, int height) {
 	// Allocate video frame
 	AVFrame *frame = av_frame_alloc();
 
@@ -481,7 +493,7 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 					    av_init_packet(pkt);
 						pkt->data = NULL;
       	            	pkt->size = 0;
-						convert_image(state->video_st->codec, frame, pkt, got_frame);
+						convert_image(state->video_st->codec, frame, pkt, got_frame, width, height);
 						break;
 					}
 				}
@@ -497,6 +509,10 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 }
 
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
+	return get_scaled_frame_at_time(ps, timeUs, option, pkt, -1, -1);
+}
+
+int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt, int width, int height) {
 	printf("get_frame_at_time\n");
 	int got_packet = 0;
     int64_t desired_frame_number = -1;
@@ -554,7 +570,7 @@ int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
     	}
     }
     
-    decode_frame(state, pkt, &got_packet, desired_frame_number);
+    decode_frame(state, pkt, &got_packet, desired_frame_number, width, height);
     
     if (got_packet) {
     	//const char *filename = "/Users/wseemann/Desktop/one.png";

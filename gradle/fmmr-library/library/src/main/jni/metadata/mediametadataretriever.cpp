@@ -51,6 +51,11 @@ int MediaMetadataRetriever::getFrameAtTime(int64_t timeUs, int option, AVPacket 
     return ::get_frame_at_time(&state, timeUs, option, pkt);
 }
 
+int MediaMetadataRetriever::getScaledFrameAtTime(int64_t timeUs, int option, AVPacket *pkt, int width, int height)
+{
+    return ::get_scaled_frame_at_time(&state, timeUs, option, pkt, width, height);
+}
+
 const char* MediaMetadataRetriever::extractMetadata(const char *key)
 {
     return ::extract_metadata(&state, key);

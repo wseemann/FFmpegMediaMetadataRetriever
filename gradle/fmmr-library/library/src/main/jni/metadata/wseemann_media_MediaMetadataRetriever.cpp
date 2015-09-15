@@ -268,6 +268,40 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
    return array;
 }
 
+static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option, jint width, jint height)
+{
+    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getScaledFrameAtTime");
+    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+    if (retriever == 0) {
+        jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
+        return NULL;
+    }
+    
+    AVPacket packet;
+    av_init_packet(&packet);
+    jbyteArray array = NULL;
+    
+    if (retriever->getScaledFrameAtTime(timeUs, option, &packet, width, height) == 0) {
+        int size = packet.size;
+        uint8_t* data = packet.data;
+        array = env->NewByteArray(size);
+        if (!array) {  // OutOfMemoryError exception has already been thrown.
+            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "getFrameAtTime: OutOfMemoryError is thrown.");
+        } else {
+            //__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime: Got frame.");
+            jbyte* bytes = env->GetByteArrayElements(array, NULL);
+            if (bytes != NULL) {
+                memcpy(bytes, data, size);
+                env->ReleaseByteArrayElements(array, bytes, 0);
+            }
+        }
+    }
+    
+    av_free_packet(&packet);
+    
+    return array;
+}
+
 static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture(JNIEnv *env, jobject thiz)
 {
    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getEmbeddedPicture");
@@ -465,6 +499,7 @@ static JNINativeMethod nativeMethods[] = {
     
     {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
+    {"_getScaledFrameAtTime", "(JIII)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTime},
     {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},
     {"extractMetadataFromChapter", "(Ljava/lang/String;I)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromChapter},
     {"native_getMetadata", "(ZZLjava/util/HashMap;)Ljava/util/HashMap;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getMetadata},
