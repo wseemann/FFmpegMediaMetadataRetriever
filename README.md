@@ -41,10 +41,7 @@ Add the following maven dependency to your project's `build.gradle` file:
         compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.1'
     }
 
-Using FMMR in your application (Eclipse/Legacy)
-------------
-
-Extract and copy the following JAR file and prebuilt native libraries into your projects "libs" folder:
+or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
 https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars.zip?raw=true.
 
@@ -151,7 +148,7 @@ License
 FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
 and meta data from an input media file.
 
-Copyright 2014 William Seemann
+Copyright 2015 William Seemann
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
