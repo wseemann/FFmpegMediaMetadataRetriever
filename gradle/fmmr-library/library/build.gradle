@@ -5,15 +5,24 @@ android {
     buildToolsVersion "21.1.2"
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
+    def aarname = "all-fmmr"
+
     //def mkfile = "NDK_APPLICATION_MK=ARMApplication.mk"
+    //def aarname = "arm-fmmr"
+
     //def mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
+    //def aarname = "armv7-fmmr"
+
     //def mkfile = "NDK_APPLICATION_MK=x86Application.mk"
+    //def aarname = "x86-fmmr"
+
     //def mkfile = "NDK_APPLICATION_MK=MIPSApplication.mk"
+    //def aarname = "mips-fmmr"
 
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 2
         versionName "1.0.1"
     }
@@ -56,6 +65,16 @@ android {
 
     tasks.withType(JavaCompile) {
         compileTask -> compileTask.dependsOn buildNative
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${aarname}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
     }
 }
 
