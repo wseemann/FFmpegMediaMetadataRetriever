@@ -4,6 +4,13 @@ android {
     compileSdkVersion 22
     buildToolsVersion "21.1.2"
 
+    def mkfile = "NDK_APPLICATION_MK=Application.mk"
+    //def mkfile = "NDK_APPLICATION_MK=ARMApplication.mk"
+    //def mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
+    //def mkfile = "NDK_APPLICATION_MK=x86Application.mk"
+    //def mkfile = "NDK_APPLICATION_MK=MIPSApplication.mk"
+
+
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 22
@@ -28,7 +35,9 @@ android {
 
     task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
         def ndkDir = android.ndkDirectory
+        print mkfile
         commandLine "$ndkDir/ndk-build",
+                mkfile,
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
                 '-j', Runtime.runtime.availableProcessors(),
                 'all',
