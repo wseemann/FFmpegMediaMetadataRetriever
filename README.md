@@ -46,7 +46,7 @@ Using FMMR in your application (Eclipse/Legacy)
 
 Extract and copy the following JAR file and prebuilt native libraries into your projects "libs" folder:
 
-https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars.zip.
+https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars.zip?raw=true.
 
 Demo Application
 ------------
