@@ -125,12 +125,12 @@ const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, A
 	}
     
 	if (key) {
-		if (av_dict_get(ic->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
-			value = av_dict_get(ic->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
-		} else if (audio_st && av_dict_get(audio_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
-			value = av_dict_get(audio_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
-		} else if (video_st && av_dict_get(video_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
-			value = av_dict_get(video_st->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+		if (av_dict_get(ic->metadata, key, NULL, AV_DICT_MATCH_CASE)) {
+			value = av_dict_get(ic->metadata, key, NULL, AV_DICT_MATCH_CASE)->value;
+		} else if (audio_st && av_dict_get(audio_st->metadata, key, NULL, AV_DICT_MATCH_CASE)) {
+			value = av_dict_get(audio_st->metadata, key, NULL, AV_DICT_MATCH_CASE)->value;
+		} else if (video_st && av_dict_get(video_st->metadata, key, NULL, AV_DICT_MATCH_CASE)) {
+			value = av_dict_get(video_st->metadata, key, NULL, AV_DICT_MATCH_CASE)->value;
 		}
 	}
 	
@@ -163,7 +163,7 @@ const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream
 	
 	printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
-	while ((tag = av_dict_get(ch->metadata, "", tag, AV_DICT_IGNORE_SUFFIX))) {
+	while ((tag = av_dict_get(ch->metadata, "", tag, AV_DICT_MATCH_CASE))) {
     	printf("Key %s: \n", tag->key);
     	printf("Value %s: \n", tag->value);
     }
@@ -180,8 +180,8 @@ const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream
 		sprintf(time, "%d", end_time);
 		value = malloc(strlen(time));
 		sprintf(value, "%s", time);
-	} else if (av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)) {
-		value = av_dict_get(ch->metadata, key, NULL, AV_DICT_IGNORE_SUFFIX)->value;
+	} else if (av_dict_get(ch->metadata, key, NULL, AV_DICT_MATCH_CASE)) {
+		value = av_dict_get(ch->metadata, key, NULL, AV_DICT_MATCH_CASE)->value;
 	}
 
 	return value;
