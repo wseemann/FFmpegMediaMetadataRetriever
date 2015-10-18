@@ -46,7 +46,7 @@ Using FMMR in your application (Eclipse/Legacy)
 
 Extract and copy the following JAR file and prebuilt native libraries into your projects "libs" folder:
 
-https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-library/prebuilt-libs.tar.gz.
+https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-libs.zip.
 
 Demo Application
 ------------
