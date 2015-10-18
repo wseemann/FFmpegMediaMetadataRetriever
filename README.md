@@ -51,7 +51,7 @@ https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-librar
 Demo Application
 ------------
 
-A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/fmmr-demo/FMMRDemo.apk. Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
+A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk. Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
 
 Installation
 ------------
