@@ -69,7 +69,7 @@ void set_codec(AVFormatContext *ic, int i) {
 
 void set_rotation(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st) {	
 	if (!extract_metadata_internal(ic, audio_st, video_st, ROTATE) && video_st && video_st->metadata) {
-		AVDictionaryEntry *entry = av_dict_get(video_st->metadata, ROTATE, NULL, AV_DICT_IGNORE_SUFFIX);
+		AVDictionaryEntry *entry = av_dict_get(video_st->metadata, ROTATE, NULL, AV_DICT_MATCH_CASE);
         
         if (entry && entry->value) {
             av_dict_set(&ic->metadata, ROTATE, entry->value, 0);
