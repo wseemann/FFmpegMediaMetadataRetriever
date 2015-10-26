@@ -24,18 +24,18 @@ if [ "$#" -eq 1 ] && [ "$1" = "--enable-openssl" ]; then
     rm -rf $WORKING_DIR/jni/ffmpeg/ffmpeg/*
 fi
 
-#if [ ! -d ffmpeg ]; then
+if [ ! -d $FFMPEG_BUILD_DIR ]; then
     # Unpackage the FFmpeg archive
-#    tar -C  $WORKING_DIR -xvf $WORKING_DIR/ffmpeg-2.5.3.tar.gz
+    tar -C  $WORKING_DIR -xvf $WORKING_DIR/ffmpeg-2.5.3.tar.gz
     # rm ffmpeg-0.11.1-android-2012-09-18.tar.gz
-#    mv $WORKING_DIR/ffmpeg-2.5.3 $FFMPEG_BUILD_DIR
+    mv $WORKING_DIR/ffmpeg-2.5.3 $FFMPEG_BUILD_DIR
 
     # Prepare the FFmpeg archive for building
     cd $FFMPEG_BUILD_DIR
    ./extract.sh
 
-#    cd $WORKING_DIR
-#fi
+    cd $WORKING_DIR
+fi
 
 # Make the target JNI folder if it doesn't exist
 if [ ! -d $WORKING_DIR/jni/ffmpeg/ffmpeg ] && ! mkdir -p $WORKING_DIR/jni/ffmpeg/ffmpeg; then
