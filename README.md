@@ -43,12 +43,16 @@ Add the following maven dependency to your project's `build.gradle` file:
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
-https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars.zip?raw=true.
+[Prebuilt AARs] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars.zip?raw=true)
+
+(with HTTPS support)
+
+[Prebuilt AARs with HTTPS] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars-with-https.zip?raw=true)
 
 Demo Application
 ------------
 
-A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded at: https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk?raw=true. Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
+A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded [here] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk?raw=true). Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
 
 Installation
 ------------
