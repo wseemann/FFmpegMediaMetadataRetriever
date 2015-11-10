@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
