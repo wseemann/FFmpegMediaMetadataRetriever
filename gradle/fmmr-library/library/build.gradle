@@ -38,7 +38,7 @@ android {
     }
 
     task buildFFmpeg(type: Exec, description: 'Compile FFmpeg source via NDK') {
-        def dir = file('src/main/scripts/build-ffmpeg.sh').absolutePath
+        def dir = file('src/main/scripts/build-ffmpeg.sh').absolutePath //--enable-openssl
         commandLine "$dir"
     }
 
