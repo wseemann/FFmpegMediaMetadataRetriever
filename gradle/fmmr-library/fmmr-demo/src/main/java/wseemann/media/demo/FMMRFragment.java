@@ -75,7 +75,8 @@ public class FMMRFragment extends ListFragment
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
     	//uriText.setText("http://...");
-    	
+		//https://ia700401.us.archive.org/19/items/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4
+
     	Intent intent = getActivity().getIntent();
     	
     	// Populate the edit text field with the intent uri, if available
