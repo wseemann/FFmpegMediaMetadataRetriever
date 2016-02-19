@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,4 +74,9 @@ int MediaMetadataRetriever::extractAlbumArt(AVPacket *pkt)
 int MediaMetadataRetriever::getMetadata(bool update_only, bool apply_filter, AVDictionary **metadata)
 {
     return get_metadata(&state, metadata);
+}
+
+int MediaMetadataRetriever::setNativeWindow(ANativeWindow* native_window)
+{
+	return ::set_native_window(&state, native_window);
 }

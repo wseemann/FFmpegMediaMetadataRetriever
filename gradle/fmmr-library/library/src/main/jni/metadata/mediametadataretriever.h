@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@
 
 #ifndef MEDIAMETADATARETRIEVER_H
 #define MEDIAMETADATARETRIEVER_H
+
+#include <android/native_window_jni.h>
 
 extern "C" {
     #include "ffmpeg_mediametadataretriever.h"
@@ -39,6 +41,7 @@ public:
     const char* extractMetadata(const char* key);
     const char* extractMetadataFromChapter(const char* key, int chapter);
     int getMetadata(bool update_only, bool apply_filter, AVDictionary **metadata);
+    int setNativeWindow(ANativeWindow* native_window);
 };
 
 #endif // MEDIAMETADATARETRIEVER_H

@@ -51,6 +51,7 @@ android {
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
                 '-j', Runtime.runtime.availableProcessors(),
                 'all',
+                'TARGET_PLATFORM=android-12'
                 'NDK_DEBUG=1'
     }
 

@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,10 @@
 #include <mediametadataretriever.h>
 #include "jni.h"
 
+// for native window JNI
+#include <android/bitmap.h>
+#include <android/native_window_jni.h>
+
 extern "C" {
 	#include "ffmpeg_mediametadataretriever.h"
 }
@@ -40,11 +44,14 @@ static const char* const kClassPathName = "wseemann/media/FFmpegMediaMetadataRet
 
 static JavaVM *m_vm;
 
+// video sink for the player
+static ANativeWindow* theNativeWindow;
+
 static jstring NewStringUTF(JNIEnv* env, const char * data) {
     jstring str = NULL;
-    
+
     int size = strlen(data);
-    
+
     jbyteArray array = NULL;
     array = env->NewByteArray(size);
     if (!array) {  // OutOfMemoryError exception has already been thrown.
@@ -54,18 +61,18 @@ static jstring NewStringUTF(JNIEnv* env, const char * data) {
         if (bytes != NULL) {
             memcpy(bytes, data, size);
             env->ReleaseByteArrayElements(array, bytes, 0);
-            
+
             jclass string_Clazz = env->FindClass("java/lang/String");
             jmethodID string_initMethodID = env->GetMethodID(string_Clazz, "<init>", "([BLjava/lang/String;)V");
             jstring utf = env->NewStringUTF("UTF-8");
             str = (jstring) env->NewObject(string_Clazz, string_initMethodID, array, utf);
-            
+
             env->DeleteLocalRef(utf);
             //env->DeleteLocalRef(str);
         }
     }
     env->DeleteLocalRef(array);
-    
+
     return str;
 }
 
@@ -110,7 +117,7 @@ static void
 wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
         JNIEnv *env, jobject thiz, jstring path,
         jobjectArray keys, jobjectArray values) {
-	
+
 	__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "setDataSource");
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
     if (retriever == 0) {
@@ -143,35 +150,35 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
     }
 
     char *headers = NULL;
-    
+
     if (keys && values != NULL) {
         int keysCount = env->GetArrayLength(keys);
         int valuesCount = env->GetArrayLength(values);
-        
+
         if (keysCount != valuesCount) {
             __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "keys and values arrays have different length");
             jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
             return;
         }
-        
+
         int i = 0;
         const char *rawString = NULL;
         char hdrs[2048];
-        
+
         for (i = 0; i < keysCount; i++) {
             jstring key = (jstring) env->GetObjectArrayElement(keys, i);
             rawString = env->GetStringUTFChars(key, NULL);
             strcat(hdrs, rawString);
             strcat(hdrs, ": ");
             env->ReleaseStringUTFChars(key, rawString);
-            
+
             jstring value = (jstring) env->GetObjectArrayElement(values, i);
             rawString = env->GetStringUTFChars(value, NULL);
             strcat(hdrs, rawString);
             strcat(hdrs, "\r\n");
             env->ReleaseStringUTFChars(value, rawString);
         }
-        
+
         headers = &hdrs[0];
     }
 
@@ -194,14 +201,14 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSource(
 static int jniGetFDFromFileDescriptor(JNIEnv * env, jobject fileDescriptor) {
     jint fd = -1;
     jclass fdClass = env->FindClass("java/io/FileDescriptor");
-    
+
     if (fdClass != NULL) {
         jfieldID fdClassDescriptorFieldID = env->GetFieldID(fdClass, "descriptor", "I");
         if (fdClassDescriptorFieldID != NULL && fileDescriptor != NULL) {
             fd = env->GetIntField(fileDescriptor, fdClassDescriptorFieldID);
         }
     }
-    
+
     return fd;
 }
 
@@ -249,7 +256,7 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
 
    if (retriever->getFrameAtTime(timeUs, option, &packet) == 0) {
 	   int size = packet.size;
-	   uint8_t* data = packet.data;
+       uint8_t* data = packet.data;
 	   array = env->NewByteArray(size);
 	   if (!array) {  // OutOfMemoryError exception has already been thrown.
 		   __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "getFrameAtTime: OutOfMemoryError is thrown.");
@@ -257,14 +264,14 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
        	   //__android_log_print(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime: Got frame.");
     	   jbyte* bytes = env->GetByteArrayElements(array, NULL);
            if (bytes != NULL) {
-        	   memcpy(bytes, data, size);
+               memcpy(bytes, data, size);
                env->ReleaseByteArrayElements(array, bytes, 0);
            }
        }
    }
 
    av_free_packet(&packet);
-   
+
    return array;
 }
 
@@ -451,11 +458,29 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, job
     setRetriever(env, thiz, 0);
 }
 
+// set the surface
+static void wseemann_media_FFmpegMediaMetadataRetriever_setSurface(JNIEnv *env, jclass thiz, jobject surface)
+{
+	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "setSurface");
+	MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+	if (retriever == 0) {
+		jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
+	    return;
+	}
+
+    // obtain a native window from a Java surface
+    theNativeWindow = ANativeWindow_fromSurface(env, surface);
+
+    if (theNativeWindow != NULL) {
+        retriever->setNativeWindow(theNativeWindow);
+    }
+}
+
 static void wseemann_media_FFmpegMediaMetadataRetriever_native_finalize(JNIEnv *env, jobject thiz)
 {
-	//__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "native_finalize");
+    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "native_finalize");
     // No lock is needed, since Java_wseemann_media_FFmpegMediaMetadataRetriever_release() is protected
-	wseemann_media_FFmpegMediaMetadataRetriever_release(env, thiz);
+    wseemann_media_FFmpegMediaMetadataRetriever_release(env, thiz);
 }
 
 static void wseemann_media_FFmpegMediaMetadataRetriever_native_init(JNIEnv *env, jobject thiz)
@@ -505,6 +530,7 @@ static JNINativeMethod nativeMethods[] = {
     {"native_getMetadata", "(ZZLjava/util/HashMap;)Ljava/util/HashMap;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getMetadata},
     {"getEmbeddedPicture", "()[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture},
     {"release", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_release},
+    {"setSurface", "(Ljava/lang/Object;)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setSurface},
     {"native_finalize", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_finalize},
     {"native_setup", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_setup},
     {"native_init", "()V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_native_init},

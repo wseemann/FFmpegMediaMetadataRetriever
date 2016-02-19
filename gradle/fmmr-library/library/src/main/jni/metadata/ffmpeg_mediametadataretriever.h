@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@
 #include <libavformat/avformat.h>
 #include <libavutil/dict.h>
 
+#include <android/native_window_jni.h>
+
 // Keep these in synch with the constants defined in FFmpegMediaMetadataRetriever.java
 // class.
 typedef enum {
@@ -44,6 +46,7 @@ typedef struct State {
 	int             fd;
 	int64_t         offset;
 	const char      *headers;
+	ANativeWindow   *native_window;
 } State;
 
 struct AVDictionary {
@@ -59,6 +62,7 @@ int get_metadata(State **ps, AVDictionary **metadata);
 int get_embedded_picture(State **ps, AVPacket *pkt);
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);
 int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt, int width, int height);
+int set_native_window(State **ps, ANativeWindow* native_window);
 void release(State **ps);
 
 #endif /*FFMPEG_MEDIAMETADATARETRIEVER_H_*/

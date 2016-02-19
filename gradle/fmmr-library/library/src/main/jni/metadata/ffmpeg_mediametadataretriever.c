@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
-const int TARGET_IMAGE_FORMAT = AV_PIX_FMT_RGB24;
+#include <android/log.h>
+
+const int TARGET_IMAGE_FORMAT = AV_PIX_FMT_RGBA; //AV_PIX_FMT_RGB24;
 const int TARGET_IMAGE_CODEC = AV_CODEC_ID_PNG;
 
-void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height);
+void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height);
 
 int is_supported_format(int codec_id) {
 	if (codec_id == AV_CODEC_ID_PNG ||
@@ -328,7 +330,7 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
         	            av_init_packet(&packet);
         	            packet.data = NULL;
         	            packet.size = 0;
-        				convert_image(state->video_st->codec, frame, &packet, &got_packet, -1, -1);
+        				convert_image(state, state->video_st->codec, frame, &packet, &got_packet, -1, -1);
         				*pkt = packet;
         				break;
         			}
@@ -353,10 +355,9 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
 	}
 }
 
-void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height) {
+void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height) {
 	AVCodecContext *codecCtx;
 	AVCodec *codec;
-	AVPicture dst_picture;
 	AVFrame *frame;
 	
 	*got_packet_ptr = 0;
@@ -402,13 +403,27 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 		goto fail;
 	}
 	
-    avpicture_alloc(&dst_picture,
+	// Determine required buffer size and allocate buffer
+	int numBytes = avpicture_get_size(TARGET_IMAGE_FORMAT, codecCtx->width, codecCtx->height);
+	void * buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
+
+	printf("wqwq %d\n", numBytes);
+
+    avpicture_fill(((AVPicture *)frame),
+    		buffer,
     		TARGET_IMAGE_FORMAT,
     		codecCtx->width,
     		codecCtx->height);
-    
-    /* copy data and linesize picture pointers to frame */
-    *((AVPicture *)frame) = dst_picture;
+
+    /*avpicture_alloc(((AVPicture *)frame),
+    		TARGET_IMAGE_FORMAT,
+    		codecCtx->width,
+    		codecCtx->height);*/
+
+    avpicture_alloc(((AVPicture *)frame),
+    		TARGET_IMAGE_FORMAT,
+    		codecCtx->width,
+    		codecCtx->height);
     
 	struct SwsContext *scalerCtx = sws_getContext(pCodecCtx->width, 
 			pCodecCtx->height, 
@@ -424,7 +439,7 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
 		printf("sws_getContext() failed\n");
 		goto fail;
 	}
-    
+
     sws_scale(scalerCtx,
     		(const uint8_t * const *) pFrame->data,
     		pFrame->linesize,
@@ -432,19 +447,30 @@ void convert_image(AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, 
     		pFrame->height,
     		frame->data,
     		frame->linesize);
-	
+
 	int ret = avcodec_encode_video2(codecCtx, avpkt, frame, got_packet_ptr);
+	
+	if (state->native_window) {
+		//ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
+
+		ANativeWindow_Buffer windowBuffer;
+
+		if (ANativeWindow_lock(state->native_window, &windowBuffer, NULL) == 0) {
+			memcpy(windowBuffer.bits, avpkt->data, windowBuffer.width * windowBuffer.height * 4);
+			ANativeWindow_unlockAndPost(state->native_window);
+		}
+	}
 	
 	if (ret < 0) {
 		*got_packet_ptr = 0;
 	}
 	
-    av_free(dst_picture.data[0]);
-	
 	// TODO is this right?
 	fail:
     av_free(frame);
 	
+    free(buffer);
+
 	if (codecCtx) {
 		avcodec_close(codecCtx);
 	    av_free(codecCtx);
@@ -493,7 +519,7 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 					    av_init_packet(pkt);
 						pkt->data = NULL;
       	            	pkt->size = 0;
-						convert_image(state->video_st->codec, frame, pkt, got_frame, width, height);
+						convert_image(state, state->video_st->codec, frame, pkt, got_frame, width, height);
 						break;
 					}
 				}
@@ -586,6 +612,22 @@ int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *p
 	}
 }
 
+int set_native_window(State **ps, ANativeWindow* native_window) {
+    printf("set_native_window\n");
+
+	State *state = *ps;
+
+	if (!state || native_window == NULL) {
+		return FAILURE;
+	}
+
+	state->native_window = native_window;
+
+	*ps = state;
+
+	return SUCCESS;
+}
+
 void release(State **ps) {
 	printf("release\n");
 
@@ -600,6 +642,13 @@ void release(State **ps) {
     		close(state->fd);
     	}
     	
+
+        // make sure we don't leak native windows
+        if (state->native_window != NULL) {
+            ANativeWindow_release(state->native_window);
+            state->native_window = NULL;
+        }
+
     	av_freep(&state);
         ps = NULL;
     }

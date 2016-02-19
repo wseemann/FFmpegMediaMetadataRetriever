@@ -31,7 +31,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -49,6 +53,10 @@ public class FMMRFragment extends ListFragment
 
 	private int mId = 0;
 	private ImageView mImage;
+
+	private SurfaceView mmSurfaceView;
+	private SurfaceHolder mSurfaceHolder;
+	public static Surface mFinalSurface;
 	
 	// This is the Adapter being used to display the list's data.
     private MetadataListAdapter mAdapter;
@@ -74,7 +82,8 @@ public class FMMRFragment extends ListFragment
     	
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
-    	//uriText.setText("http://...");
+		//uriText.setText("http://...");
+    	//uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
 		//https://ia700401.us.archive.org/19/items/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4
 
     	Intent intent = getActivity().getIntent();
@@ -98,30 +107,30 @@ public class FMMRFragment extends ListFragment
 		
     	Button goButton = (Button) v.findViewById(R.id.go_button);
     	goButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// Clear the error message
 				uriText.setError(null);
-				
+
 				// Hide the keyboard
 				InputMethodManager imm = (InputMethodManager)
-					FMMRFragment.this.getActivity().getSystemService(
-					Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(uriText.getWindowToken(), 0);
-				
+						FMMRFragment.this.getActivity().getSystemService(
+								Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(uriText.getWindowToken(), 0);
+
 				String uri = uriText.getText().toString();
-				
+
 				if (uri.equals("")) {
 					uriText.setError(getString(R.string.uri_error));
 					return;
 				}
-				
+
 				// Start out with a progress indicator.
 				setListShown(false);
-				
+
 				String uriString = uriText.getText().toString();
-				
+
 				Bundle bundle = new Bundle();
 				try {
 					bundle.putString("uri", URLDecoder.decode(uriString, "UTF-8"));
@@ -146,9 +155,31 @@ public class FMMRFragment extends ListFragment
 
     	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.header, null);
     	mImage = (ImageView) header.findViewById(R.id.image);
-    	
-    	getListView().addHeaderView(header);
-        
+
+		// set up the Surface 1 video sink
+		mmSurfaceView = (SurfaceView) getView().findViewById(R.id.surfaceview);
+		mSurfaceHolder = mmSurfaceView.getHolder();
+
+		mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
+
+			public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+				Log.v("TAG", "surfaceChanged format=" + format + ", width=" + width + ", height="
+						+ height);
+			}
+
+			public void surfaceCreated(SurfaceHolder holder) {
+				Log.v("TAG", "surfaceCreated");
+				mFinalSurface = holder.getSurface();
+			}
+
+			public void surfaceDestroyed(SurfaceHolder holder) {
+				Log.v("TAG", "surfaceDestroyed");
+			}
+
+		});
+
+		getListView().addHeaderView(header);
+
         if (mAdapter == null) {
         	// Create an empty adapter we will use to display the loaded data.
         	mAdapter = new MetadataListAdapter(getActivity());

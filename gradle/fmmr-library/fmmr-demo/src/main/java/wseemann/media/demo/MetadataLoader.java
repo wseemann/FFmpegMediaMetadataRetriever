@@ -61,7 +61,11 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
     	
     	FFmpegMediaMetadataRetriever fmmr = new FFmpegMediaMetadataRetriever();
     	try {
-    		fmmr.setDataSource(mUri);
+            fmmr.setDataSource(mUri);
+
+            if (FMMRFragment.mFinalSurface != null) {
+                fmmr.setSurface(FMMRFragment.mFinalSurface);
+            }
     	
     		for (int i = 0; i < Constants.METADATA_KEYS.length; i++) {
     			String key = Constants.METADATA_KEYS[i];
@@ -92,7 +96,7 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
                 }
             }
 
-    		Bitmap b = fmmr.getFrameAtTime();;
+    		Bitmap b = fmmr.getFrameAtTime();
     		
     		if (b != null) {
     			Bitmap b2 = fmmr.getFrameAtTime(4000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST_SYNC);

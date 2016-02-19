@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.view.Surface;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -562,7 +563,27 @@ public class FFmpegMediaMetadataRetriever
     	
     	return Bitmap.Config.RGB_565;
     }
-    
+
+    /**
+     * Sets the {@link Surface} to be used as the sink for the video portion of
+     * the media. This is similar to {@link #setDisplay(SurfaceHolder)}, but
+     * does not support {@link #setScreenOnWhilePlaying(boolean)}.  Setting a
+     * Surface will un-set any Surface or SurfaceHolder that was previously set.
+     * A null surface will result in only the audio track being played.
+     *
+     * If the Surface sends frames to a {@link SurfaceTexture}, the timestamps
+     * returned from {@link SurfaceTexture#getTimestamp()} will have an
+     * unspecified zero point.  These timestamps cannot be directly compared
+     * between different media sources, different instances of the same media
+     * source, or multiple runs of the same program.  The timestamp is normally
+     * monotonically increasing and is unaffected by time-of-day adjustments,
+     * but it is reset when the position is set.
+     *
+     * @param surface The {@link Surface} to be used for the video portion of
+     * the media.
+     */
+    public native void setSurface(Object surface);
+
     /**
      * Option used in method {@link #getFrameAtTime(long, int)} to get a
      * frame at a specified location.
