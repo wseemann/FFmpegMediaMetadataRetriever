@@ -125,7 +125,7 @@ public class FFmpegMediaMetadataRetriever
     }
 
     // The field below is accessed by native methods
-    private int mNativeContext;
+    private long mNativeContext;
     
     public FFmpegMediaMetadataRetriever() {
     	native_setup();
@@ -372,7 +372,7 @@ public class FFmpegMediaMetadataRetriever
     	Bitmap b = null;
     	
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
+        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
     	
         byte [] picture = _getFrameAtTime(timeUs, option);
@@ -408,7 +408,7 @@ public class FFmpegMediaMetadataRetriever
     	Bitmap b = null;
     	
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
+        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
     	
         byte [] picture = _getFrameAtTime(timeUs, OPTION_CLOSEST_SYNC);
@@ -478,7 +478,7 @@ public class FFmpegMediaMetadataRetriever
         Bitmap b = null;
 
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
+        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
 
         byte [] picture = _getScaledFrameAtTime(timeUs, option, width, height);
@@ -514,7 +514,7 @@ public class FFmpegMediaMetadataRetriever
         Bitmap b = null;
 
         BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
+        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
         bitmapOptionsCache.inDither = false;
 
         byte [] picture = _getScaledFrameAtTime(timeUs, OPTION_CLOSEST_SYNC, width, height);
@@ -556,13 +556,13 @@ public class FFmpegMediaMetadataRetriever
         }
     }
 
-    private Bitmap.Config getInPreferredConfig() {
+    /*private Bitmap.Config getInPreferredConfig() {
     	if (IN_PREFERRED_CONFIG != null) {
     		return IN_PREFERRED_CONFIG;
     	}
     	
     	return Bitmap.Config.RGB_565;
-    }
+    }*/
 
     /**
      * Sets the {@link Surface} to be used as the sink for the video portion of

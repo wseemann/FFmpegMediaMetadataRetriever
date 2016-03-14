@@ -34,13 +34,14 @@ const int TARGET_IMAGE_CODEC = AV_CODEC_ID_PNG;
 
 void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height);
 
-int is_supported_format(int codec_id) {
-	if (codec_id == AV_CODEC_ID_PNG ||
-			codec_id == AV_CODEC_ID_MJPEG ||
-	        codec_id == AV_CODEC_ID_BMP) {
+int is_supported_format(int codec_id, int pix_fmt) {
+	if ((codec_id == AV_CODEC_ID_PNG ||
+		 codec_id == AV_CODEC_ID_MJPEG ||
+		 codec_id == AV_CODEC_ID_BMP) &&
+		pix_fmt == AV_PIX_FMT_RGBA) {
 		return 1;
 	}
-	
+
 	return 0;
 }
 
@@ -206,8 +207,16 @@ void init(State **ps) {
 int set_data_source_uri(State **ps, const char* path, const char* headers) {
 	State *state = *ps;
 	
+	ANativeWindow *native_window = NULL;
+
+	if (state && state->native_window) {
+		native_window = state->native_window;
+	}
+
 	init(&state);
 	
+	state->native_window = native_window;
+
 	state->headers = headers;
 	
 	*ps = state;
@@ -220,7 +229,15 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
 
 	State *state = *ps;
 	
+	ANativeWindow *native_window = NULL;
+
+	if (state && state->native_window) {
+		native_window = state->native_window;
+	}
+
 	init(&state);
+
+	state->native_window = native_window;
     	
     int myfd = dup(fd);
 
@@ -307,9 +324,10 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
         	// Is this a packet from the video stream?
         	if (pkt->stream_index == state->video_stream) {
         		int codec_id = state->video_st->codec->codec_id;
-        		
+				int pix_fmt = state->video_st->codec->pix_fmt;
+
         		// If the image isn't already in a supported format convert it to one
-        		if (!is_supported_format(codec_id)) {
+        		if (!is_supported_format(codec_id, pix_fmt)) {
         			int got_frame = 0;
         			
                     av_init_packet(pkt);
@@ -407,20 +425,8 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 	int numBytes = avpicture_get_size(TARGET_IMAGE_FORMAT, codecCtx->width, codecCtx->height);
 	void * buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
 
-	printf("wqwq %d\n", numBytes);
-
     avpicture_fill(((AVPicture *)frame),
     		buffer,
-    		TARGET_IMAGE_FORMAT,
-    		codecCtx->width,
-    		codecCtx->height);
-
-    /*avpicture_alloc(((AVPicture *)frame),
-    		TARGET_IMAGE_FORMAT,
-    		codecCtx->width,
-    		codecCtx->height);*/
-
-    avpicture_alloc(((AVPicture *)frame),
     		TARGET_IMAGE_FORMAT,
     		codecCtx->width,
     		codecCtx->height);
@@ -432,8 +438,11 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 			//pCodecCtx->height,
 			width,
 			height,
-			TARGET_IMAGE_FORMAT, 
-	        SWS_FAST_BILINEAR, 0, 0, 0);
+			TARGET_IMAGE_FORMAT,
+	        SWS_BILINEAR,
+	        NULL,
+	        NULL,
+	        NULL);
 	
 	if (!scalerCtx) {
 		printf("sws_getContext() failed\n");
@@ -451,12 +460,22 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 	int ret = avcodec_encode_video2(codecCtx, avpkt, frame, got_packet_ptr);
 	
 	if (state->native_window) {
-		//ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
+		ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
 
 		ANativeWindow_Buffer windowBuffer;
 
 		if (ANativeWindow_lock(state->native_window, &windowBuffer, NULL) == 0) {
-			memcpy(windowBuffer.bits, avpkt->data, windowBuffer.width * windowBuffer.height * 4);
+			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "width %d", windowBuffer.width);
+			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "height %d", windowBuffer.height);
+
+			int h = 0;
+
+			for (h = 0; h < height; h++)  {
+			  memcpy(windowBuffer.bits + h * windowBuffer.stride * 4,
+			         buffer + h * frame->linesize[0],
+			         width*4);
+			}
+
 			ANativeWindow_unlockAndPost(state->native_window);
 		}
 	}
@@ -469,7 +488,9 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 	fail:
     av_free(frame);
 	
-    free(buffer);
+    if (buffer) {
+    	free(buffer);
+    }
 
 	if (codecCtx) {
 		avcodec_close(codecCtx);
@@ -501,9 +522,10 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 		// Is this a packet from the video stream?
 		if (pkt->stream_index == state->video_stream) {
 			int codec_id = state->video_st->codec->codec_id;
+			int pix_fmt = state->video_st->codec->pix_fmt;
 			        		
 			// If the image isn't already in a supported format convert it to one
-			if (!is_supported_format(codec_id)) {
+			if (!is_supported_format(codec_id, pix_fmt)) {
 	            *got_frame = 0;
 	            
 				// Decode video frame
@@ -617,8 +639,12 @@ int set_native_window(State **ps, ANativeWindow* native_window) {
 
 	State *state = *ps;
 
-	if (!state || native_window == NULL) {
+	if (native_window == NULL) {
 		return FAILURE;
+	}
+
+	if (!state) {
+		init(&state);
 	}
 
 	state->native_window = native_window;

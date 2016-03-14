@@ -102,15 +102,15 @@ static void process_media_retriever_call(JNIEnv *env, int opStatus, const char* 
 static MediaMetadataRetriever* getRetriever(JNIEnv* env, jobject thiz)
 {
     // No lock is needed, since it is called internally by other methods that are protected
-    MediaMetadataRetriever* retriever = (MediaMetadataRetriever*) env->GetIntField(thiz, fields.context);
+    MediaMetadataRetriever* retriever = (MediaMetadataRetriever*) env->GetLongField(thiz, fields.context);
     return retriever;
 }
 
-static void setRetriever(JNIEnv* env, jobject thiz, int retriever)
+static void setRetriever(JNIEnv* env, jobject thiz, long retriever)
 {
     // No lock is needed, since it is called internally by other methods that are protected
-    MediaMetadataRetriever *old = (MediaMetadataRetriever*) env->GetIntField(thiz, fields.context);
-    env->SetIntField(thiz, fields.context, retriever);
+    MediaMetadataRetriever *old = (MediaMetadataRetriever*) env->GetLongField(thiz, fields.context);
+    env->SetLongField(thiz, fields.context, retriever);
 }
 
 static void
@@ -491,7 +491,7 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_native_init(JNIEnv *env,
         return;
     }
 
-    fields.context = env->GetFieldID(clazz, "mNativeContext", "I");
+    fields.context = env->GetFieldID(clazz, "mNativeContext", "J");
     if (fields.context == NULL) {
         return;
     }
@@ -509,7 +509,7 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_native_setup(JNIEnv *env
         jniThrowException(env, "java/lang/RuntimeException", "Out of memory");
         return;
     }
-    setRetriever(env, thiz, (int)retriever);
+    setRetriever(env, thiz, (long)retriever);
 }
 
 // JNI mapping between Java methods and native methods

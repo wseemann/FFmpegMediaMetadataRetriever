@@ -19,6 +19,9 @@ android {
     //def mkfile = "NDK_APPLICATION_MK=MIPSApplication.mk"
     //def aarname = "mips-fmmr"
 
+    //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
+    //def aarname = "x86_64-fmmr"
+
 
     defaultConfig {
         minSdkVersion 7
@@ -38,7 +41,7 @@ android {
     }
 
     task buildFFmpeg(type: Exec, description: 'Compile FFmpeg source via NDK') {
-        def dir = file('src/main/scripts/build-ffmpeg.sh').absolutePath
+        def dir = file('src/main/ffmpeg/build-ffmpeg.sh').absolutePath
         commandLine "$dir"
                 //"--enable-openssl"
     }
@@ -51,7 +54,7 @@ android {
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
                 '-j', Runtime.runtime.availableProcessors(),
                 'all',
-                'TARGET_PLATFORM=android-12'
+                'TARGET_PLATFORM=android-21'
                 'NDK_DEBUG=1'
     }
 
