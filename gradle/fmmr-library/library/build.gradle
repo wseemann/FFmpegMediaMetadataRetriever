@@ -4,8 +4,8 @@ android {
     compileSdkVersion 23
     buildToolsVersion "21.1.2"
 
-    def mkfile = "NDK_APPLICATION_MK=Application.mk"
-    def aarname = "all-fmmr"
+    //def mkfile = "NDK_APPLICATION_MK=Application.mk"
+    //def aarname = "all-fmmr"
 
     //def mkfile = "NDK_APPLICATION_MK=ARMApplication.mk"
     //def aarname = "arm-fmmr"
@@ -19,15 +19,15 @@ android {
     //def mkfile = "NDK_APPLICATION_MK=MIPSApplication.mk"
     //def aarname = "mips-fmmr"
 
-    //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
-    //def aarname = "x86_64-fmmr"
+    def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
+    def aarname = "x86_64-fmmr"
 
 
     defaultConfig {
-        minSdkVersion 7
+        minSdkVersion 12
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 5
+        versionName "1.0.4"
     }
     buildTypes {
         release {

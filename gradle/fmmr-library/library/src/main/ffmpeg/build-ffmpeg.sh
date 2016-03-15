@@ -1,15 +1,15 @@
 #!/bin/sh
 
-exit 0
 cd src/main/ffmpeg
+
 export WORKING_DIR=`pwd`
 export PROPS=$WORKING_DIR/../../../../local.properties
-FFMPEG_BUILD_DIR=$WORKING_DIR/ffmpeg
-TARGET_ARMEABI_DIR=$WORKING_DIR/jni/ffmpeg/ffmpeg/armeabi
-TARGET_ARMEABIV7A_DIR=$WORKING_DIR/jni/ffmpeg/ffmpeg/armeabi-v7a
-TARGET_X86_DIR=$WORKING_DIR/jni/ffmpeg/ffmpeg/x86
-TARGET_MIPS_DIR=$WORKING_DIR/jni/ffmpeg/ffmpeg/mips
-TARGET_X86_64_DIR=$WORKING_DIR/jni/ffmpeg/ffmpeg/x86_64
+
+TARGET_ARMEABI_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/armeabi
+TARGET_ARMEABIV7A_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/armeabi-v7a
+TARGET_X86_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86
+TARGET_MIPS_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/mips
+TARGET_X86_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86_64
 
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
 
