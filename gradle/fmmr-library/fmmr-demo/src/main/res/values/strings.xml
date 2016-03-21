@@ -10,4 +10,7 @@
     <string name="error_message">Metadata could not be retrieved</string>
     <string name="artwork">Artwork</string>
 
+    <string name="image_display_type">Image Display View</string>
+    <string name="pref_displaytype_default">ImageView</string>
+
 </resources>

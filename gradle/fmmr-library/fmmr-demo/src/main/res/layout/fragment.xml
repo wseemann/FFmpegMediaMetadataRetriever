@@ -9,21 +9,6 @@
     android:orientation="vertical"
     tools:context=".FMMRFragment" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dip"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <SurfaceView
-            android:id="@+id/surfaceview"
-            android:layout_width="100dip"
-            android:layout_height="100dip"
-            android:layout_gravity="center"
-            android:contentDescription="@string/artwork" />
-
-    </LinearLayout>
-
     <RelativeLayout 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >

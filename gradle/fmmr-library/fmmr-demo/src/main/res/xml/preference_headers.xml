@@ -1,0 +1,12 @@
+<preference-headers
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header android:fragment="wseemann.media.demo.PreferencesActivity$Prefs1Fragment"
+        android:title="Prefs 1"
+        android:summary="Some other preferences you can see.">
+        <!-- Arbitrary key/value pairs can be included with a header as
+             arguments to its fragment. -->
+        <extra android:name="someKey" android:value="someHeaderValue" />
+    </header>
+
+</preference-headers>

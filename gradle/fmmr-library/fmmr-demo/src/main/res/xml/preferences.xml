@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="pref_displaytype"
+        android:title="@string/image_display_type"
+        android:dialogTitle="@string/image_display_type"
+        android:entries="@array/pref_displaytype_entries"
+        android:entryValues="@array/pref_displaytype_values"
+        android:defaultValue="@string/pref_displaytype_default" />
+</PreferenceScreen>

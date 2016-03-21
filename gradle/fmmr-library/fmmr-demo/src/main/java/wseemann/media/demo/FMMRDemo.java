@@ -22,11 +22,16 @@ package wseemann.media.demo;
 import wseemann.media.demo.R;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class FMMRDemo extends FragmentActivity {
 
@@ -38,6 +43,25 @@ public class FMMRDemo extends FragmentActivity {
 		setContentView(R.layout.activity);
 
 		checkPermission();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_fmmr_demo, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action buttons
+		switch (item.getItemId()) {
+			case (R.id.settings):
+				startActivity(new Intent(this, PreferencesActivity.class));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private void checkPermission() {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_displaytype_entries">
+        <item>ImageView</item>
+        <item>SurfaceView</item>
+    </string-array>
+
+    <string-array name="pref_displaytype_values">
+        <item>ImageView</item>
+        <item>SurfaceView</item>
+    </string-array>
+
+</resources>

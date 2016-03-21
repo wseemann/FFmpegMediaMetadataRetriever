@@ -46,6 +46,11 @@
         		<data android:mimeType="video/*" />
     		</intent-filter>
         </activity>
+
+        <activity
+            android:name="wseemann.media.demo.PreferencesActivity"
+            android:label="@string/action_settings" >
+        </activity>
     </application>
 
 </manifest>
