@@ -20,7 +20,8 @@ Overview
 FFmpegMediaMetadataRetriever is a reimplementation of Android's MediaMetadataRetriever class. The FFmpegMediaMetadataRetriever class provides a unified interface for retrieving frame and meta data from an input media file and uses FFmpeg as its backend.
 
 Key Features:
-* Support for API 7+ (Not just API level 10+ like MediaMetadataRetriever)
+* ARM, ARMv7, x86, x86_64 and MIPS support
+* Support for API 12+
 * URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
 Supported protocols:
@@ -47,7 +48,7 @@ or, if your application supports individual architectures extract the appropriat
 
 (with HTTPS support)
 
-[Prebuilt AARs with HTTPS] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars-with-https.zip?raw=true)
+#[Prebuilt AARs with HTTPS] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars-with-https.zip?raw=true)
 
 Demo Application
 ------------
