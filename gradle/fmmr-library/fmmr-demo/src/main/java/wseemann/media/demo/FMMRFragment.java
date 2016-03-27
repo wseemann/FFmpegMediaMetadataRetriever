@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2016 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 
-import wseemann.media.demo.R;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -139,6 +138,8 @@ public class FMMRFragment extends ListFragment
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
+				//	mAdapter.add(new Metadata("test", "test"));
+				//	mAdapter.notifyDataSetChanged();
 			}
 		});
     	
@@ -149,15 +150,15 @@ public class FMMRFragment extends ListFragment
 	public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Give some text to display if there is no data.  In a real
+		// Give some text to display if there is no data.  In a real
         // application this would come from a resource.
         setEmptyText(getString(R.string.no_metadata));
 
     	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.header, null);
     	mImage = (ImageView) header.findViewById(R.id.image);
 
-		// set up the Surface 1 video sink
-		mmSurfaceView = (SurfaceView) getView().findViewById(R.id.surfaceview);
+		// set up the Surface video sink
+		mmSurfaceView = (SurfaceView) header.findViewById(R.id.surfaceview);
 		mSurfaceHolder = mmSurfaceView.getHolder();
 
 		mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
@@ -168,8 +169,41 @@ public class FMMRFragment extends ListFragment
 			}
 
 			public void surfaceCreated(SurfaceHolder holder) {
-				Log.v("TAG", "surfaceCreated");
 				mFinalSurface = holder.getSurface();
+
+				final EditText uriText = (EditText) getView().findViewById(R.id.uri);
+
+				// Clear the error message
+				uriText.setError(null);
+
+				// Hide the keyboard
+				InputMethodManager imm = (InputMethodManager)
+						FMMRFragment.this.getActivity().getSystemService(
+								Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(uriText.getWindowToken(), 0);
+
+				String uri = uriText.getText().toString();
+
+				if (uri.equals("")) {
+					uriText.setError(getString(R.string.uri_error));
+					return;
+				}
+
+				String view = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_displaytype", "ImageView");
+
+				// Start out with a progress indicator.
+				setListShown(false);
+
+				String uriString = uriText.getText().toString();
+
+				Bundle bundle = new Bundle();
+				try {
+					bundle.putString("uri", URLDecoder.decode(uriString, "UTF-8"));
+					mId++;
+					//FMMRFragment.this.getLoaderManager().initLoader(mId, bundle, FMMRFragment.this);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 			}
 
 			public void surfaceDestroyed(SurfaceHolder holder) {
@@ -186,10 +220,10 @@ public class FMMRFragment extends ListFragment
         	setListAdapter(mAdapter);
         } else {
         	setListAdapter(mAdapter);
-        	
+
         	// Start out with a progress indicator.
 			setListShown(false);
-        	
+
             // Prepare the loader.  Either re-connect with an existing one,
             // or start a new one.
             getLoaderManager().initLoader(mId, new Bundle(), this);
@@ -201,14 +235,6 @@ public class FMMRFragment extends ListFragment
 	    super.onDestroyView();
 	    setListAdapter(null);
 	}
-	
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(
-				R.menu.ffmpeg_media_metadata_retriever_sample, menu);
-		return true;
-	}*/
 
 	@Override
 	public Loader<List<Metadata>> onCreateLoader(int arg0, Bundle args) {

@@ -425,6 +425,11 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 	int numBytes = avpicture_get_size(TARGET_IMAGE_FORMAT, codecCtx->width, codecCtx->height);
 	void * buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
 
+	// set the frame parameters
+	frame->format = TARGET_IMAGE_FORMAT;
+    frame->width = codecCtx->width;
+    frame->height = codecCtx->height;
+
     avpicture_fill(((AVPicture *)frame),
     		buffer,
     		TARGET_IMAGE_FORMAT,
@@ -459,7 +464,7 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 
 	int ret = avcodec_encode_video2(codecCtx, avpkt, frame, got_packet_ptr);
 	
-	if (state->native_window) {
+	if (ret >= 0 && state->native_window) {
 		ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
 
 		ANativeWindow_Buffer windowBuffer;
