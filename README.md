@@ -48,7 +48,7 @@ or, if your application supports individual architectures extract the appropriat
 
 (with HTTPS support)
 
-#[Prebuilt AARs with HTTPS] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars-with-https.zip?raw=true)
+[Prebuilt AARs with HTTPS] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars-with-https.zip?raw=true)
 
 Demo Application
 ------------
