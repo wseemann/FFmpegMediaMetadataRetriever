@@ -8,8 +8,8 @@ android {
         applicationId "wseemann.media.fmpdemo"
         minSdkVersion 12
         targetSdkVersion 23
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 36
+        versionName "1.0.6"
     }
     buildTypes {
         release {
