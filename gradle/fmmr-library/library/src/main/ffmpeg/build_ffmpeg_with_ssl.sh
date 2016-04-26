@@ -71,7 +71,6 @@ done
 
 function build_one
 {
-echo ":sasas"
 echo $ARCH_NAME
 
 SSL_LD=`pwd`

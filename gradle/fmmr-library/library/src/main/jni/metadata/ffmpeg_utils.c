@@ -73,8 +73,12 @@ void set_rotation(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st) {
         
         if (entry && entry->value) {
             av_dict_set(&ic->metadata, ROTATE, entry->value, 0);
+        } else {
+            av_dict_set(&ic->metadata, ROTATE, "0", 0);
         }
-	}
+    } else if (video_st && video_st->metadata) {
+        av_dict_set(&ic->metadata, ROTATE, "0", 0);
+    }
 }
 
 void set_framerate(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st) {
