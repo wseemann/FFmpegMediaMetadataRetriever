@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    android.packageBuildConfig = false
+    android.packageBuildConfig = false 
 
     compileSdkVersion 23
     buildToolsVersion "21.1.2"
