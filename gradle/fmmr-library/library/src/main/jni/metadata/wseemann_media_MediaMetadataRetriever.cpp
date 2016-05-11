@@ -391,7 +391,7 @@ static jobject wseemann_media_FFmpegMediaMetadataRetriever_extractMetadataFromCh
         return NULL;
     }
 
-    if (chapter <= 0) {
+    if (chapter < 0) {
     	return NULL;
     }
     
