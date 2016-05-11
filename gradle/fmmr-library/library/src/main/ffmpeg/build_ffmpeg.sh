@@ -123,7 +123,7 @@ pushd ffmpeg-$FFMPEG_VERSION
     --disable-devices \
     --disable-filters \
     --enable-encoder=png \
-    --enable-protocol=file,http,https,mmsh,mmst,pipe,rtmp \
+    --enable-protocol=file,http,https,mmsh,mmst,pipe,rtmp,rtmps,rtmpt,rtmpts,rtp \
     --disable-debug \
     --disable-asm \
     $ADDITIONAL_CONFIGURE_FLAG
