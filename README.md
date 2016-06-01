@@ -39,12 +39,12 @@ Using FMMR in your application (Android Studio)
 Add the following maven dependency to your project's `build.gradle` file:
 
     dependencies {
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.9'
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.10'
     }
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
-[Prebuilt AARs] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.9/prebuilt-aars.zip)
+[Prebuilt AARs] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.10/prebuilt-aars.zip)
 
 (with HTTPS support)
 
