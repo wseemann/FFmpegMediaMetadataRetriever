@@ -8,28 +8,34 @@ android {
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
     def aarname = "all-fmmr"
+    def platform = "TARGET_PLATFORM=android-21"
 
     //def mkfile = "NDK_APPLICATION_MK=ARMApplication.mk"
     //def aarname = "arm-fmmr"
+    //def platform = "TARGET_PLATFORM=android-12"
 
     //def mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
     //def aarname = "armv7-fmmr"
+    //def platform = "TARGET_PLATFORM=android-12"
 
     //def mkfile = "NDK_APPLICATION_MK=x86Application.mk"
     //def aarname = "x86-fmmr"
+    //def platform = "TARGET_PLATFORM=android-12"
 
     //def mkfile = "NDK_APPLICATION_MK=MIPSApplication.mk"
     //def aarname = "mips-fmmr"
+    //def platform = "TARGET_PLATFORM=android-12"
 
     //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
     //def aarname = "x86_64-fmmr"
+    //def platform = "TARGET_PLATFORM=android-21"
 
 
     defaultConfig {
         minSdkVersion 12
         targetSdkVersion 23
-        versionCode 10
-        versionName "1.0.9"
+        versionCode 11
+        versionName "1.0.10"
     }
     buildTypes {
         release {
@@ -56,7 +62,7 @@ android {
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
                 '-j', Runtime.runtime.availableProcessors(),
                 'all',
-                'TARGET_PLATFORM=android-21'
+                platform
                 'NDK_DEBUG=1'
     }
 

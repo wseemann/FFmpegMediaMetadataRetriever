@@ -309,17 +309,21 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
 		return FAILURE;
 	}
 
+    // TODO commented out 5/31/16, do we actully need this since the context
+    // has been initialized
     // read the format headers
-    if (state->pFormatCtx->iformat->read_header(state->pFormatCtx) < 0) {
+    /*if (state->pFormatCtx->iformat->read_header(state->pFormatCtx) < 0) {
     	printf("Could not read the format header\n");
     	return FAILURE;
-    }
+    }*/
 
     // find the first attached picture, if available
     for (i = 0; i < state->pFormatCtx->nb_streams; i++) {
         if (state->pFormatCtx->streams[i]->disposition & AV_DISPOSITION_ATTACHED_PIC) {
         	printf("Found album art\n");
-        	*pkt = state->pFormatCtx->streams[i]->attached_pic;
+            av_copy_packet(pkt, &state->pFormatCtx->streams[i]->attached_pic);
+			// TODO is this right
+			got_packet = 1;
         	
         	// Is this a packet from the video stream?
         	if (pkt->stream_index == state->video_stream) {
@@ -354,8 +358,7 @@ int get_embedded_picture(State **ps, AVPacket *pkt) {
         			}
         		} else {
                 	av_init_packet(pkt);
-                	pkt->data = state->pFormatCtx->streams[i]->attached_pic.data;
-                	pkt->size = state->pFormatCtx->streams[i]->attached_pic.size;
+                    av_copy_packet(pkt, &state->pFormatCtx->streams[i]->attached_pic);
         			
         			got_packet = 1;
         			break;
