@@ -60,8 +60,8 @@ Installation
 
 FFmpegMediaMetadataRetriever relies on FFmpeg and native code. The build process
 is complex and may be confusing for those unfamiliar the Android NDK. For this
-reason I've precompiled the modules created by the build process and checked them
-in [here] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/prebuilt-aars.zip?raw=true).
+reason I've precompiled AARs created by the build process and checked them
+in [here] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.10/prebuilt-aars.zip).
 The modules are also included with the library. If you don't want to build the modules
 you can simple unzip the prebuilt ones and copy them to your projects "libs" folder. (Note:
 copy them to YOUR projects "libs" folder, NOT the "libs" folder located in
