@@ -46,6 +46,11 @@ typedef struct State {
 	int             fd;
 	int64_t         offset;
 	const char      *headers;
+	struct SwsContext *sws_ctx;
+	AVCodecContext  *codecCtx;
+
+	struct SwsContext *scaled_sws_ctx;
+	AVCodecContext  *scaled_codecCtx;
 	ANativeWindow   *native_window;
 } State;
 

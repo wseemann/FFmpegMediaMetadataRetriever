@@ -270,7 +270,7 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
        }
    }
 
-   av_free_packet(&packet);
+   av_packet_unref(&packet);
 
    return array;
 }
@@ -304,7 +304,7 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTi
         }
     }
     
-    av_free_packet(&packet);
+    av_packet_unref(&packet);
     
     return array;
 }
@@ -338,7 +338,7 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture
        }
    }
 
-   av_free_packet(&packet);
+   av_packet_unref(&packet);
    
    return array;
 }
