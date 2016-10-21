@@ -551,6 +551,8 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 	if (ret < 0 || !*got_packet_ptr) {
 		av_packet_unref(avpkt);
 	}
+
+//	avcodec_close(codecCtx);
 }
 
 void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number, int width, int height) {
@@ -591,6 +593,8 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 					    av_init_packet(pkt);
 						convert_image(state, state->video_st->codec, frame, pkt, got_frame, width, height);
 						break;
+					} else {
+					    av_frame_unref(frame);
 					}
 				}
 			} else {
@@ -598,10 +602,12 @@ void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_f
 	        	break;
 			}
 		}
+		av_packet_unref(pkt);
 	}
 	
 	// Free the frame
 	av_frame_free(&frame);
+//	avcodec_close(state->video_st->codec);
 }
 
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
@@ -708,6 +714,22 @@ void release(State **ps) {
 	State *state = *ps;
 	
     if (state) {
+        if(state->video_st) {
+	        if(state->video_st->codec != NULL) {
+	            avcodec_close(state->video_st->codec);
+		    // Do not free here. Crash.
+//		    av_free(state->video_st->codec);
+	        }
+        }
+
+        if(state->audio_st) {
+	        if(state->audio_st->codec != NULL) {
+	            avcodec_close(state->audio_st->codec);
+		    // Do not free here. Crash.
+//		    av_free(state->video_st->codec);
+	        }
+        }
+
     	if (state->pFormatCtx) {
     		avformat_close_input(&state->pFormatCtx);
     	}
