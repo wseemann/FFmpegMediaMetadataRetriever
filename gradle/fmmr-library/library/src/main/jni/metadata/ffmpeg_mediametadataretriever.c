@@ -708,6 +708,14 @@ void release(State **ps) {
 	State *state = *ps;
 	
     if (state) {
+        if (state->audio_st && state->audio_st->codec) {
+            avcodec_close(state->audio_st->codec);
+        }
+        
+        if (state->video_st && state->video_st->codec) {
+            avcodec_close(state->video_st->codec);
+        }
+        
     	if (state->pFormatCtx) {
     		avformat_close_input(&state->pFormatCtx);
     	}
