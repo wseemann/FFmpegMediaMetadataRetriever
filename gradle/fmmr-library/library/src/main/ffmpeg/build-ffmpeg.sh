@@ -10,6 +10,7 @@ TARGET_ARMEABIV7A_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/armeabi-v7a
 TARGET_X86_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86
 TARGET_MIPS_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/mips
 TARGET_X86_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86_64
+TARGET_ARMEABI_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/arm64-v8a
 
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
 
@@ -58,6 +59,12 @@ if [ ! -d $TARGET_X86_64_DIR ]; then
     # Build FFmpeg from x86_64 architecture and copy to the JNI folder
     cd $WORKING_DIR
     ./build_ffmpeg.sh x86_64
+fi
+
+if [ ! -d $TARGET_ARMEABI_64_DIR ]; then
+    # Build FFmpeg from arneabi_64 architecture and copy to the JNI folder
+    cd $WORKING_DIR
+    ./build_ffmpeg.sh arm64-v8a
 fi
 
 echo Native build complete, exiting...

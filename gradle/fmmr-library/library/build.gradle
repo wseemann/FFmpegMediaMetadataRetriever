@@ -24,6 +24,9 @@ android {
     //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
     //def aarname = "x86_64-fmmr"
 
+    //def mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
+    //def aarname = "arm_64-fmmr"
+
     defaultConfig {
         minSdkVersion 12
         targetSdkVersion 23

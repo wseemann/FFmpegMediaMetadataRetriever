@@ -204,7 +204,8 @@ if [ $TARGET == 'arm64-v8a' ]; then
     CPU=arm64-v8a
     ARCH=arm64
     OPTIMIZE_CFLAGS=
-    PREFIX=$BUILD_DIR/$CPU
+    #PREFIX=$BUILD_DIR/$CPU
+    PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/arm64-v8a
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
 fi
