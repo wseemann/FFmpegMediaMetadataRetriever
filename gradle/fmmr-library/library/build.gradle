@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     android.packageBuildConfig = false
 
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion "21.1.2"
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
@@ -29,10 +29,11 @@ android {
 
     defaultConfig {
         minSdkVersion 12
-        targetSdkVersion 23
-        versionCode 13
-        versionName "1.0.12"
+        targetSdkVersion 25
+        versionCode 14
+        versionName "1.0.13"
     }
+
     buildTypes {
         release {
             //minifyEnabled false

@@ -20,7 +20,7 @@ Overview
 FFmpegMediaMetadataRetriever is a reimplementation of Android's MediaMetadataRetriever class. The FFmpegMediaMetadataRetriever class provides a unified interface for retrieving frame and meta data from an input media file and uses FFmpeg as its backend.
 
 Key Features:
-* ARM, ARMv7, x86, x86_64 and MIPS support
+* ARM, ARMv7, x86, x86_64, MIPS and ARM_64 support
 * Support for API 12+
 * URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
@@ -39,12 +39,12 @@ Using FMMR in your application (Android Studio)
 Add the following maven dependency to your project's `build.gradle` file:
 
     dependencies {
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.12'
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.13'
     }
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
-[Prebuilt AARs] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.12/prebuilt-aars.zip)
+[Prebuilt AARs] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.13/prebuilt-aars.zip)
 
 (with HTTPS support)
 
@@ -61,7 +61,7 @@ Installation
 FFmpegMediaMetadataRetriever relies on FFmpeg and native code. The build process
 is complex and may be confusing for those unfamiliar the Android NDK. For this
 reason I've precompiled AARs created by the build process and checked them
-in [here] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.11/prebuilt-aars.zip).
+in [here] (https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.13/prebuilt-aars.zip).
 The modules are also included with the library. If you don't want to build the modules
 you can simple unzip the prebuilt ones and copy them to your projects "libs" folder. (Note:
 copy them to YOUR projects "libs" folder, NOT the "libs" folder located in
