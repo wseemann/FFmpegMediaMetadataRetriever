@@ -119,6 +119,18 @@ void set_chapter_count(AVFormatContext *ic) {
 	av_dict_set(&ic->metadata, CHAPTER_COUNT, value, 0);
 }
 
+void set_video_dimensions(AVFormatContext *ic, AVStream *video_st) {
+	char value[30] = "0";
+
+	if (video_st) {
+		sprintf(value, "%d", video_st->codec->width);
+	    av_dict_set(&ic->metadata, VIDEO_WIDTH, value, 0);
+
+		sprintf(value, "%d", video_st->codec->height);
+	    av_dict_set(&ic->metadata, VIDEO_HEIGHT, value, 0);
+	}
+}
+
 const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key) {
     char* value = NULL;
     

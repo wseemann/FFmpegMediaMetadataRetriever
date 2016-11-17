@@ -241,6 +241,7 @@ int set_data_source_l(State **ps, const char* path) {
     set_framerate(state->pFormatCtx, state->audio_st, state->video_st);
     set_filesize(state->pFormatCtx);
     set_chapter_count(state->pFormatCtx);
+    set_video_dimensions(state->pFormatCtx, state->video_st);
     
 	/*printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
@@ -716,7 +717,7 @@ void release(State **ps) {
             avcodec_close(state->video_st->codec);
         }
         
-    	if (state->pFormatCtx) {
+        if (state->pFormatCtx) {
     		avformat_close_input(&state->pFormatCtx);
     	}
     	

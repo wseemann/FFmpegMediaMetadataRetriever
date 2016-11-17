@@ -767,6 +767,14 @@ public class FFmpegMediaMetadataRetriever
      * The metadata key to retrieve the file size in bytes.
      */
     public static final String METADATA_KEY_FILESIZE = "filesize";
+    /**
+     * The metadata key to retrieve the video width.
+     */
+    public static final String METADATA_KEY_VIDEO_WIDTH = "video_width";
+    /**
+     * The metadata key to retrieve the video height.
+     */
+    public static final String METADATA_KEY_VIDEO_HEIGHT = "video_height";
 
     /**
      Class to hold the media's metadata.  Metadata are used
