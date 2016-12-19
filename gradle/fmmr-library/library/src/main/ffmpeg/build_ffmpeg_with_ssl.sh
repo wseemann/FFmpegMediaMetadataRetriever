@@ -14,28 +14,6 @@ set -e
 
 export TARGET=$1
 
-export ARCH_NAME=""
-
-if [ $TARGET == 'x86_64' ]; then
-    export ARCH_NAME="x86_64"
-fi
-
-if [ $TARGET == 'i686' ]; then
-    export ARCH_NAME="x86"
-fi
-
-if [ $TARGET == 'mips' ]; then
-    export ARCH_NAME="mips"
-fi
-
-if [ $TARGET == 'armv7-a' ]; then
-    export ARCH_NAME="armeabi-v7a"
-fi
-
-if [ $TARGET == 'arm' ]; then
-    export ARCH_NAME="armeabi"
-fi
-
 ARM_PLATFORM=$NDK/platforms/android-9/arch-arm/
 ARM_PREBUILT=$NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64
 
@@ -71,15 +49,13 @@ done
 
 function build_one
 {
-echo $ARCH_NAME
-
 SSL_LD=`pwd`
 
-SSL_EXTRA_LDFLAGS="-L$SSL_LD/../libs/$ARCH_NAME"
-SSL_EXTRA_CFLAGS="-I$SSL_LD/../jni/openssl-android/include"
+SSL_EXTRA_LDFLAGS="-L$SSL_LD/openssl-android/$TARGET/lib"
+SSL_EXTRA_CFLAGS="-I$SSL_LD/openssl-android/$TARGET/include"
 
-echo $SSL_EXTRA_LDFLAGS | tee $BUILD_DIR/configuration1.txt
-echo $SSL_EXTRA_CFLAGS | tee $BUILD_DIR/configuration2.txt
+echo $SSL_EXTRA_LDFLAGS
+echo $SSL_EXTRA_CFLAGS
 
 if [ $ARCH == "arm" ]
 then
@@ -132,7 +108,7 @@ pushd ffmpeg-$FFMPEG_VERSION
     --extra-cflags="$OPTIMIZE_CFLAGS $SSL_EXTRA_CFLAGS" \
     --enable-shared \
     --enable-small \
-    --extra-ldflags="-Wl,-rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -nostdlib -lc -lm -ldl -llog $SSL_EXTRA_LDFLAGS" \
+    --extra-ldflags="-Wl,-rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -nostdlib -lc -lm -ldl -llog $SSL_EXTRA_LDFLAGS -DOPENSSL_API_COMPAT=0x00908000L" \
     --disable-ffplay \
     --disable-ffmpeg \
     --disable-ffprobe \
@@ -157,7 +133,7 @@ pushd ffmpeg-$FFMPEG_VERSION
     --disable-debug \
     --disable-asm \
     --enable-openssl \
-    $ADDITIONAL_CONFIGURE_FLAG | tee $BUILD_DIR/configuration.txt
+    $ADDITIONAL_CONFIGURE_FLAG
 
 #--disable-protocols \
 #--enable-protocol=file,http,https,mmsh,mmst,pipe,rtmp \
@@ -239,6 +215,7 @@ if [ $TARGET == 'arm64-v8a' ]; then
     ARCH=arm64
     OPTIMIZE_CFLAGS=
     PREFIX=$BUILD_DIR/$CPU
+    PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/arm64-v8a
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
 fi
@@ -252,7 +229,6 @@ if [ $TARGET == 'x86_64' ]; then
     PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/x86_64
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
-    ARCH_NAME="x86_64"
 fi
 
 if [ $TARGET == 'i686' ]; then
@@ -264,7 +240,6 @@ if [ $TARGET == 'i686' ]; then
     PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/x86
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
-    ARCH_NAME="x86"
 fi
 
 if [ $TARGET == 'mips' ]; then
@@ -279,7 +254,6 @@ if [ $TARGET == 'mips' ]; then
     PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/mips
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
-    ARCH_NAME="mips"
 fi
 
 if [ $TARGET == 'armv7-a' ]; then
@@ -291,7 +265,6 @@ if [ $TARGET == 'armv7-a' ]; then
     PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/armeabi-v7a
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
-    ARCH_NAME="armeabi-v7a"
 fi
 
 if [ $TARGET == 'arm' ]; then
@@ -303,5 +276,4 @@ if [ $TARGET == 'arm' ]; then
     PREFIX=`pwd`/../jni/ffmpeg/ffmpeg/armeabi
     ADDITIONAL_CONFIGURE_FLAG=
     build_one
-    ARCH_NAME="armeabi"
 fi
