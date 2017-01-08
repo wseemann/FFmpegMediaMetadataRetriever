@@ -53,10 +53,10 @@ Optionally, to support individual ABIs:
     dependencies {
         compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi:1.0.14'
         compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-v7a:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-x86:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-mips:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-x86_64:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-arm64-v8a:1.0.14'
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-x86:1.0.14'
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-mips:1.0.14'
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-x86_64:1.0.14'
+        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-arm64-v8a:1.0.14'
     }
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
