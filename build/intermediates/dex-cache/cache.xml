@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/weji/wentao_workspace/FFmpegMediaMetadataRetriever/fmmr-demo/build/intermediates/pre-dexed/debug/android-support-v4-6d2fa697489b8d6a1a91d190900ba3ac02bb6cc8.jar"
+        jar="/Users/weji/wentao_workspace/FFmpegMediaMetadataRetriever/fmmr-demo/libs/android-support-v4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="4a6be13368bb64c5a0b0460632d228a1a915f58f"/>
+    <item
+        dex="/Users/weji/wentao_workspace/FFmpegMediaMetadataRetriever/fmmr-demo/build/intermediates/pre-dexed/debug/fmmr-7532393547e9c2a9268d2d30fb2bda8f22b9b7a3.jar"
+        jar="/Users/weji/wentao_workspace/FFmpegMediaMetadataRetriever/fmmr-demo/libs/fmmr.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e83ab56639d42a01ce3bc74317d674ec839184cb"/>
+
+</pre-dex-items>

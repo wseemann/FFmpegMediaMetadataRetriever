@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fmmr">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/fmmr-demo/libs/fmmr.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
