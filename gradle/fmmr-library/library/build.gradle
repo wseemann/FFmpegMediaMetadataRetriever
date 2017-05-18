@@ -4,7 +4,7 @@ android {
     android.packageBuildConfig = false
 
     compileSdkVersion 25
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
     def aarname = "all-fmmr"
@@ -32,6 +32,8 @@ android {
         targetSdkVersion 25
         versionCode 16
         versionName "1.0.14"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -89,6 +91,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile 'junit:junit:4.12'
+
+    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
 }
 
 apply from: 'maven-push.gradle'
