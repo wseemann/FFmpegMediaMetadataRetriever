@@ -39,7 +39,7 @@ MIPS_PREBUILT=$NDK/toolchains/mipsel-linux-android-4.9/prebuilt/darwin-x86_64
 
 BUILD_DIR=`pwd`/openssl-android
 
-OPENSSL_VERSION="1.0.2j" #"1.1.0c"
+OPENSSL_VERSION="1.0.2j"
 
 if [ ! -e "openssl-${OPENSSL_VERSION}.tar.gz" ]; then
   echo "Downloading openssl-${OPENSSL_VERSION}.tar.gz"
@@ -96,7 +96,23 @@ then
     ./Configure android-mips shared no-ssl2 no-ssl3 no-comp no-hw no-engine --openssldir=$INSTALL_DIR --prefix=$INSTALL_DIR
 elif [ $TARGET == "x86_64" ]
 then
-    ./Configure linux-x86_64 shared no-ssl2 no-ssl3 no-comp no-hw no-engine --openssldir=$INSTALL_DIR --prefix=$INSTALL_DIR
+    #./Configure linux-generic64 shared no-ssl2 no-ssl3 no-comp no-hw no-engine --openssldir=$INSTALL_DIR --prefix=$INSTALL_DIR
+    . ../libopenssl_builder.sh -s `pwd` -n $NDK -o $BUILD_DIR -b 6
+
+    # copy the binaries
+    mkdir -p $PREFIX
+    cp -r $BUILD_DIR/$CPU/* $PREFIX
+
+    exit 0
+elif [ $TARGET == "arm64-v8a" ]
+then
+    . ../libopenssl_builder.sh -s `pwd` -n $NDK -o $BUILD_DIR -b 1
+
+    # copy the binaries
+    mkdir -p $PREFIX
+    cp -r $BUILD_DIR/$CPU/* $PREFIX
+
+    exit 0
 else
     ./config shared no-ssl2 no-ssl3 no-comp no-hw no-engine --openssldir=$INSTALL_DIR --prefix=$INSTALL_DIR
 fi
