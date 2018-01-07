@@ -52,6 +52,9 @@ typedef struct State {
 	struct SwsContext *scaled_sws_ctx;
 	AVCodecContext  *scaled_codecCtx;
 	ANativeWindow   *native_window;
+	int (*media_data_source_callback) (void*, long, void *, int, int);
+	void* clazz;
+	long position;
 } State;
 
 struct AVDictionary {
@@ -61,6 +64,7 @@ struct AVDictionary {
 
 int set_data_source_uri(State **ps, const char* path, const char* headers);
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length);
+int set_data_source_callback(State **ps, void* clazz, int (*listener) (void*, long, void*, int, int));
 const char* extract_metadata(State **ps, const char* key);
 const char* extract_metadata_from_chapter(State **ps, const char* key, int chapter);
 int get_metadata(State **ps, AVDictionary **metadata);
@@ -68,6 +72,7 @@ int get_embedded_picture(State **ps, AVPacket *pkt);
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);
 int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt, int width, int height);
 int set_native_window(State **ps, ANativeWindow* native_window);
+int setMediaDataSource(State **ps, void* clazz, int (*listener) (void*, long, void*, int, int));
 void release(State **ps);
 
 #endif /*FFMPEG_MEDIAMETADATARETRIEVER_H_*/

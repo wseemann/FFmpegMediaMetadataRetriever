@@ -29,6 +29,7 @@ extern "C" {
 MediaMetadataRetriever::MediaMetadataRetriever()
 {
 	state = NULL;
+    mListener = NULL;
 }
 
 MediaMetadataRetriever::~MediaMetadataRetriever()
@@ -47,6 +48,20 @@ int MediaMetadataRetriever::setDataSource(int fd, int64_t offset, int64_t length
 {
 	Mutex::Autolock _l(mLock);
     return ::set_data_source_fd(&state, fd, offset, length);
+}
+
+static int
+notifyListener(void* clazz, long position, void *buffer, int offset, int size)
+{
+	MediaMetadataRetriever* mmr = (MediaMetadataRetriever*) clazz;
+    return mmr->readAt(position, buffer, offset, size);
+}
+
+int MediaMetadataRetriever::setDataSource(MediaDataSource* callbackDataSource)
+{
+	Mutex::Autolock _l(mLock);
+	setMediaDataSource(callbackDataSource);
+    return ::set_data_source_callback(&state, this, notifyListener);
 }
 
 int MediaMetadataRetriever::getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt)
@@ -89,4 +104,28 @@ int MediaMetadataRetriever::setNativeWindow(ANativeWindow* native_window)
 {
     Mutex::Autolock _l(mLock);
 	return ::set_native_window(&state, native_window);
+}
+
+void MediaMetadataRetriever::setMediaDataSource(MediaDataSource* callbackDataSource)
+{
+	//Mutex::Autolock _l(mLock);
+	mListener = callbackDataSource;
+	if (state != 0) {
+	    ::setMediaDataSource(&state, this, notifyListener);
+	}
+}
+
+MediaDataSource * MediaMetadataRetriever::getMediaDataSource() {
+	return mListener;
+}
+
+int MediaMetadataRetriever::readAt(long position, void *buffer, int offset, int size)
+{
+    MediaDataSource* listener = mListener;
+
+    if ((listener != 0)) {
+    	return listener->readAt(position, buffer, offset, size);
+    }
+
+    return -1;
 }

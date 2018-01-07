@@ -37,12 +37,97 @@ using namespace std;
 
 struct fields_t {
     jfieldID context;
+    jmethodID read_at;
+    jmethodID get_buffer;
 };
 
 static fields_t fields;
 static const char* const kClassPathName = "wseemann/media/FFmpegMediaMetadataRetriever";
 
 static JavaVM *m_vm;
+
+// ----------------------------------------------------------------------------
+// ref-counted object for callbacks
+class JMediaDataSource: public MediaDataSource
+{
+public:
+	JMediaDataSource(JNIEnv* env, jobject thiz, jobject weak_thiz);
+    ~JMediaDataSource();
+    virtual int readAt(long position, void *buffer, int offset, int size);
+private:
+    JMediaDataSource();
+    jclass      mClass;     // Reference to MediaMetadataRetriever class
+    jobject     mObject;    // Weak ref to MediaMetadataRetriever Java object to call on
+    jobject     mThiz;
+};
+
+void jniThrowException(JNIEnv* env, const char* className,
+    const char* msg) {
+    jclass exception = env->FindClass(className);
+    env->ThrowNew(exception, msg);
+}
+
+JMediaDataSource::JMediaDataSource(JNIEnv* env, jobject thiz, jobject weak_thiz)
+{
+
+    // Hold onto the MediaPlayer class for use in calling the static method
+    // that posts events to the application thread.
+    jclass clazz = env->GetObjectClass(thiz);
+    if (clazz == NULL) {
+    	__android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Can't find wseemann/media/FFmpegMediaMetadataRetriever");
+        jniThrowException(env, "java/lang/Exception", NULL);
+        return;
+    }
+    mClass = (jclass)env->NewGlobalRef(clazz);
+    mThiz = (jobject)env->NewGlobalRef(thiz);
+
+    // We use a weak reference so the MediaPlayer object can be garbage collected.
+    // The reference is only used as a proxy for callbacks.
+    mObject  = env->NewGlobalRef(weak_thiz);
+}
+
+JMediaDataSource::~JMediaDataSource()
+{
+    // remove global references
+    //JNIEnv *env = AndroidRuntime::getJNIEnv();
+	JNIEnv *env = 0;
+	m_vm->GetEnv((void**)&env, JNI_VERSION_1_6);
+    env->DeleteGlobalRef(mObject);
+    env->DeleteGlobalRef(mClass);
+    env->DeleteGlobalRef(mThiz);
+}
+
+int JMediaDataSource::readAt(long position, void *buffer, int offset, int size)
+{
+    //__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "readAt: %d %d", offset, size);
+	JNIEnv *env = 0;
+	int isAttached = 0;
+
+	int status  = m_vm->GetEnv((void**)&env, JNI_VERSION_1_6);
+
+	int bytesRead = env->CallIntMethod(mThiz, fields.read_at, position, offset, size);
+
+	if (bytesRead > 0) {
+		jbyteArray data = (jbyteArray) env->CallObjectMethod(mThiz, fields.get_buffer);
+
+		jbyte* dataPtr = env->GetByteArrayElements(data, NULL);
+		//jsize lengthOfData = env->GetArrayLength(data);
+
+        memcpy(buffer, dataPtr, bytesRead);
+
+	    __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "read size: %d", bytesRead);
+
+		env->ReleaseByteArrayElements(data, dataPtr, 0);
+	}
+
+    if (env->ExceptionCheck()) {
+    	__android_log_print(ANDROID_LOG_WARN, LOG_TAG, "An exception occurred while notifying an event.");
+        //LOGW_EX(env);
+        env->ExceptionClear();
+    }
+
+    return bytesRead;
+}
 
 // video sink for the player
 static ANativeWindow* theNativeWindow;
@@ -74,12 +159,6 @@ static jstring NewStringUTF(JNIEnv* env, const char * data) {
     env->DeleteLocalRef(array);
 
     return str;
-}
-
-void jniThrowException(JNIEnv* env, const char* className,
-    const char* msg) {
-    jclass exception = env->FindClass(className);
-    env->ThrowNew(exception, msg);
 }
 
 static void process_media_retriever_call(JNIEnv *env, int opStatus, const char* exception, const char *message)
@@ -123,6 +202,14 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
     if (retriever == 0) {
         jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
         return;
+    }
+
+    JMediaDataSource *callbackDataSource = (JMediaDataSource *) retriever->getMediaDataSource();
+
+    if (callbackDataSource) {
+        delete callbackDataSource;
+        __android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "popopop");
+        retriever->setMediaDataSource(0);
     }
 
     if (!path) {
@@ -220,6 +307,14 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *
         jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
         return;
     }
+
+    JMediaDataSource *callbackDataSource = (JMediaDataSource *) retriever->getMediaDataSource();
+
+    if (callbackDataSource) {
+        delete callbackDataSource;
+        retriever->setMediaDataSource(0);
+    }
+
     if (!fileDescriptor) {
         jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
         return;
@@ -239,6 +334,26 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *
         return;
     }
     process_media_retriever_call(env, retriever->setDataSource(fd, offset, length), "java/lang/RuntimeException", "setDataSource failed");
+}
+
+static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceCallback(JNIEnv *env, jobject thiz, jobject weak_this)
+{
+    __android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "setDataSourceCallback");
+    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+    if (retriever == 0) {
+        jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
+        return;
+    }
+    /*if (dataSource == NULL) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return;
+    }*/
+
+    // create new media data source and give it to MediaMediaDataRetriever
+    JMediaDataSource* callbackDataSource = new JMediaDataSource(env, thiz, weak_this);
+
+    //sp<IDataSource> callbackDataSource = new JMediaDataSource(env, dataSource);
+    process_media_retriever_call(env, retriever->setDataSource(callbackDataSource), "java/lang/RuntimeException", "setDataSourceCallback failed");
 }
 
 static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
@@ -454,6 +569,15 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_release(JNIEnv *env, job
     __android_log_write(ANDROID_LOG_INFO, LOG_TAG, "release");
     //Mutex::Autolock lock(sLock);
     MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+
+    // this prevents native callbacks after the object is released
+    JMediaDataSource *callbackDataSource = (JMediaDataSource *) retriever->getMediaDataSource();
+
+    if (callbackDataSource) {
+        delete callbackDataSource;
+        retriever->setMediaDataSource(0);
+    }
+
     delete retriever;
     setRetriever(env, thiz, 0);
 }
@@ -496,6 +620,16 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_native_init(JNIEnv *env,
         return;
     }
 
+    fields.read_at = env->GetMethodID(clazz, "readAt", "(JII)I");
+    if (fields.read_at == NULL) {
+        return;
+    }
+
+    fields.get_buffer = env->GetMethodID(clazz, "getBuffer", "()[B");
+    if (fields.get_buffer == NULL) {
+        return;
+    }
+
     // Initialize libavformat and register all the muxers, demuxers and protocols.
 	av_register_all();
 	avformat_network_init();
@@ -523,6 +657,7 @@ static JNINativeMethod nativeMethods[] = {
     },
     
     {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
+    {"_setDataSource",   "(Ljava/lang/Object;)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceCallback},
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
     {"_getScaledFrameAtTime", "(JIII)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTime},
     {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},

@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2016 William Seemann
+ * Copyright 2018 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,17 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaDataSource;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.Surface;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -129,7 +134,9 @@ public class FFmpegMediaMetadataRetriever
 
     // The field below is accessed by native methods
     private long mNativeContext;
-    
+	private Object mDataSource;
+    private byte [] mBuffer;
+
     public FFmpegMediaMetadataRetriever() {
     	native_setup();
     }
@@ -258,7 +265,46 @@ public class FFmpegMediaMetadataRetriever
         }
         setDataSource(uri.toString());
     }
-    
+
+    /**
+     * Sets the data source (MediaDataSource) to use.
+     *
+     * @param dataSource the MediaDataSource for the media you want to play
+     */
+    public void setDataSource(android.media.MediaDataSource dataSource)
+            throws IllegalArgumentException {
+        mDataSource = dataSource;
+        _setDataSource(new WeakReference<FFmpegMediaMetadataRetriever>(this));
+    }
+
+    private native void _setDataSource(Object mediametadataretriever_this)
+            throws IllegalArgumentException;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private int readAt(long position, int offset, int size) {
+        Log.d("------->", "position: " + String.valueOf(position) + " offset: " + offset + " size:" + size);
+
+        if (mDataSource == null) {
+            return -1;
+        }
+
+        android.media.MediaDataSource mediaDataSource = (MediaDataSource) mDataSource;
+
+        mBuffer = new byte[size];
+
+        try {
+            return mediaDataSource.readAt(position, mBuffer, offset, size);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    private byte [] getBuffer() {
+        return mBuffer;
+    }
+
     /**
      * Call this method after setDataSource(). This method retrieves the 
      * meta data value associated with the keyCode.

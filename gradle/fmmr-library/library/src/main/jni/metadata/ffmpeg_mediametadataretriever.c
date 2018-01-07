@@ -168,6 +168,22 @@ int stream_component_open(State *s, int stream_index) {
 	return SUCCESS;
 }
 
+static int
+media_data_source_callback(void* opaque, uint8_t *buf, int buf_size)
+{
+	State *state = (State *) opaque;
+
+	int bytes_read = state->media_data_source_callback(state->clazz, state->position, buf, 0, buf_size);
+
+	if (bytes_read == -1) {
+		return AVERROR_EOF;
+	}
+
+    state->position = state->position + bytes_read;
+
+	return bytes_read;
+}
+
 int set_data_source_l(State **ps, const char* path) {
 	printf("set_data_source\n");
 	int audio_index = -1;
@@ -191,6 +207,25 @@ int set_data_source_l(State **ps, const char* path) {
         state->pFormatCtx->skip_initial_bytes = state->offset;
     }
     
+    if (state->media_data_source_callback) {
+		__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "media_data_source_callback != null");
+    	int size = 32 * 1024;
+    	uint8_t *buffer = malloc(size);
+
+    	AVIOContext* avioCtx = avio_alloc_context(buffer,
+    			size,
+				0,
+				state,
+				media_data_source_callback,
+				NULL,
+				NULL);
+
+        state->pFormatCtx = avformat_alloc_context();
+    	state->pFormatCtx->pb = avioCtx;
+    	state->pFormatCtx->flags = AVFMT_FLAG_CUSTOM_IO;
+    	state->position = 0;
+    }
+
     if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
 	    printf("Metadata could not be retrieved\n");
 		*ps = NULL;
@@ -277,6 +312,8 @@ void init(State **ps) {
 	state->fd = -1;
 	state->offset = 0;
 	state->headers = NULL;
+	state->clazz = NULL;
+    state->media_data_source_callback = 0;
 
 	*ps = state;
 }
@@ -297,7 +334,7 @@ int set_data_source_uri(State **ps, const char* path, const char* headers) {
 	state->headers = headers;
 	
 	*ps = state;
-	
+
 	return set_data_source_l(ps, path);
 }
 
@@ -326,7 +363,32 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     state->offset = offset;
     
 	*ps = state;
-    
+
+    return set_data_source_l(ps, path);
+}
+
+int setMediaDataSource(State **ps, void* clazz, int (*listener) (void*, long, void*, int, int)) {
+    State *state = *ps;
+    state->clazz = clazz;
+    state->media_data_source_callback = listener;
+    return SUCCESS;
+}
+
+int set_data_source_callback(State **ps, void* clazz, int (*listener) (void*, long, void*, int, int)) {
+    char path[256] = "";
+
+	State *state = *ps;
+
+	init(&state);
+
+	char str[20];
+    sprintf(str, "pipe:0");
+    strcat(path, str);
+
+	*ps = state;
+
+	setMediaDataSource(ps, clazz, listener);
+
     return set_data_source_l(ps, path);
 }
 

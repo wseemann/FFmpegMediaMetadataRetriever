@@ -27,6 +27,14 @@ extern "C" {
     #include "ffmpeg_mediametadataretriever.h"
 }
 
+// ----------------------------------------------------------------------------
+// ref-counted object for callbacks
+class MediaDataSource
+{
+public:
+    virtual int readAt(long position, void *buffer, int offset, int size) = 0;
+};
+
 class MediaMetadataRetriever
 {
 	State* state;
@@ -36,6 +44,7 @@ public:
     void disconnect();
     int setDataSource(const char* dataSourceUrl, const char* headers);
     int setDataSource(int fd, int64_t offset, int64_t length);
+    int setDataSource(MediaDataSource* callbackDataSource);
     int getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt);
     int getScaledFrameAtTime(int64_t timeUs, int option, AVPacket *pkt, int width, int height);
     int extractAlbumArt(AVPacket *pkt);
@@ -43,9 +52,13 @@ public:
     const char* extractMetadataFromChapter(const char* key, int chapter);
     int getMetadata(bool update_only, bool apply_filter, AVDictionary **metadata);
     int setNativeWindow(ANativeWindow* native_window);
+    void setMediaDataSource(MediaDataSource* callbackDataSource);
+    MediaDataSource * getMediaDataSource();
+    int readAt(long position, void *buffer, int offset, int size);
 
 private:
     Mutex                                     mLock;
+    MediaDataSource*                          mListener;
 };
 
 #endif // MEDIAMETADATARETRIEVER_H
