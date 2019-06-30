@@ -27,9 +27,10 @@ import wseemann.media.FFmpegMediaMetadataRetriever;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.loader.content.AsyncTaskLoader;
 
 /**
  * A custom Loader that loads all of the installed applications.

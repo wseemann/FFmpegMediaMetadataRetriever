@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -44,8 +43,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+
+import androidx.fragment.app.ListFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 public class FMMRFragment extends ListFragment
 		implements LoaderManager.LoaderCallbacks<List<Metadata>> {
@@ -82,7 +83,7 @@ public class FMMRFragment extends ListFragment
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
 		//uriText.setText("http://...");
-    	//uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
+    	uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
 		//https://ia700401.us.archive.org/19/items/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4
 
     	Intent intent = getActivity().getIntent();

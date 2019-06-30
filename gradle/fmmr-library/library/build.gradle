@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
     android.packageBuildConfig = false
 
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
     def aarname = "all-fmmr"
@@ -32,7 +32,7 @@ android {
         versionCode 16
         versionName "1.0.14"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -93,9 +93,9 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
-    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 }
 
 apply from: 'maven-push.gradle'
