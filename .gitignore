@@ -1,3 +1,6 @@
+gradle/fmmr-library/library/src/main/ffmpeg/ffmpeg-android/
+gradle/fmmr-library/library/src/main/ffmpeg/ffmpeg-3.0.1/
+
 .DS_Store
 
 .gradle
