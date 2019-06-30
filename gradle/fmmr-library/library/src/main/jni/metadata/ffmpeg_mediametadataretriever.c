@@ -622,7 +622,7 @@ int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *p
 		return FAILURE;
 	}
 	
-    if (timeUs != -1) {
+    if (timeUs > -1) {
         int stream_index = state->video_stream;
         int64_t seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
         int64_t seek_stream_duration = state->pFormatCtx->streams[stream_index]->duration;
