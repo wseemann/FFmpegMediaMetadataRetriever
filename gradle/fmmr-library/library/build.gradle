@@ -3,11 +3,10 @@ apply plugin: 'com.android.library'
 android {
     android.packageBuildConfig = false
 
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 28
 
-    //def mkfile = "NDK_APPLICATION_MK=Application.mk"
-    //def aarname = "all-fmmr"
+    def mkfile = "NDK_APPLICATION_MK=Application.mk"
+    def aarname = "all-fmmr"
 
     //def mkfile = "NDK_APPLICATION_MK=ARMApplication.mk"
     //def aarname = "arm-fmmr"
@@ -24,12 +23,12 @@ android {
     //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
     //def aarname = "x86_64-fmmr"
 
-    def mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
-    def aarname = "arm_64-fmmr"
+    //def mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
+    //def aarname = "arm_64-fmmr"
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 29
         versionCode 16
         versionName "1.0.14"
 
@@ -78,7 +77,7 @@ android {
         compileTask -> compileTask.dependsOn buildNative
     }
 
-    libraryVariants.all { variant ->
+    /*libraryVariants.all { variant ->
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.aar')) {
@@ -86,17 +85,17 @@ android {
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
-    }
+    }*/
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 
-    androidTestCompile 'com.android.support:support-annotations:24.0.0'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestImplementation 'com.android.support:support-annotations:28.0.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }
 
 apply from: 'maven-push.gradle'
