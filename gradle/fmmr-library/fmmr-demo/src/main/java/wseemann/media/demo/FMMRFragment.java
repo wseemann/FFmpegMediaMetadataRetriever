@@ -83,7 +83,7 @@ public class FMMRFragment extends ListFragment
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
 		//uriText.setText("http://...");
-    	uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
+    	//uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
 		//https://ia700401.us.archive.org/19/items/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4
 
     	Intent intent = getActivity().getIntent();
