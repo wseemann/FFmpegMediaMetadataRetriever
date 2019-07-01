@@ -1,1 +1,1 @@
-include ':library', ':fmmr-demo'
+include ':library', ':fmmr-demo', ':core'
