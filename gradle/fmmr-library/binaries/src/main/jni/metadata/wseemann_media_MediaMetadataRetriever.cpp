@@ -141,12 +141,15 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
         return;
     }
 
+    char uri[] = "";
+    strcpy(uri, tmp);
+    
     // Workaround for FFmpeg ticket #998
     // "must convert mms://... streams to mmsh://... for FFmpeg to work"
-    char *restrict_to = strstr(tmp, "mms://");
+    char *restrict_to = strstr(uri, "mms://");
     if (restrict_to) {
     	strncpy(restrict_to, "mmsh://", 6);
-    	puts(tmp);
+    	puts(uri);
     }
 
     char *headers = NULL;
@@ -184,7 +187,7 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
 
     process_media_retriever_call(
             env,
-            retriever->setDataSource(tmp, headers),
+            retriever->setDataSource(uri, headers),
             "java/lang/IllegalArgumentException",
             "setDataSource failed");
 
