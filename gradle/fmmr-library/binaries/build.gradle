@@ -8,17 +8,11 @@ android {
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
     def aarname = "all-fmmr"
 
-    //def mkfile = "NDK_APPLICATION_MK=ARMApplication.mk"
-    //def aarname = "arm-fmmr"
-
     //def mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
     //def aarname = "armv7-fmmr"
 
     //def mkfile = "NDK_APPLICATION_MK=x86Application.mk"
     //def aarname = "x86-fmmr"
-
-    //def mkfile = "NDK_APPLICATION_MK=MIPSApplication.mk"
-    //def aarname = "mips-fmmr"
 
     //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
     //def aarname = "x86_64-fmmr"

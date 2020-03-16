@@ -8,10 +8,6 @@ ifeq ($(TARGET_ARCH),x86)
     APP_PLATFORM=12
 endif
 
-ifeq ($(TARGET_ARCH),mips)
-    APP_PLATFORM=12
-endif
-
 ifeq ($(TARGET_ARCH),x86_64)
     APP_PLATFORM=21
 endif

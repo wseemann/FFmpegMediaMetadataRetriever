@@ -5,16 +5,15 @@ cd src/main/ffmpeg
 export WORKING_DIR=`pwd`
 export PROPS=$WORKING_DIR/../../../../local.properties
 
-TARGET_ARMEABI_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/armeabi
 TARGET_ARMEABIV7A_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/armeabi-v7a
 TARGET_X86_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86
-TARGET_MIPS_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/mips
 TARGET_X86_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86_64
 TARGET_ARMEABI_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/arm64-v8a
 
 export ENABLE_OPENSSL=false
 
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
+export ANDROID_NDK_HOME=$NDK
 
 build_target() {
     if [ "$ENABLE_OPENSSL" = true ] ; then
@@ -22,7 +21,9 @@ build_target() {
         ./build_openssl.sh $1
         ./build_ffmpeg_with_ssl.sh $1
     else
-        ./build_ffmpeg.sh $1
+        ./ffmpeg-android-maker/ffmpeg-android-maker.sh $1
+        export OUTPUT_DIR=${WORKING_DIR}/ffmpeg-android-maker/output/$1
+        cp -r $OUTPUT_DIR $WORKING_DIR/../jni/ffmpeg/ffmpeg/
     fi
 }
 
@@ -42,28 +43,16 @@ if [ ! -d $WORKING_DIR/../jni/ffmpeg/ffmpeg ] && ! mkdir -p $WORKING_DIR/../jni/
     exit 1
 fi
 
-if [ ! -d $TARGET_ARMEABI_DIR ]; then
-    # Build FFmpeg from ARM architecture and copy to the JNI folder
-    cd $WORKING_DIR
-    build_target arm
-fi
-
 if [ ! -d $TARGET_ARMEABIV7A_DIR ]; then
     # Build FFmpeg from ARM v7 architecture and copy to the JNI folder
     cd $WORKING_DIR
-    build_target armv7-a
+    build_target "armeabi-v7a"
 fi
 
 if [ ! -d $TARGET_X86_DIR ]; then
     # Build FFmpeg from x86 architecture and copy to the JNI folder
     cd $WORKING_DIR
-    build_target i686
-fi
-
-if [ ! -d $TARGET_MIPS_DIR ]; then
-    # Build FFmpeg from MIPS architecture and copy to the JNI folder
-    cd $WORKING_DIR
-    build_target mips
+    build_target "x86"
 fi
 
 if [ ! -d $TARGET_X86_64_DIR ]; then
