@@ -51,632 +51,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36ab4c4f-22e3-45f1-90df-d84b7744db68" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/binaries.iml" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/binaries.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/ffmpeg/build-ffmpeg.sh" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/ffmpeg/build-ffmpeg.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/ffmpeg/diffs/0001-Set-the-soname-to-be-SLIBNAME-instead-of-SLIBNAME_WI.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/ffmpeg/diffs/0003-Fix-UINT64_C-was-not-declared-in-this-scope-error.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/ffmpeg/ffmpeg-3.0.1.tar.bz2" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/ffmpeg/ffmpeg-android-maker/ffmpeg-android-maker.sh" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/ffmpeg/ffmpeg-android-maker/ffmpeg-android-maker.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/ffmpeg/ffmpeg-android-maker/scripts/ffmpeg/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/ffmpeg/ffmpeg-android-maker/scripts/ffmpeg/build.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ARMApplication.mk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/Android.mk" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/Android.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/Application.mk" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/Application.mk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/MIPSApplication.mk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/avcodec.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/avcodec.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vaapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vaapi.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vda.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vdpau.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vdpau.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/videotoolbox.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/videotoolbox.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vorbis_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavcodec/vorbis_parser.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavfilter/avfilter.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavfilter/avfiltergraph.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavfilter/buffersink.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavfilter/buffersrc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavfilter/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavformat/avformat.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavformat/avformat.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavformat/avio.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavformat/avio.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavformat/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavformat/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/adler32.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/adler32.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/aes_ctr.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/aes_ctr.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/attributes.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/attributes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/audio_fifo.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/audio_fifo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avassert.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avassert.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avconfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avstring.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avstring.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avutil.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/avutil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/base64.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/base64.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/buffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/buffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/channel_layout.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/channel_layout.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/common.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/common.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/cpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/cpu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/crc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/crc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/dict.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/dict.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/display.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/display.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/ffversion.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/ffversion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/file.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/file.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/frame.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/frame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/hash.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/hash.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/hmac.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/hmac.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/imgutils.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/imgutils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/intreadwrite.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/intreadwrite.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/lfg.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/lfg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/log.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/mastering_display_metadata.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/mastering_display_metadata.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/mathematics.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/mathematics.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/md5.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/md5.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/mem.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/mem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/murmur3.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/murmur3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/opt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/opt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/pixdesc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/pixdesc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/pixfmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/pixfmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/rational.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/rational.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/replaygain.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/replaygain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/ripemd.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/ripemd.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/samplefmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/samplefmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/sha.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/sha.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/sha512.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/sha512.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/stereo3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/stereo3d.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/threadmessage.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/threadmessage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/timecode.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/timecode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/timestamp.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/timestamp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/tree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libavutil/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libswresample/swresample.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libswresample/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libswscale/swscale.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libswscale/swscale.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libswscale/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/include/libswscale/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavcodec.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavcodec.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavcodec.so.57.24.102" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavfilter.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavfilter.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavfilter.so.6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavfilter.so.6.31.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavformat.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavformat.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavformat.so.57.25.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavutil.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavutil.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavutil.so.55" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libavutil.so.55.17.103" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswresample.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswresample.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswresample.so.2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswresample.so.2.0.101" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswscale.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswscale.so.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/libswscale.so.4.0.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/pkgconfig/libavcodec.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/pkgconfig/libavfilter.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/pkgconfig/libavformat.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/pkgconfig/libavutil.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/pkgconfig/libswresample.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/arm64-v8a/lib/pkgconfig/libswscale.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/avcodec.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/avcodec.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vaapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vaapi.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vda.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vdpau.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vdpau.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/videotoolbox.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/videotoolbox.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vorbis_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavcodec/vorbis_parser.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavformat/avformat.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavformat/avformat.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavformat/avio.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavformat/avio.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavformat/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavformat/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/adler32.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/adler32.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/aes_ctr.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/aes_ctr.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/attributes.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/attributes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/audio_fifo.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/audio_fifo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avassert.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avassert.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avconfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avstring.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avstring.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avutil.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/avutil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/base64.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/base64.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/buffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/buffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/channel_layout.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/channel_layout.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/common.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/common.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/cpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/cpu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/crc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/crc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/dict.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/dict.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/display.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/display.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/ffversion.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/ffversion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/file.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/file.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/frame.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/frame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/hash.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/hash.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/hmac.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/hmac.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/imgutils.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/imgutils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/intreadwrite.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/intreadwrite.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/lfg.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/lfg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/log.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/mastering_display_metadata.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/mastering_display_metadata.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/mathematics.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/mathematics.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/md5.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/md5.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/mem.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/mem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/murmur3.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/murmur3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/opt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/opt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/pixdesc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/pixdesc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/pixfmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/pixfmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/rational.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/rational.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/replaygain.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/replaygain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/ripemd.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/ripemd.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/samplefmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/samplefmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/sha.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/sha.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/sha512.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/sha512.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/stereo3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/stereo3d.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/threadmessage.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/threadmessage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/timecode.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/timecode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/timestamp.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/timestamp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/tree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libavutil/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libswscale/swscale.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libswscale/swscale.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libswscale/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/include/libswscale/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavcodec.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavcodec.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavcodec.so.57.24.102" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavformat.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavformat.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavformat.so.57.25.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavutil.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavutil.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavutil.so.55" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libavutil.so.55.17.103" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libswscale.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libswscale.so.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/libswscale.so.4.0.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/pkgconfig/libavcodec.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/pkgconfig/libavformat.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/pkgconfig/libavutil.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi-v7a/lib/pkgconfig/libswscale.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/avcodec.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/avdct.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/avfft.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/d3d11va.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/dirac.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/dv_profile.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/dxva2.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/qsv.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/vaapi.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/vda.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/vdpau.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/videotoolbox.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/vorbis_parser.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavcodec/xvmc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavformat/avformat.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavformat/avio.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavformat/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/adler32.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/aes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/aes_ctr.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/attributes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/audio_fifo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/avassert.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/avconfig.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/avstring.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/avutil.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/base64.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/blowfish.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/bprint.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/bswap.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/buffer.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/camellia.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/cast5.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/channel_layout.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/common.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/cpu.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/crc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/des.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/dict.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/display.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/downmix_info.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/error.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/eval.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/ffversion.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/fifo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/file.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/frame.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/hash.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/hmac.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/imgutils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/intfloat.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/intreadwrite.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/lfg.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/log.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/lzo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/macros.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/mastering_display_metadata.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/mathematics.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/md5.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/mem.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/motion_vector.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/murmur3.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/opt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/parseutils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/pixdesc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/pixelutils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/pixfmt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/random_seed.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/rational.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/rc4.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/replaygain.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/ripemd.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/samplefmt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/sha.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/sha512.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/stereo3d.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/tea.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/threadmessage.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/time.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/timecode.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/timestamp.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/tree.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/twofish.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libavutil/xtea.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libswscale/swscale.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/include/libswscale/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavcodec.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavcodec.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavcodec.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavcodec.so.57.24.102" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavformat.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavformat.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavformat.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavformat.so.57.25.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavutil.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavutil.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavutil.so.55" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libavutil.so.55.17.103" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libswscale.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libswscale.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libswscale.so.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/libswscale.so.4.0.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/pkgconfig/libavcodec.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/pkgconfig/libavformat.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/pkgconfig/libavutil.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/armeabi/lib/pkgconfig/libswscale.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/avcodec.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/avdct.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/avfft.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/d3d11va.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/dirac.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/dv_profile.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/dxva2.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/qsv.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/vaapi.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/vda.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/vdpau.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/videotoolbox.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/vorbis_parser.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavcodec/xvmc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavformat/avformat.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavformat/avio.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavformat/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/adler32.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/aes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/aes_ctr.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/attributes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/audio_fifo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/avassert.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/avconfig.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/avstring.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/avutil.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/base64.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/blowfish.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/bprint.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/bswap.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/buffer.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/camellia.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/cast5.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/channel_layout.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/common.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/cpu.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/crc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/des.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/dict.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/display.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/downmix_info.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/error.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/eval.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/ffversion.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/fifo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/file.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/frame.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/hash.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/hmac.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/imgutils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/intfloat.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/intreadwrite.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/lfg.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/log.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/lzo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/macros.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/mastering_display_metadata.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/mathematics.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/md5.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/mem.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/motion_vector.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/murmur3.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/opt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/parseutils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/pixdesc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/pixelutils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/pixfmt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/random_seed.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/rational.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/rc4.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/replaygain.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/ripemd.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/samplefmt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/sha.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/sha512.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/stereo3d.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/tea.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/threadmessage.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/time.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/timecode.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/timestamp.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/tree.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/twofish.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libavutil/xtea.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libswscale/swscale.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/include/libswscale/version.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavcodec.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavcodec.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavcodec.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavcodec.so.57.24.102" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavformat.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavformat.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavformat.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavformat.so.57.25.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavutil.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavutil.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavutil.so.55" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libavutil.so.55.17.103" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libswscale.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libswscale.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libswscale.so.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/libswscale.so.4.0.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/pkgconfig/libavcodec.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/pkgconfig/libavformat.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/pkgconfig/libavutil.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/mips/lib/pkgconfig/libswscale.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/avcodec.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/avcodec.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vaapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vaapi.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vda.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vdpau.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vdpau.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/videotoolbox.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/videotoolbox.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vorbis_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavcodec/vorbis_parser.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavformat/avformat.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavformat/avformat.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavformat/avio.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavformat/avio.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavformat/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavformat/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/adler32.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/adler32.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/aes_ctr.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/aes_ctr.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/attributes.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/attributes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/audio_fifo.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/audio_fifo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avassert.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avassert.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avconfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avstring.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avstring.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avutil.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/avutil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/base64.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/base64.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/buffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/buffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/channel_layout.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/channel_layout.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/common.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/common.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/cpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/cpu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/crc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/crc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/dict.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/dict.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/display.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/display.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/ffversion.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/ffversion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/file.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/file.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/frame.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/frame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/hash.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/hash.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/hmac.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/hmac.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/imgutils.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/imgutils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/intreadwrite.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/intreadwrite.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/lfg.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/lfg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/log.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/mastering_display_metadata.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/mastering_display_metadata.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/mathematics.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/mathematics.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/md5.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/md5.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/mem.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/mem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/murmur3.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/murmur3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/opt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/opt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/pixdesc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/pixdesc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/pixfmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/pixfmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/rational.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/rational.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/replaygain.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/replaygain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/ripemd.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/ripemd.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/samplefmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/samplefmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/sha.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/sha.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/sha512.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/sha512.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/stereo3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/stereo3d.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/threadmessage.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/threadmessage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/timecode.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/timecode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/timestamp.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/timestamp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/tree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libavutil/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libswscale/swscale.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libswscale/swscale.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libswscale/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/include/libswscale/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavcodec.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavcodec.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavcodec.so.57.24.102" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavformat.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavformat.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavformat.so.57.25.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavutil.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavutil.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavutil.so.55" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libavutil.so.55.17.103" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libswscale.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libswscale.so.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/libswscale.so.4.0.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/pkgconfig/libavcodec.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/pkgconfig/libavformat.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/pkgconfig/libavutil.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86/lib/pkgconfig/libswscale.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/avcodec.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/avcodec.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vaapi.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vaapi.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vda.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vdpau.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vdpau.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/videotoolbox.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/videotoolbox.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vorbis_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavcodec/vorbis_parser.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavformat/avformat.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavformat/avformat.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavformat/avio.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavformat/avio.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavformat/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavformat/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/adler32.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/adler32.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/aes_ctr.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/aes_ctr.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/attributes.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/attributes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/audio_fifo.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/audio_fifo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avassert.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avassert.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avconfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avstring.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avstring.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avutil.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/avutil.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/base64.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/base64.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/buffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/buffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/channel_layout.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/channel_layout.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/common.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/common.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/cpu.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/cpu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/crc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/crc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/dict.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/dict.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/display.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/display.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/ffversion.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/ffversion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/file.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/file.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/frame.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/frame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/hash.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/hash.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/hmac.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/hmac.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/imgutils.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/imgutils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/intreadwrite.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/intreadwrite.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/lfg.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/lfg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/log.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/log.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/mastering_display_metadata.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/mastering_display_metadata.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/mathematics.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/mathematics.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/md5.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/md5.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/mem.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/mem.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/murmur3.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/murmur3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/opt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/opt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/pixdesc.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/pixdesc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/pixfmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/pixfmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/rational.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/rational.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/replaygain.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/replaygain.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/ripemd.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/ripemd.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/samplefmt.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/samplefmt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/sha.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/sha.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/sha512.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/sha512.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/stereo3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/stereo3d.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/threadmessage.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/threadmessage.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/timecode.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/timecode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/timestamp.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/timestamp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/tree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libavutil/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libswscale/swscale.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libswscale/swscale.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libswscale/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include/libswscale/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavcodec.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavcodec.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavcodec.so.57.24.102" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavformat.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavformat.so.57" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavformat.so.57.25.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavutil.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavutil.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavutil.so.55" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libavutil.so.55.17.103" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libswscale.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libswscale.so.4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/libswscale.so.4.0.100" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/pkgconfig/libavcodec.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/pkgconfig/libavformat.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/pkgconfig/libavutil.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/lib/pkgconfig/libswscale.pc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/jni/metadata/wseemann_media_MediaMetadataRetriever.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/jni/metadata/wseemann_media_MediaMetadataRetriever.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/gdb.setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/gdbserver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/arm64-v8a/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/gdb.setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/gdbserver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/armeabi-v7a/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/gdb.setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/gdbserver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/gdb.setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/gdbserver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/libs/x86_64/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libavutil.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/arm64-v8a/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/armeabi-v7a/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_mediametadataretriever.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/ffmpeg_utils.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/mediametadataretriever.o.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libavcodec.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libavcodec.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libavformat.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libavformat.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libavutil.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libavutil.so" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libffmpeg_mediametadataretriever_jni.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libffmpeg_mediametadataretriever_jni.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libswscale.so" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/libswscale.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/core/core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" beforeDir="false" afterPath="$PROJECT_DIR$/binaries/src/main/obj/local/x86_64/objs-debug/ffmpeg_mediametadataretriever_jni/wseemann_media_MediaMetadataRetriever.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmmr-demo/fmmr-demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fmmr-demo/fmmr-demo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fmmr-demo/src/main/java/wseemann/media/demo/FMMRFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/fmmr-demo/src/main/java/wseemann/media/demo/FMMRFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <ignored path="fmmr-library.iws" />
@@ -693,8 +83,7 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_XL_API_28" />
   <component name="ExternalProjectsData">
@@ -713,29 +102,7 @@
     <favorites_list name="fmmr-library" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fmmr-demo/src/main/java/wseemann/media/demo/FMMRFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="85" column="8" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/binaries/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-583">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -744,6 +111,11 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="$USER_HOME$/Desktop/keystore" />
+    <option name="KEY_ALIAS" value="mykey" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -764,8 +136,8 @@
         <option value="$PROJECT_DIR$/core/src/androidTest/java/wseemann/media/FFmpegMediaMetadataRetrieverTest.java" />
         <option value="$PROJECT_DIR$/library/build.gradle" />
         <option value="$PROJECT_DIR$/local.properties" />
-        <option value="$PROJECT_DIR$/fmmr-demo/src/main/java/wseemann/media/demo/FMMRFragment.java" />
         <option value="$PROJECT_DIR$/binaries/build.gradle" />
+        <option value="$PROJECT_DIR$/fmmr-demo/src/main/java/wseemann/media/demo/FMMRFragment.java" />
       </list>
     </option>
   </component>
@@ -788,23 +160,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="fmmr-library" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/fmmr-demo" />
+    <property name="ExportApk.BuildVariants" value="release" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="device.picker.selection" value="Pixel_3_XL_API_28" />
@@ -1065,12 +431,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="40" y="60" width="1400" height="757" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48955917" visible="true" weight="0.2496318" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48723897" visible="true" weight="0.2496318" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Captures" order="2" side_tool="true" weight="0.25" />
-      <window_info id="Build Variants" order="3" sideWeight="0.5104408" side_tool="true" weight="0.2496318" />
+      <window_info active="true" id="Build Variants" order="3" sideWeight="0.512761" side_tool="true" visible="true" weight="0.2496318" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" sideWeight="0.5093023" side_tool="true" weight="0.2496318" />
@@ -1090,7 +455,7 @@
       <window_info anchor="bottom" id="Gradle Console" order="11" sideWeight="0.56480116" side_tool="true" visible="true" weight="0.32917318" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.4351988" visible="true" weight="0.32917318" />
       <window_info anchor="bottom" id="Build" order="13" visible="true" weight="0.32866043" />
-      <window_info anchor="bottom" id="Android Profiler" order="14" />
+      <window_info anchor="bottom" id="Android Profiler" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Logcat" order="15" weight="0.32866043" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1288,13 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fmmr-demo/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1304,18 +662,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fmmr-demo/src/main/java/wseemann/media/demo/FMMRFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="85" column="8" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
+        <state relative-caret-position="57">
+          <caret line="72" column="46" selection-start-line="72" selection-start-column="46" selection-end-line="72" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fmmr-demo/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/binaries/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-583">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="15">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
