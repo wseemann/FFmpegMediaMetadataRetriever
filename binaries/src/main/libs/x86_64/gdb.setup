@@ -1,2 +1,0 @@
-set solib-search-path /Users/wseemann/Android/FFmpegMediaMetadataRetriever/binaries/src/main/obj/local/x86_64
-directory /Users/wseemann/Android/android-ndk-r20/toolchains/llvm/prebuilt/darwin-x86_64/sysroot /Users/wseemann/Android/FFmpegMediaMetadataRetriever/binaries/src/main/jni/ffmpeg /Users/wseemann/Android/FFmpegMediaMetadataRetriever/binaries/src/main/jni/metadata/../ffmpeg/ffmpeg/x86_64/include /Users/wseemann/Android/android-ndk-r20/sources/cxx-stl/system/include /Users/wseemann/Android/FFmpegMediaMetadataRetriever/binaries/src/main/jni/ffmpeg/ffmpeg/x86_64/include

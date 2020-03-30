@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FFmpegMediaMetadataRetriever.iml" filepath="$PROJECT_DIR$/FFmpegMediaMetadataRetriever.iml" />
-      <module fileurl="file://$PROJECT_DIR$/binaries/binaries.iml" filepath="$PROJECT_DIR$/binaries/binaries.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/fmmr-demo/fmmr-demo.iml" filepath="$PROJECT_DIR$/fmmr-demo/fmmr-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native/native.iml" filepath="$PROJECT_DIR$/native/native.iml" />
     </modules>
   </component>
 </project>

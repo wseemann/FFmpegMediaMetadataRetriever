@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/binaries/src/main/ffmpeg/ffmpeg-android-maker" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/native/src/main/ffmpeg/ffmpeg-android-maker" vcs="Git" />
   </component>
 </project>
