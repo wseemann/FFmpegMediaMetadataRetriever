@@ -35,6 +35,11 @@ Supported formats (audio and video):
 Additional support for:
 * ICY Metadata (SHOUTcast metadata)
 
+Demo Application
+------------
+
+If you would like to try FFmpegMediaMetadataRetriever you can do so using the [Demo Application](https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk)
+
 Using FMMR in your application (Android Studio)
 ------------
 
