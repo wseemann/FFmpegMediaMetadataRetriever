@@ -73,6 +73,9 @@ android {
     }
 
     task cleanNative(type: Exec, description: 'Clean JNI object files') {
+        delete "$project.projectDir/src/main/libs"
+        delete "$project.projectDir/src/main/obj"
+        delete project.buildDir
         def ndkDir = android.ndkDirectory
         commandLine "$ndkDir/ndk-build",
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
