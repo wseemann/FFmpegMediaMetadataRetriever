@@ -95,6 +95,7 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-common:2.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat-resources:1.1.0@aar" level="project" />
@@ -115,7 +116,9 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.interpolator:interpolator:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime:2.0.0@aar" level="project" />
-    <orderEntry type="module" module-name="native" />
-    <orderEntry type="module" module-name="core" />
+    <orderEntry type="library" name="Gradle: com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.15@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.15@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.15@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.15@aar" level="project" />
   </component>
 </module>
