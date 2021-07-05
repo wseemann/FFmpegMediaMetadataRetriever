@@ -34,8 +34,10 @@ build_target() {
     make
 
     # Copy the outputs
-    OUTPUT_INCLUDE=$SCRIPTPATH/output/include
-    OUTPUT_LIB=$SCRIPTPATH/output/lib/${architecture}
+    OUTPUT_INCLUDE=$2/include
+    echo $OUTPUT_INCLUDE
+    OUTPUT_LIB=$2/lib/
+    echo $OUTPUT_LIB
     mkdir -p $OUTPUT_INCLUDE
     mkdir -p $OUTPUT_LIB
     cp -RL include/openssl $OUTPUT_INCLUDE
@@ -47,10 +49,10 @@ build_target() {
     cd ../
 }
 
-build_target "android-arm"
-build_target "android-arm64"
-build_target "android-x86"
-build_target "android-x86_64"
+build_target "android-arm" "../../jni/openssl/openssl/armeabi-v7a"
+build_target "android-arm64" "../../jni/openssl/openssl/arm64-v8a"
+build_target "android-x86" "../../jni/openssl/openssl/x86"
+build_target "android-x86_64" "../../jni/openssl/openssl/x86_64"
 
 echo OpenSSL build complete, exiting...
 exit
