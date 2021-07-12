@@ -27,11 +27,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.15'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.15'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.15'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.15'
 
     //implementation project(':native')
     //implementation project(path: ':core')

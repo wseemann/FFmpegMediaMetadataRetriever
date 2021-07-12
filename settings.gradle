@@ -1,1 +1,1 @@
-include ':ffmpeg', ':openssl', ':fmmr-demo', ':core'
+include ':native', ':fmmr-demo', ':core'
