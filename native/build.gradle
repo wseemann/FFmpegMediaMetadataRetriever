@@ -3,8 +3,8 @@ apply plugin: "com.vanniktech.maven.publish"
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -18,7 +18,7 @@ buildscript {
 android {
     android.packageBuildConfig = false
 
-    compileSdkVersion 29
+    compileSdkVersion 31
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
     def aarname = "all-fmmr"
@@ -37,7 +37,7 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 17
         versionName "1.0.15"
 
@@ -46,8 +46,8 @@ android {
 
     buildTypes {
         release {
-            //minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     sourceSets.main {
@@ -56,9 +56,10 @@ android {
     }
 
     task buildFFmpeg(type: Exec, description: 'Compile FFmpeg source via NDK') {
-        def dir = file('src/main/ffmpeg/build-ffmpeg.sh').absolutePath
-        commandLine "$dir",
-                '--with-openssl'
+        //def dir = file('src/main/ffmpeg/build-ffmpeg.sh').absolutePath
+        //commandLine "$dir",
+        //        '--with-openssl'
+        //def dir = file('src/main/ffmpeg/build.sh').absolutePath
     }
 
     task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
@@ -83,7 +84,7 @@ android {
     }
 
     clean.dependsOn 'cleanNative'
-    buildNative.dependsOn 'buildFFmpeg'
+    //buildNative.dependsOn 'buildFFmpeg'
 
     tasks.withType(JavaCompile) {
         compileTask -> compileTask.dependsOn buildNative
@@ -109,9 +110,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.0'
 }

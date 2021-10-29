@@ -62,8 +62,8 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
     	
     	FFmpegMediaMetadataRetriever fmmr = new FFmpegMediaMetadataRetriever();
     	try {
-            if (FMMRFragment.mFinalSurface != null) {
-                fmmr.setSurface(FMMRFragment.mFinalSurface);
+            if (FMMRFragment.finalSurface != null) {
+                fmmr.setSurface(FMMRFragment.finalSurface);
             }
 
             fmmr.setDataSource(mUri);

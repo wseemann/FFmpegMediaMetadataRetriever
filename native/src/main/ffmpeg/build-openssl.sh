@@ -56,12 +56,21 @@ build_target() {
     cp libssl.a ../build/openssl/$ANDROID_ARCH/lib/
 }
 
-get_openssl
-build_target arm-linux-androideabi armeabi-v7a android-arm
-build_target aarch64-linux-android arm64-v8a android-arm64
-build_target i686-linux-android x86 android-x86
-build_target x86_64-linux-android x86_64 android-x86_64
-cd ../
+remove_openssl() {
+    if [ -e $OPENSSL_DIR ]; then
+        echo Cleaning up build directory $OPENSSL_DIR
+        rm -rf $OPENSSL_DIR
+    fi
+}
+
+
+#get_openssl
+#build_target arm-linux-androideabi armeabi-v7a android-arm
+#build_target aarch64-linux-android arm64-v8a android-arm64
+#build_target i686-linux-android x86 android-x86
+#build_target x86_64-linux-android x86_64 android-x86_64
+remove_openssl
+#cd ../
 
 echo OpenSSL build complete, exiting...
 exit

@@ -44,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.ListFragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -51,15 +52,15 @@ import androidx.loader.content.Loader;
 public class FMMRFragment extends ListFragment
 		implements LoaderManager.LoaderCallbacks<List<Metadata>> {
 
-	private int mId = 0;
-	private ImageView mImage;
+	private int id = 0;
+	private ImageView image;
 
-	private SurfaceView mmSurfaceView;
-	private SurfaceHolder mSurfaceHolder;
-	public static Surface mFinalSurface;
+	private SurfaceView surfaceView;
+	private SurfaceHolder surfaceHolder;
+	public static Surface finalSurface;
 	
 	// This is the Adapter being used to display the list's data.
-    private MetadataListAdapter mAdapter;
+    private MetadataListAdapter adapter;
 	
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class FMMRFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View layout = super.onCreateView(inflater, container, savedInstanceState);
-    	ListView lv = (ListView) layout.findViewById(android.R.id.list);
+    	ListView lv = layout.findViewById(android.R.id.list);
     	ViewGroup parent = (ViewGroup) lv.getParent();
     	
     	View v = inflater.inflate(R.layout.fragment, container, false);
@@ -82,9 +83,9 @@ public class FMMRFragment extends ListFragment
     	
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
-		//uriText.setText("http://...");
-    	//uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
-		//https://ia700401.us.archive.org/19/items/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4
+		uriText.setText("https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+    	// uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
+		// https://gist.github.com/jsturgis/3b19447b304616f18657
 
     	Intent intent = getActivity().getIntent();
     	
@@ -105,7 +106,7 @@ public class FMMRFragment extends ListFragment
     	
 		getActivity().setIntent(null);
 		
-    	Button goButton = (Button) v.findViewById(R.id.go_button);
+    	Button goButton = v.findViewById(R.id.go_button);
     	goButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -134,13 +135,11 @@ public class FMMRFragment extends ListFragment
 				Bundle bundle = new Bundle();
 				try {
 					bundle.putString("uri", URLDecoder.decode(uriString, "UTF-8"));
-					mId++;
-					FMMRFragment.this.getLoaderManager().initLoader(mId, bundle, FMMRFragment.this);
+					id++;
+					FMMRFragment.this.getLoaderManager().initLoader(id, bundle, FMMRFragment.this);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-				//	mAdapter.add(new Metadata("test", "test"));
-				//	mAdapter.notifyDataSetChanged();
 			}
 		});
     	
@@ -156,13 +155,13 @@ public class FMMRFragment extends ListFragment
         setEmptyText(getString(R.string.no_metadata));
 
     	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.header, null);
-    	mImage = (ImageView) header.findViewById(R.id.image);
+    	image = (ImageView) header.findViewById(R.id.image);
 
 		// set up the Surface video sink
-		mmSurfaceView = (SurfaceView) header.findViewById(R.id.surfaceview);
-		mSurfaceHolder = mmSurfaceView.getHolder();
+		surfaceView = header.findViewById(R.id.surfaceview);
+		surfaceHolder = surfaceView.getHolder();
 
-		mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
+		surfaceHolder.addCallback(new SurfaceHolder.Callback() {
 
 			public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 				Log.v("TAG", "surfaceChanged format=" + format + ", width=" + width + ", height="
@@ -170,9 +169,9 @@ public class FMMRFragment extends ListFragment
 			}
 
 			public void surfaceCreated(SurfaceHolder holder) {
-				mFinalSurface = holder.getSurface();
+				finalSurface = holder.getSurface();
 
-				final EditText uriText = (EditText) getView().findViewById(R.id.uri);
+				final EditText uriText = getView().findViewById(R.id.uri);
 
 				// Clear the error message
 				uriText.setError(null);
@@ -200,7 +199,7 @@ public class FMMRFragment extends ListFragment
 				Bundle bundle = new Bundle();
 				try {
 					bundle.putString("uri", URLDecoder.decode(uriString, "UTF-8"));
-					mId++;
+					id++;
 					//FMMRFragment.this.getLoaderManager().initLoader(mId, bundle, FMMRFragment.this);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
@@ -215,19 +214,19 @@ public class FMMRFragment extends ListFragment
 
 		getListView().addHeaderView(header);
 
-        if (mAdapter == null) {
+        if (adapter == null) {
         	// Create an empty adapter we will use to display the loaded data.
-        	mAdapter = new MetadataListAdapter(getActivity());
-        	setListAdapter(mAdapter);
+        	adapter = new MetadataListAdapter(getActivity());
+        	setListAdapter(adapter);
         } else {
-        	setListAdapter(mAdapter);
+        	setListAdapter(adapter);
 
         	// Start out with a progress indicator.
 			setListShown(false);
 
             // Prepare the loader.  Either re-connect with an existing one,
             // or start a new one.
-            getLoaderManager().initLoader(mId, new Bundle(), this);
+            getLoaderManager().initLoader(id, new Bundle(), this);
         }
     }
 	
@@ -237,6 +236,7 @@ public class FMMRFragment extends ListFragment
 	    setListAdapter(null);
 	}
 
+	@NonNull
 	@Override
 	public Loader<List<Metadata>> onCreateLoader(int arg0, Bundle args) {
         // This is called when a new Loader needs to be created.  This
@@ -245,10 +245,10 @@ public class FMMRFragment extends ListFragment
 	}
 
 	@Override
-	public void onLoadFinished(Loader<List<Metadata>> loader, List<Metadata> metadata) {
+	public void onLoadFinished(@NonNull Loader<List<Metadata>> loader, List<Metadata> metadata) {
 		if (metadata.size() == 0) {
 	        // Set the new metadata in the adapter.
-	        mAdapter.setMetadata(metadata);
+	        adapter.setMetadata(metadata);
 			setListShown(true);
 			return;
 		}
@@ -256,7 +256,7 @@ public class FMMRFragment extends ListFragment
 		Bitmap b = null;
 		int imageIndex = -1;
 		
-		mImage.setImageResource(0);
+		image.setImageResource(0);
 		
 		for (int i = 0; i < metadata.size(); i++) {
 			if (metadata.get(i).getKey().equals("image")) {
@@ -267,7 +267,7 @@ public class FMMRFragment extends ListFragment
 					float density = getResources().getDisplayMetrics().density;
 					int scale = (int) (200 * density);
 					Bitmap bm = Bitmap.createScaledBitmap(b, scale, scale, true);
-					mImage.setImageBitmap(bm);
+					image.setImageBitmap(bm);
 				}
 			}
 		}
@@ -277,7 +277,7 @@ public class FMMRFragment extends ListFragment
 		}
 		
         // Set the new metadata in the adapter.
-        mAdapter.setMetadata(metadata);
+        adapter.setMetadata(metadata);
 
         if (b != null) {
         	metadata.add(new Metadata("image", b));
@@ -292,9 +292,9 @@ public class FMMRFragment extends ListFragment
 	}
 
 	@Override
-	public void onLoaderReset(Loader<List<Metadata>> metadata) {
+	public void onLoaderReset(@NonNull Loader<List<Metadata>> metadata) {
         // Clear the metadata in the adapter.
-        mAdapter.setMetadata(null);
+        adapter.setMetadata(null);
 	}
 	
 	private static class MetadataListAdapter extends ArrayAdapter<Metadata> {

@@ -3,8 +3,8 @@ apply plugin: "com.vanniktech.maven.publish"
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -16,11 +16,11 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 17
         versionName "1.0.15"
 
@@ -30,8 +30,8 @@ android {
 
     buildTypes {
         release {
-            //minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
