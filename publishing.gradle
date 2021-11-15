@@ -7,8 +7,8 @@ android {
             maven {
                 url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
                 credentials {
-                    username = project.properties["artifactory_username"]
-                    password = project.properties["artifactory_password"]
+                    username = project.properties["sonatype_username"]
+                    password = project.properties["sonatype_password"]
                 }
             }
         }
