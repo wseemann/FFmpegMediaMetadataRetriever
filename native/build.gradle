@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: "com.vanniktech.maven.publish"
+apply from: "$rootProject.projectDir/publishing.gradle"
 
 buildscript {
     repositories {
@@ -9,49 +9,88 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
-
-    dependencies {
-        classpath "gradle.plugin.com.vanniktech:gradle-maven-publish-plugin:0.8.0"
-    }
 }
 
 android {
-    android.packageBuildConfig = false
+    buildFeatures {
+        buildConfig = false
+    }
 
     compileSdkVersion 31
 
     def mkfile = "NDK_APPLICATION_MK=Application.mk"
     def aarname = "all-fmmr"
+    def pomName = 'FFmpegMediaMetadataRetriever-native'
 
     //def mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
     //def aarname = "armv7-fmmr"
+    //def pomName = 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'
 
     //def mkfile = "NDK_APPLICATION_MK=x86Application.mk"
     //def aarname = "x86-fmmr"
+    //def pomName = 'FFmpegMediaMetadataRetriever-native-x86'
 
     //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
     //def aarname = "x86_64-fmmr"
+    //def pomName = 'FFmpegMediaMetadataRetriever-native-x86_64'
 
     //def mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
     //def aarname = "arm_64-fmmr"
+    //def pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
+
+    def pomArtifactId = "$pomName"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 31
-        versionCode 17
-        versionName "1.0.15"
+        minSdkVersion versions.get("minSdkVersion")
+        targetSdkVersion versions.get("targetSdkVersion")
+        versionCode versions.get("versionCode")
+        versionName versions.get("versionName")
+
+        /*ndk {
+            abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
+        }*/
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    /*flavorDimensions "version"
+    productFlavors {
+        fat {
+            //mkfile = "NDK_APPLICATION_MK=Application.mk"
+            //aarname = "all-fmmr"
+        }
+        armeabi_v7a {
+            //mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
+            //aarname = "armv7-fmmr"
+        }
+        x86 {
+            //mkfile = "NDK_APPLICATION_MK=x86Application.mk"
+            //aarname = "x86-fmmr"
+        }
+        x86_64 {
+            //mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
+            //aarname = "x86_64-fmmr"
+        }
+        arm_64_v8a {
+            //mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
+            //aarname = "arm_64-fmmr"
+        }
+    }*/
+
     sourceSets.main {
-        jni.srcDirs = [] // This prevents the auto generation of Android.mk
+        jni.srcDirs = [] // This prevents the auto generation of Android.mk, disables automatic ndk-build
         jniLibs.srcDir 'src/main/libs' // This is not necessary unless you have precompiled libraries in your project.
     }
 
@@ -64,9 +103,10 @@ android {
 
     task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
         def ndkDir = android.ndkDirectory
-        print mkfile
+        println mkfile
         commandLine "$ndkDir/ndk-build",
                 mkfile,
+                'NDK_LIBS_OUT=../jniLibs', // Output .so files to jniLibs
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
                 '-j', Runtime.runtime.availableProcessors(),
                 'all',
@@ -75,6 +115,7 @@ android {
 
     task cleanNative(type: Exec, description: 'Clean JNI object files') {
         delete "$project.projectDir/src/main/libs"
+        delete "$project.projectDir/src/main/jniLibs"
         delete "$project.projectDir/src/main/obj"
         delete project.buildDir
         def ndkDir = android.ndkDirectory
@@ -85,20 +126,50 @@ android {
 
     clean.dependsOn 'cleanNative'
     //buildNative.dependsOn 'buildFFmpeg'
+    preBuild.dependsOn 'buildNative'
 
-    tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn buildNative
-    }
+    //tasks.withType(JavaCompile) {
+    //    compileTask -> compileTask.dependsOn buildNative
+    //}
 
-    /*libraryVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                def fileName = "${aarname}.aar"
-                output.outputFile = new File(outputFile.parent, fileName)
+    afterEvaluate {
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    from components.release
+
+                    groupId = 'com.github.wseemann'
+                    artifactId = "$pomArtifactId"
+                    version = "$project.android.defaultConfig.versionName"
+
+                    pom {
+                        name = "$pomName"
+                        description = 'FFmpegMediaMetadataRetriever library'
+                        url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                        packaging = 'aar'
+                        licenses {
+                            license {
+                                name = 'Apache License, Version 2.0'
+                                url = 'http://www.apache.org/licenses/LICENSE-2.0'
+                                distribution = 'repo'
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = 'wseemann'
+                                name = 'William Seemann'
+                            }
+                        }
+                        scm {
+                            connection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                            developerConnection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                            url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                        }
+                    }
+                }
             }
         }
-    }*/
+    }
 
     android.libraryVariants.all { variant ->
         variant.outputs.all {
@@ -112,7 +183,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.annotation:annotation:1.2.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.3.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
 }

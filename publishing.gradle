@@ -1,0 +1,20 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+android {
+    publishing {
+        repositories {
+            maven {
+                url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                credentials {
+                    username = project.properties["artifactory_username"]
+                    password = project.properties["artifactory_password"]
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications
+    }
+}
