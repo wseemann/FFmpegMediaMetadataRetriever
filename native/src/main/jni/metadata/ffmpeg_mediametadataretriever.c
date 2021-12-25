@@ -323,11 +323,30 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     strcat(path, str);
     
     state->fd = myfd;
-    state->offset = offset;
+    //state->offset = offset;
     
+    if (offset > 0) {
+    	advance_file_descriptor(myfd, offset);
+    }
+
 	*ps = state;
     
     return set_data_source_l(ps, path);
+}
+
+int advance_file_descriptor(int fd, int64_t offset) {
+	unsigned char buffer[1];
+	int count;
+
+	int i;
+
+	for (i = 0; i < offset; i = i + 1) {
+		count = read(fd, buffer, 1);
+
+		if (!count) {
+			break;
+		}
+	}
 }
 
 const char* extract_metadata(State **ps, const char* key) {
