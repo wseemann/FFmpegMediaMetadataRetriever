@@ -1,0 +1,81 @@
+apply plugin: 'com.android.library'
+apply from: "$rootProject.projectDir/publishing.gradle"
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion versions.get("minSdkVersion")
+        targetSdkVersion versions.get("targetSdkVersion")
+        versionCode versions.get("versionCode")
+        versionName versions.get("versionName")
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    afterEvaluate {
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    from components.release
+
+                    groupId = 'com.github.wseemann'
+                    artifactId = 'FFmpegMediaMetadataRetriever-core'
+                    version = "$project.android.defaultConfig.versionName"
+
+                    pom {
+                        name = 'FFmpegMediaMetadataRetriever-core'
+                        description = 'FFmpegMediaMetadataRetriever library'
+                        url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                        packaging = 'aar'
+                        licenses {
+                            license {
+                                name = 'Apache License, Version 2.0'
+                                url = 'http://www.apache.org/licenses/LICENSE-2.0'
+                                distribution = 'repo'
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = 'wseemann'
+                                name = 'William Seemann'
+                            }
+                        }
+                        scm {
+                            connection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                            developerConnection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                            url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}

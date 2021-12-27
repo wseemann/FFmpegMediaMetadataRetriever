@@ -1,0 +1,6 @@
+def versions = [:]
+versions.minSdkVersion = 14
+versions.targetSdkVersion = 31
+versions.versionCode = 18
+versions.versionName = "1.0.16"
+ext.versions = versions

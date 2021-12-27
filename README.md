@@ -8,25 +8,21 @@ Donations
 
 Donations can be made via PayPal:
 
-**This project needs you!** If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, **feel free to donate**. Your donation is highly appreciated (and I love food and coffee). Thank you!
+**This project needs you!** If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, **feel free to donate**. Donations are highly appreciated. Thank you!
 
 **PayPal**
 
-- [**Donate 5 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY): Thank's for creating this project, here's a coffee for you!
-- [**Donate 10 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY): Wow, I am stunned. Let me take you to the movies!
-- [**Donate 15 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY): I really appreciate your work, let's grab some lunch!
-- [**Donate 25 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY): That's some awesome stuff you did right there, dinner is on me!
-- [**Donate 50 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY): I really really want to support this project, great job!
-- [**Donate 100 $**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY): You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
-- Of course, you can also [**choose what you want to donate**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY), all donations are awesome!
+- [**Choose what you want to donate**](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2BDTFVEW9LFZY), all donations are awesome!
 
 Overview
 --------
 
 FFmpegMediaMetadataRetriever is a reimplementation of Android's MediaMetadataRetriever class. The FFmpegMediaMetadataRetriever class provides a unified interface for retrieving frame and meta data from an input media file and uses FFmpeg as its backend.
 
+This project uses FFmpeg version 4.2.2.
+
 Key Features:
-* ARM, ARMv7, x86, x86_64, MIPS and ARM_64 support
+* ARMv7, x86, x86_64 and ARM_64 support (Note: ARM and MIPS aren't supported as of version 1.0.14)
 * Support for API 12+
 * URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
@@ -39,33 +35,34 @@ Supported formats (audio and video):
 Additional support for:
 * ICY Metadata (SHOUTcast metadata)
 
+Demo Application
+------------
+
+If you would like to try FFmpegMediaMetadataRetriever you can do so using the [Demo Application](https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk)
+
 Using FMMR in your application (Android Studio)
 ------------
 
 Add the following maven dependency to your project's `build.gradle` file:
 
     dependencies {
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.14'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.16'
     }
 
 Optionally, to support individual ABIs:
 
     dependencies {
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-armeabi-v7a:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-x86:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-mips:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-x86_64:1.0.14'
-        compile 'com.github.wseemann:FFmpegMediaMetadataRetriever-arm64-v8a:1.0.14'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.16'
     }
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
-[Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.14/prebuilt-aars.zip)
-
-(with HTTPS support)
-
-[Prebuilt AARs with HTTPS](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.14/prebuilt-aars-with-https.zip)
+[Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.16/prebuilt-aars.zip)
 
 Demo Application
 ------------
@@ -78,7 +75,7 @@ Installation
 FFmpegMediaMetadataRetriever relies on FFmpeg and native code. The build process
 is complex and may be confusing for those unfamiliar the Android NDK. For this
 reason I've precompiled AARs created by the build process and checked them
-in [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.14/prebuilt-aars.zip).
+in [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.16/prebuilt-aars.zip).
 The modules are also included with the library. If you don't want to build the modules
 you can simple unzip the prebuilt ones and copy them to your projects "libs" folder. (Note:
 copy them to YOUR projects "libs" folder, NOT the "libs" folder located in
@@ -92,7 +89,7 @@ Clone/Download/Fork the repo through GitHub or via (read-only)
 
     git clone https://github.com/wseemann/FFmpegMediaMetadataRetriever.git
 
-### Android Studio (Gradle))
+### Android Studio (Gradle)
 
 Note: The build instructions and scripts assume you are running Unix or Linux. Building
 on other operating systems is currently not supported.
@@ -108,7 +105,7 @@ Open the newly created local.properties file and add the following lines:
 
 where <path to NDK> is the path to your Android NDK, for example:
 
-    ndk.dir=/home/wseemann/Android/android-ndk-r11c
+    ndk.dir=/home/wseemann/Android/android-ndk-r20
 
 **Note:** If you wish to enable https support (for use with API 8+ only) navigate to FFmpegMediaMetadataRetriever/fmmr-library/ and execute
 
@@ -141,7 +138,7 @@ License
 FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
 and meta data from an input media file.
 
-Copyright 2017 William Seemann
+Copyright 2021 William Seemann
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
