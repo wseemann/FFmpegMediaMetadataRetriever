@@ -518,10 +518,6 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_native_init(JNIEnv *env,
     if (fields.context == NULL) {
         return;
     }
-
-    // Initialize libavformat and register all the muxers, demuxers and protocols.
-	av_register_all();
-	avformat_network_init();
 }
 
 static void wseemann_media_FFmpegMediaMetadataRetriever_native_setup(JNIEnv *env, jobject thiz)

@@ -48,8 +48,8 @@ public:
     int setNativeWindow(ANativeWindow* native_window);
 
 private:
+    void freeMediaDataSource();
     Mutex                                     mLock;
-    JMediaDataSource*                         mListener;
 };
 
 #endif // MEDIAMETADATARETRIEVER_H

@@ -28,35 +28,6 @@ extern "C" {
 
 #include <android/log.h>
 
-MediaMetadataRetriever::MediaMetadataRetriever()
-{
-	state = NULL;
-}
-
-MediaMetadataRetriever::~MediaMetadataRetriever()
-{
-	Mutex::Autolock _l(mLock);
-	__android_log_write(ANDROID_LOG_VERBOSE, "fmmr", "before release");
-	if (state->callback_data_source) {
-		JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
-		delete callbackDataSource;
-		state->callback_data_source = NULL;
-	}
-	::release(&state);
-}
-
-int MediaMetadataRetriever::setDataSource(const char *srcUrl, const char *headers)
-{
-	Mutex::Autolock _l(mLock);
-	return ::set_data_source_uri(&state, srcUrl, headers);
-}
-
-int MediaMetadataRetriever::setDataSource(int fd, int64_t offset, int64_t length)
-{
-	Mutex::Autolock _l(mLock);
-    return ::set_data_source_fd(&state, fd, offset, length);
-}
-
 int mediaDataSourceCallback(void *opaque, uint8_t *buf, int buf_size)
 {
 	__android_log_write(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback before read");
@@ -89,9 +60,36 @@ int64_t mediaDataSourceSeekCallback(void *opaque, int64_t offset, int whence)
 	}
 }
 
+MediaMetadataRetriever::MediaMetadataRetriever()
+{
+	state = NULL;
+}
+
+MediaMetadataRetriever::~MediaMetadataRetriever()
+{
+	Mutex::Autolock _l(mLock);
+	freeMediaDataSource();
+	::release(&state);
+}
+
+int MediaMetadataRetriever::setDataSource(const char *srcUrl, const char *headers)
+{
+	Mutex::Autolock _l(mLock);
+	freeMediaDataSource();
+	return ::set_data_source_uri(&state, srcUrl, headers);
+}
+
+int MediaMetadataRetriever::setDataSource(int fd, int64_t offset, int64_t length)
+{
+	Mutex::Autolock _l(mLock);
+	freeMediaDataSource();
+    return ::set_data_source_fd(&state, fd, offset, length);
+}
+
 int MediaMetadataRetriever::setDataSource(JMediaDataSource* callbackDataSource)
 {
 	Mutex::Autolock _l(mLock);
+	freeMediaDataSource();
     return ::set_data_source_callback(&state, callbackDataSource, mediaDataSourceCallback, mediaDataSourceSeekCallback);
 }
 
@@ -135,4 +133,12 @@ int MediaMetadataRetriever::setNativeWindow(ANativeWindow* native_window)
 {
     Mutex::Autolock _l(mLock);
 	return ::set_native_window(&state, native_window);
+}
+
+void MediaMetadataRetriever::freeMediaDataSource() {
+	if (state && state->callback_data_source) {
+		JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
+		delete callbackDataSource;
+		state->callback_data_source = NULL;
+	}
 }

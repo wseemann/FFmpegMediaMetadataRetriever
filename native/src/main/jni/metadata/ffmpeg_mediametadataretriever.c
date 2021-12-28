@@ -825,10 +825,6 @@ void release(State **ps) {
             state->native_window = NULL;
         }
 
-        if (state->callback_data_source) {
-        	state->callback_data_source = NULL;
-        }
-
     	av_freep(&state);
         ps = NULL;
     }
