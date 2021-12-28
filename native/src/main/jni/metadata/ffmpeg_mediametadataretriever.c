@@ -191,10 +191,34 @@ int set_data_source_l(State **ps, const char* path) {
         state->pFormatCtx->skip_initial_bytes = state->offset;
     }
     
-    if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
-	    printf("Metadata could not be retrieved\n");
-		*ps = NULL;
-    	return FAILURE;
+    if (state->media_data_source_callback) {
+    	int size = 64 * 1024;
+    	uint8_t *buffer = malloc(size);
+
+    	AVIOContext* avioCtx = avio_alloc_context(buffer,
+    			size,
+				0,
+				state,
+				state->media_data_source_callback,
+				NULL,
+				state->media_data_source_seek_callback);
+
+        state->pFormatCtx = avformat_alloc_context();
+    	state->pFormatCtx->pb = avioCtx;
+    	state->pFormatCtx->flags = AVFMT_FLAG_CUSTOM_IO;
+    	state->position = 0;
+
+    	if (avformat_open_input(&state->pFormatCtx, NULL, NULL, &options) != 0) {
+    		printf("Metadata could not be retrieved\n");
+    		*ps = NULL;
+    		return FAILURE;
+    	}
+    } else {
+    	if (avformat_open_input(&state->pFormatCtx, path, NULL, &options) != 0) {
+    		printf("Metadata could not be retrieved\n");
+    		*ps = NULL;
+    		return FAILURE;
+    	}
     }
 
 	if (avformat_find_stream_info(state->pFormatCtx, NULL) < 0) {
@@ -277,6 +301,10 @@ void init(State **ps) {
 	state->fd = -1;
 	state->offset = 0;
 	state->headers = NULL;
+	state->callback_data_source = NULL;
+    state->media_data_source_callback = NULL;
+    state->media_data_source_seek_callback = NULL;
+    state->position = 0;
 
 	*ps = state;
 }
@@ -330,7 +358,27 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     }
 
 	*ps = state;
-    
+
+    return set_data_source_l(ps, path);
+}
+
+int set_data_source_callback(State **ps, void* callback_data_source, int (*read_packet) (void *, uint8_t *, int), int64_t (*seek)(void *, int64_t, int)) {
+    char path[256] = "";
+
+	State *state = *ps;
+
+	init(&state);
+
+	char str[20];
+    sprintf(str, "pipe:0");
+    strcat(path, str);
+
+    state->callback_data_source = callback_data_source;
+    state->media_data_source_callback = read_packet;
+    state->media_data_source_seek_callback = seek;
+
+	*ps = state;
+
     return set_data_source_l(ps, path);
 }
 
@@ -736,6 +784,10 @@ void release(State **ps) {
             avcodec_close(state->video_st->codec);
         }
         
+        if (state->pFormatCtx->pb) {
+        	avio_context_free(&state->pFormatCtx->pb);
+        }
+
         if (state->pFormatCtx) {
     		avformat_close_input(&state->pFormatCtx);
     	}
@@ -771,6 +823,10 @@ void release(State **ps) {
         if (state->native_window != NULL) {
             ANativeWindow_release(state->native_window);
             state->native_window = NULL;
+        }
+
+        if (state->callback_data_source) {
+        	state->callback_data_source = NULL;
         }
 
     	av_freep(&state);

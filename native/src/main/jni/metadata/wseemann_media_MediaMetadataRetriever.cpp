@@ -244,6 +244,26 @@ static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD(JNIEnv *
     process_media_retriever_call(env, retriever->setDataSource(fd, offset, length), "java/lang/RuntimeException", "setDataSource failed");
 }
 
+static void wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceCallback(JNIEnv *env, jobject thiz, jobject dataSource)
+{
+    __android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "setDataSourceCallback");
+    MediaMetadataRetriever* retriever = getRetriever(env, thiz);
+    if (retriever == 0) {
+        jniThrowException(env, "java/lang/IllegalStateException", "No retriever available");
+        return;
+    }
+    if (dataSource == NULL) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return;
+    }
+
+    // create new media data source and give it to MediaMediaDataRetriever
+    JMediaDataSource* callbackDataSource = new JMediaDataSource(env, dataSource);
+
+    //sp<IDataSource> callbackDataSource = new JMediaDataSource(env, dataSource);
+    process_media_retriever_call(env, retriever->setDataSource(callbackDataSource), "java/lang/RuntimeException", "setDataSourceCallback failed");
+}
+
 static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNIEnv *env, jobject thiz, jlong timeUs, jint option)
 {
    //__android_log_write(ANDROID_LOG_INFO, LOG_TAG, "getFrameAtTime");
@@ -526,6 +546,7 @@ static JNINativeMethod nativeMethods[] = {
     },
     
     {"setDataSource", "(Ljava/io/FileDescriptor;JJ)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceFD},
+    {"_setDataSource",   "(Landroid/media/MediaDataSource;)V", (void *)wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceCallback},
     {"_getFrameAtTime", "(JI)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime},
     {"_getScaledFrameAtTime", "(JIII)[B", (void *)wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTime},
     {"extractMetadata", "(Ljava/lang/String;)Ljava/lang/String;", (void *)wseemann_media_FFmpegMediaMetadataRetriever_extractMetadata},

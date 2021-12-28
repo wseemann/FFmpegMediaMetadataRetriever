@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2016 William Seemann
+ * Copyright 2022 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,12 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaDataSource;
 import android.net.Uri;
+import android.os.Build;
 import android.view.Surface;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -200,7 +204,21 @@ public class FFmpegMediaMetadataRetriever
         }
         setDataSource(uri.toString());
     }
-    
+
+    /**
+     * Sets the data source (MediaDataSource) to use.
+     *
+     * @param dataSource the MediaDataSource for the media you want to play
+     */
+    @RequiresApi(Build.VERSION_CODES.M)
+    public void setDataSource(MediaDataSource dataSource)
+            throws IllegalArgumentException {
+        _setDataSource(dataSource);
+    }
+
+    private native void _setDataSource(MediaDataSource dataSource)
+            throws IllegalArgumentException;
+
     /**
      * Call this method after setDataSource(). This method retrieves the 
      * meta data value associated with the keyCode.
@@ -212,7 +230,7 @@ public class FFmpegMediaMetadataRetriever
      * @return The meta data value associate with the given keyCode on success; 
      * null on failure.
      */
-    public native String extractMetadata(String key);
+    public native String extractMetadata(String keyCode);
 
     /**
      * Call this method after setDataSource(). This method retrieves the 

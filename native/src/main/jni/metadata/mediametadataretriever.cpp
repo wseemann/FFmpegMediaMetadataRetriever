@@ -26,6 +26,8 @@ extern "C" {
 	#include "ffmpeg_mediametadataretriever.h"
 }
 
+#include <android/log.h>
+
 MediaMetadataRetriever::MediaMetadataRetriever()
 {
 	state = NULL;
@@ -34,6 +36,12 @@ MediaMetadataRetriever::MediaMetadataRetriever()
 MediaMetadataRetriever::~MediaMetadataRetriever()
 {
 	Mutex::Autolock _l(mLock);
+	__android_log_write(ANDROID_LOG_VERBOSE, "fmmr", "before release");
+	if (state->callback_data_source) {
+		JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
+		delete callbackDataSource;
+		state->callback_data_source = NULL;
+	}
 	::release(&state);
 }
 
@@ -47,6 +55,44 @@ int MediaMetadataRetriever::setDataSource(int fd, int64_t offset, int64_t length
 {
 	Mutex::Autolock _l(mLock);
     return ::set_data_source_fd(&state, fd, offset, length);
+}
+
+int mediaDataSourceCallback(void *opaque, uint8_t *buf, int buf_size)
+{
+	__android_log_write(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback before read");
+
+	State *state = (State *) opaque;
+	JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
+
+	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr" ,"mediaDataSourceCallback offset: %" PRId64, state->position);
+
+	int ret = callbackDataSource->readAt(state->position, buf, 0, buf_size);
+
+	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback after read! %d", ret);
+
+	return ret;
+}
+
+int64_t mediaDataSourceSeekCallback(void *opaque, int64_t offset, int whence)
+{
+	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback before seek, whence: %d", whence);
+	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr" ,"offset: %" PRId64, offset);
+
+	State *state = (State *) opaque;
+	JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
+
+	if (whence < 3) {
+		state->position = offset;
+		return 0;
+	} else {
+		return -1;
+	}
+}
+
+int MediaMetadataRetriever::setDataSource(JMediaDataSource* callbackDataSource)
+{
+	Mutex::Autolock _l(mLock);
+    return ::set_data_source_callback(&state, callbackDataSource, mediaDataSourceCallback, mediaDataSourceSeekCallback);
 }
 
 int MediaMetadataRetriever::getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt)

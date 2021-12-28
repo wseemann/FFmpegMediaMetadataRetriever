@@ -23,6 +23,8 @@
 #include <android/native_window_jni.h>
 #include <Mutex.h>
 
+#include "wseemann_media_MediaDataSource.h"
+
 extern "C" {
     #include "ffmpeg_mediametadataretriever.h"
 }
@@ -36,6 +38,7 @@ public:
     void disconnect();
     int setDataSource(const char* dataSourceUrl, const char* headers);
     int setDataSource(int fd, int64_t offset, int64_t length);
+    int setDataSource(JMediaDataSource* callbackDataSource);
     int getFrameAtTime(int64_t timeUs, int option, AVPacket *pkt);
     int getScaledFrameAtTime(int64_t timeUs, int option, AVPacket *pkt, int width, int height);
     int extractAlbumArt(AVPacket *pkt);
@@ -46,6 +49,7 @@ public:
 
 private:
     Mutex                                     mLock;
+    JMediaDataSource*                         mListener;
 };
 
 #endif // MEDIAMETADATARETRIEVER_H
