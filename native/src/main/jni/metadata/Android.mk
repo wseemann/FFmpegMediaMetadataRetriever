@@ -4,7 +4,8 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := ffmpeg_mediametadataretriever_jni
 LOCAL_CFLAGS := 
-LOCAL_SRC_FILES := wseemann_media_MediaMetadataRetriever.cpp \
+LOCAL_SRC_FILES := wseemann_media_MediaDataSource.cpp \
+	wseemann_media_MediaMetadataRetriever.cpp \
 	mediametadataretriever.cpp \
         ffmpeg_mediametadataretriever.c \
         ffmpeg_utils.c
