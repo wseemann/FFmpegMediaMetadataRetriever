@@ -131,6 +131,19 @@ void set_video_dimensions(AVFormatContext *ic, AVStream *video_st) {
 	}
 }
 
+char* toUpper(const char* source) {
+	int i = 0;
+	char *dest = malloc(sizeof(source));
+
+	strcpy(dest, source);
+
+	for (i = 0; i < strlen(dest); i++) {
+		dest[i] = toupper(dest[i]);
+	}
+
+	return dest;
+}
+
 const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key) {
     char* value = NULL;
     
@@ -146,8 +159,24 @@ const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, A
 		} else if (video_st && av_dict_get(video_st->metadata, key, NULL, AV_DICT_MATCH_CASE)) {
 			value = av_dict_get(video_st->metadata, key, NULL, AV_DICT_MATCH_CASE)->value;
 		}
+
+		// If the value is NULL, convert the key to uppercase and try one more time
+		if (!value) {
+			char* uppercaseKey = toUpper(key);
+
+			if (av_dict_get(ic->metadata, uppercaseKey, NULL, AV_DICT_MATCH_CASE)) {
+				value = av_dict_get(ic->metadata, uppercaseKey, NULL, AV_DICT_MATCH_CASE)->value;
+			} else if (audio_st && av_dict_get(audio_st->metadata, uppercaseKey, NULL, AV_DICT_MATCH_CASE)) {
+				value = av_dict_get(audio_st->metadata, uppercaseKey, NULL, AV_DICT_MATCH_CASE)->value;
+			} else if (video_st && av_dict_get(video_st->metadata, uppercaseKey, NULL, AV_DICT_MATCH_CASE)) {
+				value = av_dict_get(video_st->metadata, uppercaseKey, NULL, AV_DICT_MATCH_CASE)->value;
+			}
+
+			free(uppercaseKey);
+			uppercaseKey = NULL;
+		}
 	}
-	
+
 	return value;	
 }
 
