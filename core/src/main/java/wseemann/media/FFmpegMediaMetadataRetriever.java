@@ -27,6 +27,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaDataSource;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.Surface;
 
 import androidx.annotation.RequiresApi;
@@ -46,7 +47,8 @@ import java.util.TimeZone;
  */
 public class FFmpegMediaMetadataRetriever
 {
-	private final static String TAG = "FFmpegMediaMetadataRetriever";
+    @SuppressWarnings("unused")
+	private final static String TAG = "FMMR";
 	
 	/**
 	 * User defined bitmap configuration. A bitmap configuration describes how pixels are
@@ -88,6 +90,7 @@ public class FFmpegMediaMetadataRetriever
      * @param path The path of the input media file.
      * @throws IllegalArgumentException If the path is invalid.
      */
+    @SuppressWarnings("unused")
     public native void setDataSource(String path) throws IllegalArgumentException;
     
     /**
@@ -99,6 +102,7 @@ public class FFmpegMediaMetadataRetriever
      * @param headers the headers to be sent together with the request for the data
      * @throws IllegalArgumentException If the URI is invalid.
      */
+    @SuppressWarnings("unused")
     public void setDataSource(String uri,  Map<String, String> headers)
             throws IllegalArgumentException {
         int i = 0;
@@ -129,6 +133,7 @@ public class FFmpegMediaMetadataRetriever
      * non-negative.
      * @throws IllegalArgumentException if the arguments are invalid
      */
+    @SuppressWarnings("unused")
     public native void setDataSource(FileDescriptor fd, long offset, long length)
             throws IllegalArgumentException;
     
@@ -141,6 +146,7 @@ public class FFmpegMediaMetadataRetriever
      * @param fd the FileDescriptor for the file you want to play
      * @throws IllegalArgumentException if the FileDescriptor is invalid
      */
+    @SuppressWarnings("unused")
     public void setDataSource(FileDescriptor fd)
             throws IllegalArgumentException {
         // intentionally less than LONG_MAX
@@ -157,6 +163,7 @@ public class FFmpegMediaMetadataRetriever
      * @throws SecurityException if the Uri cannot be used due to lack of
      * permission.
      */
+    @SuppressWarnings("unused")
     public void setDataSource(Context context, Uri uri)
         throws IllegalArgumentException, SecurityException {
         if (uri == null) {
@@ -194,12 +201,14 @@ public class FFmpegMediaMetadataRetriever
             }
             return;
         } catch (SecurityException ex) {
+            Log.e(TAG, "SecurityException: ", ex);
         } finally {
             try {
                 if (fd != null) {
                     fd.close();
                 }
-            } catch(IOException ioEx) {
+            } catch(IOException ignored) {
+                Log.e(TAG, "IOException: ", ignored);
             }
         }
         setDataSource(uri.toString());
@@ -211,6 +220,7 @@ public class FFmpegMediaMetadataRetriever
      * @param dataSource the MediaDataSource for the media you want to play
      */
     @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressWarnings("unused")
     public void setDataSource(MediaDataSource dataSource)
             throws IllegalArgumentException {
         _setDataSource(dataSource);
@@ -230,6 +240,7 @@ public class FFmpegMediaMetadataRetriever
      * @return The meta data value associate with the given keyCode on success; 
      * null on failure.
      */
+    @SuppressWarnings("unused")
     public native String extractMetadata(String keyCode);
 
     /**
@@ -245,7 +256,8 @@ public class FFmpegMediaMetadataRetriever
      * @return The meta data value associate with the given keyCode on success; 
      * null on failure.
      */
-    public native String extractMetadataFromChapter(String key, int chapter);
+    @SuppressWarnings("unused")
+    public native String extractMetadataFromChapter(String keyCode, int chapter);
     
     /**
      * Gets the media metadata.
@@ -260,15 +272,13 @@ public class FFmpegMediaMetadataRetriever
      //* #BYPASS_METADATA_FILTER}.
      //*
      * @return The metadata, possibly empty. null if an error occured.
-     */    
-    public Metadata getMetadata() {//final boolean update_only,
-    	//	final boolean apply_filter) {
-    	boolean update_only = false;
-    	boolean apply_filter = false;
-    	
+     */
+    @SuppressWarnings("unused")
+    public Metadata getMetadata() {
     	Metadata data = new Metadata();
-    	HashMap<String, String> metadata = null;
-        if ((metadata = native_getMetadata(update_only, apply_filter, metadata)) == null) {
+    	HashMap<String, String> metadata;
+
+        if ((metadata = native_getMetadata(false, false, null)) == null) {
             return null;
         }
 
@@ -326,6 +336,7 @@ public class FFmpegMediaMetadataRetriever
      * @return A Bitmap containing a representative video frame, which 
      *         can be null, if such a frame cannot be retrieved.
      */
+    @SuppressWarnings("unused")
     public Bitmap getFrameAtTime(long timeUs, int option) {
         if (option < OPTION_PREVIOUS_SYNC ||
             option > OPTION_CLOSEST) {
@@ -367,6 +378,7 @@ public class FFmpegMediaMetadataRetriever
      *
      * @see #getFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public Bitmap getFrameAtTime(long timeUs) {
     	Bitmap b = null;
     	
@@ -397,6 +409,7 @@ public class FFmpegMediaMetadataRetriever
      * @see #getFrameAtTime(long)
      * @see #getFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public Bitmap getFrameAtTime() {
         return getFrameAtTime(-1, OPTION_CLOSEST_SYNC);
     }
@@ -432,6 +445,7 @@ public class FFmpegMediaMetadataRetriever
      * @return A Bitmap containing a representative video frame, which
      *         can be null, if such a frame cannot be retrieved.
      */
+    @SuppressWarnings("unused")
     public Bitmap getScaledFrameAtTime(long timeUs, int option, int width, int height) {
         if (option < OPTION_PREVIOUS_SYNC ||
                 option > OPTION_CLOSEST) {
@@ -473,6 +487,7 @@ public class FFmpegMediaMetadataRetriever
      *
      * @see #getScaledFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public Bitmap getScaledFrameAtTime(long timeUs, int width, int height) {
         Bitmap b = null;
 
@@ -498,12 +513,14 @@ public class FFmpegMediaMetadataRetriever
      * 
      * @return null if no such graphic is found.
      */
+    @SuppressWarnings("unused")
     public native byte[] getEmbeddedPicture();
     
     /**
      * Call it when one is done with the object. This method releases the memory
      * allocated internally.
      */
+    @SuppressWarnings("unused")
     public native void release();
     private native void native_setup();
     private static native void native_init();
@@ -537,6 +554,7 @@ public class FFmpegMediaMetadataRetriever
      * @param surface The {@link Surface} to be used for the video portion of
      * the media.
      */
+    @SuppressWarnings("unused")
     public native void setSurface(Object surface);
 
     /**
@@ -555,6 +573,7 @@ public class FFmpegMediaMetadataRetriever
      *
      * @see #getFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public static final int OPTION_PREVIOUS_SYNC    = 0x00;
     /**
      * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
@@ -563,6 +582,7 @@ public class FFmpegMediaMetadataRetriever
      *
      * @see #getFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public static final int OPTION_NEXT_SYNC        = 0x01;
     /**
      * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
@@ -571,6 +591,7 @@ public class FFmpegMediaMetadataRetriever
      *
      * @see #getFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public static final int OPTION_CLOSEST_SYNC     = 0x02;
     /**
      * This option is used with {@link #getFrameAtTime(long, int)} to retrieve
@@ -579,6 +600,7 @@ public class FFmpegMediaMetadataRetriever
      *
      * @see #getFrameAtTime(long, int)
      */
+    @SuppressWarnings("unused")
     public static final int OPTION_CLOSEST          = 0x03;
 
     /**
