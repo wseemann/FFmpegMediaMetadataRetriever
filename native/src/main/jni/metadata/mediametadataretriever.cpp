@@ -30,34 +30,50 @@ extern "C" {
 
 int mediaDataSourceCallback(void *opaque, uint8_t *buf, int buf_size)
 {
-	__android_log_write(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback before read");
-
 	State *state = (State *) opaque;
 	JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
 
-	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr" ,"mediaDataSourceCallback offset: %" PRId64, state->position);
+	//__android_log_print(ANDROID_LOG_VERBOSE, "fmmr" ,"mediaDataSourceCallback offset: %" PRId64, state->position);
 
 	int ret = callbackDataSource->readAt(state->position, buf, 0, buf_size);
 
-	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback after read! %d", ret);
+	//__android_log_print(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback after read! %d", ret);
 
 	return ret;
 }
 
+// https://stackoverflow.com/questions/69081037/ffmpeg-error-when-finding-stream-information-with-custom-aviocontext
 int64_t mediaDataSourceSeekCallback(void *opaque, int64_t offset, int whence)
 {
-	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr", "mediaDataSourceCallback before seek, whence: %d", whence);
-	__android_log_print(ANDROID_LOG_VERBOSE, "fmmr" ,"offset: %" PRId64, offset);
+	//__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, "mediaDataSourceCallback before seek, whence: %d", whence);
+	//__android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG ,"offset: %" PRId64, offset);
 
 	State *state = (State *) opaque;
 	JMediaDataSource *callbackDataSource = (JMediaDataSource *) state->callback_data_source;
 
-	if (whence < 3) {
-		state->position = offset;
-		return 0;
-	} else {
+	switch(whence)
+	{
+	case AVSEEK_SIZE:
+		__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "AVSEEK_SIZE");
+		off64_t size;
+		callbackDataSource->getSize(&size);
 		return -1;
+		break;
+	case SEEK_SET:
+		__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "SEEK_SET");
+		break;
+	case SEEK_CUR:
+		__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "SEEK_CUR");
+		break;
+	case SEEK_END:
+		__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "SEEK_END");
+		break;
+	default:
+		__android_log_write(ANDROID_LOG_VERBOSE, LOG_TAG, "default");
+		break;
 	}
+
+	return -1;
 }
 
 MediaMetadataRetriever::MediaMetadataRetriever()
