@@ -180,15 +180,23 @@ const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, A
 	return value;	
 }
 
-int get_metadata_internal(AVFormatContext *ic, AVDictionary **metadata) {
-    if (!ic) {
-        return FAILURE;
-    }
-    
-    set_shoutcast_metadata(ic);
-    av_dict_copy(metadata, ic->metadata, 0);
-    
-    return SUCCESS;
+int get_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, AVDictionary **metadata) {
+	if (!ic) {
+		return FAILURE;
+	}
+
+	set_shoutcast_metadata(ic);
+	av_dict_copy(metadata, ic->metadata, 0);
+
+	if (audio_st) {
+		av_dict_copy(metadata, audio_st->metadata, 0);
+	}
+
+	if (video_st) {
+		av_dict_copy(metadata, video_st->metadata, 0);
+	}
+
+	return SUCCESS;
 }
 
 const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key, int chapter) {

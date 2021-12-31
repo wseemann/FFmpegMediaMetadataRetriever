@@ -436,7 +436,7 @@ int get_metadata(State **ps, AVDictionary **metadata) {
         return FAILURE;
     }
     
-    get_metadata_internal(state->pFormatCtx, metadata);
+    get_metadata_internal(state->pFormatCtx, state->audio_st, state->video_st, metadata);
     
     return SUCCESS;
 }
