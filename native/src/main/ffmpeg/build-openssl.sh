@@ -64,13 +64,15 @@ remove_openssl() {
 }
 
 
-#get_openssl
-#build_target arm-linux-androideabi armeabi-v7a android-arm
-#build_target aarch64-linux-android arm64-v8a android-arm64
-#build_target i686-linux-android x86 android-x86
-#build_target x86_64-linux-android x86_64 android-x86_64
+get_openssl
+build_target arm-linux-androideabi armeabi-v7a android-arm
+build_target aarch64-linux-android arm64-v8a android-arm64
+build_target i686-linux-android x86 android-x86
+build_target x86_64-linux-android x86_64 android-x86_64
 remove_openssl
-#cd ../
+cd ../
+rm -r ../jni/openssl/openssl/
+cp -r build/ ../jni/openssl/
 
 echo OpenSSL build complete, exiting...
 exit
