@@ -94,8 +94,7 @@ Clone/Download/Fork the repo through GitHub or via (read-only)
 Note: The build instructions and scripts assume you are running Unix or Linux. Building
 on other operating systems is currently not supported.
 
-Execute the following in the FFmpegMediaMetadataRetriever/fmmr-library/
-directory (assuming /path/to/android_sdk/tools is in your PATH):
+Execute the following in the root project directory (assuming /path/to/android_sdk/tools is in your PATH):
 
     android update project --path .
 
@@ -107,11 +106,7 @@ where <path to NDK> is the path to your Android NDK, for example:
 
     ndk.dir=/home/wseemann/Android/android-ndk-r20
 
-**Note:** If you wish to enable https support (for use with API 8+ only) navigate to FFmpegMediaMetadataRetriever/fmmr-library/ and execute
-
-    ant build-ffmpeg-with-ssl
-
-To compile the library in Android Studio, highlight `library` in the project explorer and run Build->Make Module 'library'. This will also build the native FFmpeg binaries.
+To compile the library in Android Studio, highlight `core` in the project explorer and run Build->Make Module 'core'. This will also build the native FFmpeg binaries.
 
 Usage
 ------------
@@ -138,7 +133,7 @@ License
 FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
 and meta data from an input media file.
 
-Copyright 2021 William Seemann
+Copyright 2022 William Seemann
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

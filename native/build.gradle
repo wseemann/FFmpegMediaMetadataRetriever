@@ -95,10 +95,9 @@ android {
     }
 
     task buildFFmpeg(type: Exec, description: 'Compile FFmpeg source via NDK') {
-        //def dir = file('src/main/ffmpeg/build-ffmpeg.sh').absolutePath
-        //commandLine "$dir",
-        //        '--with-openssl'
-        //def dir = file('src/main/ffmpeg/build.sh').absolutePath
+        def pwd = "$rootProject.projectDir/native/src/main/ffmpeg"
+        def dir = file('src/main/ffmpeg/build.sh').absolutePath
+        commandLine "$dir", "$pwd"
     }
 
     task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
@@ -125,7 +124,7 @@ android {
     }
 
     clean.dependsOn 'cleanNative'
-    //buildNative.dependsOn 'buildFFmpeg'
+    buildNative.dependsOn 'buildFFmpeg'
     preBuild.dependsOn 'buildNative'
 
     //tasks.withType(JavaCompile) {
