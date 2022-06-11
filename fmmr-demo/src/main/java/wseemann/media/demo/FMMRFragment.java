@@ -83,7 +83,7 @@ public class FMMRFragment extends ListFragment
     	
     	final EditText uriText = (EditText) v.findViewById(R.id.uri);
     	// Uncomment for debugging
-		uriText.setText("https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4");
+		uriText.setText("https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4");
     	// uriText.setText("http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_stereo_abl.mp4");
 		// https://gist.github.com/jsturgis/3b19447b304616f18657
 
