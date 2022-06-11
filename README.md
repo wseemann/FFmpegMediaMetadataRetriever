@@ -100,7 +100,12 @@ Execute the following in the root project directory (assuming /path/to/android_s
 
 Open the newly created local.properties file and add the following lines:
 
+    sdk.dir=<path to SDK>
     ndk.dir=<path to NDK>
+
+where <path to SDK> is the path to your Android SDK, for example:
+
+    sdk.dir=/Users/wseemann/Library/Android/sdk
 
 where <path to NDK> is the path to your Android NDK, for example:
 
