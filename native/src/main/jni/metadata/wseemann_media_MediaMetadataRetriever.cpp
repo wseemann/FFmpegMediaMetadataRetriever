@@ -141,7 +141,7 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
         return;
     }
 
-    char uri[] = "";
+    char uri[strlen(tmp)];
     strcpy(uri, tmp);
     
     // Workaround for FFmpeg ticket #998
