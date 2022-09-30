@@ -1,54 +1,51 @@
 apply plugin: 'com.android.library'
 apply from: "$rootProject.projectDir/publishing.gradle"
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-}
+def mkfile = ''
+def aarname = ''
+def pomName = ''
+
+def pomArtifactId = ""
 
 android {
     buildFeatures {
         buildConfig = false
     }
 
-    compileSdkVersion 31
+    compileSdk versions.get("compileSdkVersion")
 
-    def mkfile = "NDK_APPLICATION_MK=Application.mk"
-    def aarname = "all-fmmr"
-    def pomName = 'FFmpegMediaMetadataRetriever-native'
+    mkfile = "NDK_APPLICATION_MK=Application.mk"
+    aarname = "all-fmmr"
+    pomName = 'FFmpegMediaMetadataRetriever-native'
 
-    //def mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
-    //def aarname = "armv7-fmmr"
-    //def pomName = 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'
+    //mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
+    //aarname = "armv7-fmmr"
+    //pomName = 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'
 
-    //def mkfile = "NDK_APPLICATION_MK=x86Application.mk"
-    //def aarname = "x86-fmmr"
-    //def pomName = 'FFmpegMediaMetadataRetriever-native-x86'
+    //mkfile = "NDK_APPLICATION_MK=x86Application.mk"
+    //aarname = "x86-fmmr"
+    //pomName = 'FFmpegMediaMetadataRetriever-native-x86'
 
-    //def mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
-    //def aarname = "x86_64-fmmr"
-    //def pomName = 'FFmpegMediaMetadataRetriever-native-x86_64'
+    //mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
+    //aarname = "x86_64-fmmr"
+    //pomName = 'FFmpegMediaMetadataRetriever-native-x86_64'
 
-    //def mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
-    //def aarname = "arm_64-fmmr"
-    //def pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
+    //mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
+    //aarname = "arm_64-fmmr"
+    //pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
 
-    def pomArtifactId = "$pomName"
+    pomArtifactId = "$pomName"
 
     defaultConfig {
         minSdkVersion versions.get("minSdkVersion")
         targetSdkVersion versions.get("targetSdkVersion")
+        ndkVersion versions.get("ndkVersion")
         versionCode versions.get("versionCode")
         versionName versions.get("versionName")
 
-        /*ndk {
+        ndk {
             abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
-        }*/
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,37 +54,15 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    /*flavorDimensions "version"
-    productFlavors {
-        fat {
-            //mkfile = "NDK_APPLICATION_MK=Application.mk"
-            //aarname = "all-fmmr"
-        }
-        armeabi_v7a {
-            //mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
-            //aarname = "armv7-fmmr"
-        }
-        x86 {
-            //mkfile = "NDK_APPLICATION_MK=x86Application.mk"
-            //aarname = "x86-fmmr"
-        }
-        x86_64 {
-            //mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
-            //aarname = "x86_64-fmmr"
-        }
-        arm_64_v8a {
-            //mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
-            //aarname = "arm_64-fmmr"
-        }
-    }*/
+    publishing {
+        singleVariant('release')
+    }
 
     sourceSets.main {
         jni.srcDirs = [] // This prevents the auto generation of Android.mk, disables automatic ndk-build
@@ -101,7 +76,10 @@ android {
     }
 
     task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
-        def ndkDir = android.ndkDirectory
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def ndkDir = properties.getProperty('ndk.dir')
+        // def ndkDir = android.ndkDirectory
         println mkfile
         commandLine "$ndkDir/ndk-build",
                 mkfile,
@@ -117,58 +95,22 @@ android {
         delete "$project.projectDir/src/main/jniLibs"
         delete "$project.projectDir/src/main/obj"
         delete project.buildDir
-        def ndkDir = android.ndkDirectory
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def ndkDir = properties.getProperty('ndk.dir')
+        // def ndkDir = android.ndkDirectory
         commandLine "$ndkDir/ndk-build",
                 '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
                 'clean'
     }
 
     clean.dependsOn 'cleanNative'
-    buildNative.dependsOn 'buildFFmpeg'
+    // buildNative.dependsOn 'buildFFmpeg'
     preBuild.dependsOn 'buildNative'
 
     //tasks.withType(JavaCompile) {
     //    compileTask -> compileTask.dependsOn buildNative
     //}
-
-    afterEvaluate {
-        publishing {
-            publications {
-                release(MavenPublication) {
-                    from components.release
-
-                    groupId = 'com.github.wseemann'
-                    artifactId = "$pomArtifactId"
-                    version = "$project.android.defaultConfig.versionName"
-
-                    pom {
-                        name = "$pomName"
-                        description = 'FFmpegMediaMetadataRetriever library'
-                        url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
-                        packaging = 'aar'
-                        licenses {
-                            license {
-                                name = 'Apache License, Version 2.0'
-                                url = 'http://www.apache.org/licenses/LICENSE-2.0'
-                                distribution = 'repo'
-                            }
-                        }
-                        developers {
-                            developer {
-                                id = 'wseemann'
-                                name = 'William Seemann'
-                            }
-                        }
-                        scm {
-                            connection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
-                            developerConnection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
-                            url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     android.libraryVariants.all { variant ->
         variant.outputs.all {
@@ -177,12 +119,54 @@ android {
     }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+println "$mkfile"
+println "$aarname"
+println "$pomName"
+println "$pomArtifactId"
 
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.github.wseemann'
+                artifactId = "$pomArtifactId"
+                version = "$project.android.defaultConfig.versionName"
+
+                pom {
+                    name = "$pomName"
+                    description = 'FFmpegMediaMetadataRetriever library'
+                    url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                    packaging = 'aar'
+                    licenses {
+                        license {
+                            name = 'Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0'
+                            distribution = 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'wseemann'
+                            name = 'William Seemann'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                        developerConnection = 'scm:hg:https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                        url = 'https://github.com/wseemann/FFmpegMediaMetadataRetriever'
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.annotation:annotation:1.3.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.5.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
 }

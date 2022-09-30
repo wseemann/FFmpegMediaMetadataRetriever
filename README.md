@@ -46,23 +46,23 @@ Using FMMR in your application (Android Studio)
 Add the following maven dependency to your project's `build.gradle` file:
 
     dependencies {
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.16'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.17'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.17'
     }
 
 Optionally, to support individual ABIs:
 
     dependencies {
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.16'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.16'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.16'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.16'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.16'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.17'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.17'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.17'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.17'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.17'
     }
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
-[Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.16/prebuilt-aars.zip)
+[Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.17/prebuilt-aars.zip)
 
 Demo Application
 ------------
@@ -75,7 +75,7 @@ Installation
 FFmpegMediaMetadataRetriever relies on FFmpeg and native code. The build process
 is complex and may be confusing for those unfamiliar the Android NDK. For this
 reason I've precompiled AARs created by the build process and checked them
-in [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.16/prebuilt-aars.zip).
+in [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.17/prebuilt-aars.zip).
 The modules are also included with the library. If you don't want to build the modules
 you can simple unzip the prebuilt ones and copy them to your projects "libs" folder. (Note:
 copy them to YOUR projects "libs" folder, NOT the "libs" folder located in

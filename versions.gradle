@@ -1,6 +1,8 @@
 def versions = [:]
 versions.minSdkVersion = 14
-versions.targetSdkVersion = 31
-versions.versionCode = 18
-versions.versionName = "1.0.16"
+versions.compileSdkVersion = 33
+versions.targetSdkVersion = 33
+versions.versionCode = 19
+versions.versionName = "1.0.17"
+versions.ndkVersion = "25.1.8937393"
 ext.versions = versions

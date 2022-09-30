@@ -1,20 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdk versions.get("compileSdkVersion")
 
     defaultConfig {
         applicationId "wseemann.media.fmpdemo"
-        minSdkVersion 14
-        targetSdkVersion 31
-        versionCode 41
-        versionName "1.0.11"
+        minSdkVersion versions.get("minSdkVersion")
+        targetSdkVersion versions.get("targetSdkVersion")
+        versionCode 42
+        versionName "1.0.12"
     }
+
     buildTypes {
         debug {
             debuggable true
         }
-
         release {
             debuggable false
             minifyEnabled false
@@ -26,16 +26,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.15'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.15'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.15'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.17'
+    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.17'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.17'
+    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.17'
+    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.17'
 
-    implementation project(':native')
-    implementation project(path: ':core')
+    // implementation project(':native')
+    // implementation project(':core')
 
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
 
     testImplementation 'junit:junit:4.13.2'
 }
