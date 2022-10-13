@@ -5,45 +5,43 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-	<application
-        android:icon="@drawable/ic_launcher"
+    <application
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-		android:networkSecurityConfig="@xml/network_security_config">
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.AppTheme">
         <activity
             android:name="wseemann.media.demo.FMMRDemo"
-            android:label="@string/app_name"
-			android:exported="true">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-  				<action android:name="android.intent.action.SEND" />
-  				<category android:name="android.intent.category.DEFAULT" />
-  				<data android:mimeType="text/plain" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:scheme="http" />
-				<data android:host="*" />
-				<data android:mimeType="audio/*" />
-				<data android:mimeType="video/*" />
-			</intent-filter>
-			<intent-filter>
-        		<action android:name="android.intent.action.VIEW" />
-        		<category android:name="android.intent.category.DEFAULT" />
-        		<data android:scheme="file" />
-        		<data android:mimeType="audio/*" />
-        		<data android:mimeType="video/*" />
-    		</intent-filter>
-        </activity>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <activity
-            android:name="wseemann.media.demo.PreferencesActivity"
-            android:label="@string/action_settings" >
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="http" />
+                <data android:host="*" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="file" />
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
         </activity>
     </application>
 

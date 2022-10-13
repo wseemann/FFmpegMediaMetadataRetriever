@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2015 William Seemann
+ * Copyright 2022 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,43 +17,20 @@
  * limitations under the License.
  */
 
-package wseemann.media.demo;
+package wseemann.media.demo
 
-public class Metadata {
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import wseemann.media.demo.databinding.ActivityMainBinding
 
-	private String mKey;
-	private Object mValue;
-	
-	public Metadata(String key, Object value) {
-		mKey = key;
-		mValue = value;
-	}
+class FMMRDemo : AppCompatActivity() {
 
-	/**
-	 * @return the mKey
-	 */
-	public String getKey() {
-		return mKey;
-	}
+    private lateinit var binding: ActivityMainBinding
 
-	/**
-	 * @param mKey the mKey to set
-	 */
-	public void setKey(String mKey) {
-		this.mKey = mKey;
-	}
-
-	/**
-	 * @return the mValue
-	 */
-	public Object getValue() {
-		return mValue;
-	}
-
-	/**
-	 * @param mValue the mValue to set
-	 */
-	public void setValue(Object mValue) {
-		this.mValue = mValue;
-	}
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+    }
 }

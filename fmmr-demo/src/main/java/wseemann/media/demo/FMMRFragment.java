@@ -74,7 +74,7 @@ public class FMMRFragment extends ListFragment
     	ListView lv = layout.findViewById(android.R.id.list);
     	ViewGroup parent = (ViewGroup) lv.getParent();
     	
-    	View v = inflater.inflate(R.layout.fragment, container, false);
+    	View v = inflater.inflate(R.layout.fragment_main, container, false);
     	
     	// Remove ListView and add my view in its place
         int lvIndex = parent.indexOfChild(lv);
@@ -154,7 +154,7 @@ public class FMMRFragment extends ListFragment
         // application this would come from a resource.
         setEmptyText(getString(R.string.no_metadata));
 
-    	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.header, null);
+    	View header = getLayoutInflater(savedInstanceState).inflate(R.layout.list_header_view, null);
     	image = (ImageView) header.findViewById(R.id.image);
 
 		// set up the Surface video sink

@@ -68,8 +68,8 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
 
             fmmr.setDataSource(mUri);
 
-    		for (int i = 0; i < Constants.METADATA_KEYS.length; i++) {
-    			String key = Constants.METADATA_KEYS[i];
+    		for (int i = 0; i < Constants.INSTANCE.getMETADATA_KEYS().length; i++) {
+    			String key = Constants.INSTANCE.getMETADATA_KEYS()[i];
     			String value = fmmr.extractMetadata(key);
     		
     			if (value != null) {
@@ -85,8 +85,8 @@ public class MetadataLoader extends AsyncTaskLoader<List<Metadata>> {
                 int chapterCount = Integer.parseInt(count);
 
                 for (int j = 0; j < chapterCount; j++) {
-                    for (int i = 0; i < Constants.METADATA_KEYS.length; i++) {
-                        String key = Constants.METADATA_KEYS[i];
+                    for (int i = 0; i < Constants.INSTANCE.getMETADATA_KEYS().length; i++) {
+                        String key = Constants.INSTANCE.getMETADATA_KEYS()[i];
                         String value = fmmr.extractMetadataFromChapter(key, j);
 
                         if (value != null) {
