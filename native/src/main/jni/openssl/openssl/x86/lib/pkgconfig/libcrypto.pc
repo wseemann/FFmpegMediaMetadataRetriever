@@ -1,4 +1,4 @@
-prefix=/Users/wseemann/Android/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1c/build/x86
+prefix=/Users/wseemann/Android/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1i/build/x86
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
@@ -6,7 +6,7 @@ enginesdir=${libdir}/engines-1.1
 
 Name: OpenSSL-libcrypto
 Description: OpenSSL cryptography library
-Version: 1.1.1c
+Version: 1.1.1i
 Libs: -L${libdir} -lcrypto
 Libs.private: -ldl -pthread 
 Cflags: -I${includedir}

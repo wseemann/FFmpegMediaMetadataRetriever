@@ -1,9 +1,9 @@
-prefix=/Users/wseemann/Android/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1c/build/x86_64
+prefix=/Users/wseemann/Android/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1i/build/x86_64
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: OpenSSL
 Description: Secure Sockets Layer and cryptography libraries and tools
-Version: 1.1.1c
+Version: 1.1.1i
 Requires: libssl libcrypto

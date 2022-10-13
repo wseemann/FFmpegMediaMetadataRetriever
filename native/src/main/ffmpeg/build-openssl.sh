@@ -2,7 +2,7 @@
 set -e
 set -x
 
-export OPENSSL_VERSION="1.1.1c"
+export OPENSSL_VERSION="1.1.1i"
 
 # Set directory
 export SCRIPTPATH=`pwd`
@@ -13,7 +13,7 @@ OPENSSL_DIR=$SCRIPTPATH/openssl-$OPENSSL_VERSION
 
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
 export HOST_TAG=darwin-x86_64
-export MIN_SDK_VERSION=21
+export MIN_SDK_VERSION=16
 
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
 
@@ -65,9 +65,13 @@ remove_openssl() {
 
 
 get_openssl
+export MIN_SDK_VERSION=16
 build_target arm-linux-androideabi armeabi-v7a android-arm
+export MIN_SDK_VERSION=21
 build_target aarch64-linux-android arm64-v8a android-arm64
+export MIN_SDK_VERSION=16
 build_target i686-linux-android x86 android-x86
+export MIN_SDK_VERSION=21
 build_target x86_64-linux-android x86_64 android-x86_64
 remove_openssl
 cd ../
