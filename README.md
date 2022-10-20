@@ -23,7 +23,7 @@ This project uses FFmpeg version 4.2.2.
 
 Key Features:
 * ARMv7, x86, x86_64 and ARM_64 support (Note: ARM and MIPS aren't supported as of version 1.0.14)
-* Support for API 14+
+* Support for API 16+
 * URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
 Supported protocols:
