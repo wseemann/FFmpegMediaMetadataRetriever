@@ -166,7 +166,7 @@ wseemann_media_FFmpegMediaMetadataRetriever_setDataSourceAndHeaders(
 
         int i = 0;
         const char *rawString = NULL;
-        char hdrs[2048];
+        char hdrs[2048] = "";
 
         for (i = 0; i < keysCount; i++) {
             jstring key = (jstring) env->GetObjectArrayElement(keys, i);
