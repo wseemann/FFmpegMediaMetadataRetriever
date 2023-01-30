@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.MediaDataSource;
 import android.net.Uri;
 import android.os.Build;
@@ -343,19 +344,7 @@ public class FFmpegMediaMetadataRetriever
             throw new IllegalArgumentException("Unsupported option: " + option);
         }
 
-    	Bitmap b = null;
-    	
-        BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
-        bitmapOptionsCache.inDither = false;
-    	
-        byte [] picture = _getFrameAtTime(timeUs, option);
-        
-        if (picture != null) {
-        	b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
-        }
-        
-        return b;
+        return createBitmap(_getFrameAtTime(timeUs, option));
     }
 
     /**
@@ -380,19 +369,7 @@ public class FFmpegMediaMetadataRetriever
      */
     @SuppressWarnings("unused")
     public Bitmap getFrameAtTime(long timeUs) {
-    	Bitmap b = null;
-    	
-        BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
-        bitmapOptionsCache.inDither = false;
-    	
-        byte [] picture = _getFrameAtTime(timeUs, OPTION_CLOSEST_SYNC);
-        
-        if (picture != null) {
-        	b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
-        }
-        
-        return b;
+        return createBitmap(_getFrameAtTime(timeUs, OPTION_CLOSEST_SYNC));
     }
     
     /**
@@ -452,19 +429,7 @@ public class FFmpegMediaMetadataRetriever
             throw new IllegalArgumentException("Unsupported option: " + option);
         }
 
-        Bitmap b = null;
-
-        BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
-        bitmapOptionsCache.inDither = false;
-
-        byte [] picture = _getScaledFrameAtTime(timeUs, option, width, height);
-
-        if (picture != null) {
-            b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
-        }
-
-        return b;
+        return createBitmap(_getScaledFrameAtTime(timeUs, option, width, height));
     }
 
     /**
@@ -489,19 +454,7 @@ public class FFmpegMediaMetadataRetriever
      */
     @SuppressWarnings("unused")
     public Bitmap getScaledFrameAtTime(long timeUs, int width, int height) {
-        Bitmap b = null;
-
-        BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
-        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
-        bitmapOptionsCache.inDither = false;
-
-        byte [] picture = _getScaledFrameAtTime(timeUs, OPTION_CLOSEST_SYNC, width, height);
-
-        if (picture != null) {
-            b = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
-        }
-
-        return b;
+        return createBitmap(_getScaledFrameAtTime(timeUs, OPTION_CLOSEST_SYNC, width, height));
     }
 
     private native byte [] _getScaledFrameAtTime(long timeUs, int option, int width, int height);
@@ -534,6 +487,39 @@ public class FFmpegMediaMetadataRetriever
         } finally {
             super.finalize();
         }
+    }
+
+    private Bitmap createBitmap(byte [] picture) {
+        if (picture == null) {
+            return null;
+        }
+
+        int rotation = 0;
+
+        String value = extractMetadata(METADATA_KEY_VIDEO_ROTATION);
+
+        if (value != null) {
+            try {
+                rotation = Integer.parseInt(value);
+            } catch (NumberFormatException ex) {
+                Log.e(TAG, "Unable to convert rotation metadata to an integer");
+            }
+        }
+
+        Bitmap bitmap;
+        BitmapFactory.Options bitmapOptionsCache = new BitmapFactory.Options();
+        //bitmapOptionsCache.inPreferredConfig = getInPreferredConfig();
+        bitmapOptionsCache.inDither = false;
+
+        bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length, bitmapOptionsCache);
+
+        if (rotation != 0) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotation);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+        }
+
+        return bitmap;
     }
 
     /**
