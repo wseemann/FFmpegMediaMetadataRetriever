@@ -1,6 +1,5 @@
-gradle/fmmr-library/binaries/src/main/ffmpeg/
-
 .DS_Store
+local.properties
 
 # Gradle files
 .gradle/
