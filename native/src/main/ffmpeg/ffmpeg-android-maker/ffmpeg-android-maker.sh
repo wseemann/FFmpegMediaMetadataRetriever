@@ -18,6 +18,9 @@ export SCRIPTS_DIR=${BASE_DIR}/scripts
 # All FFmpeg's libraries and headers are copied there
 export OUTPUT_DIR=${BASE_DIR}/output
 
+# Check the host machine for proper setup and fail fast otherwise
+${SCRIPTS_DIR}/check-host-machine.sh || exit 1
+
 # Directory to use as a place to build/install FFmpeg and its dependencies
 BUILD_DIR=${BASE_DIR}/build
 # Separate directory to build FFmpeg to
@@ -94,14 +97,8 @@ do
   cd ${BASE_DIR}
 done
 
-# ABIs to build FFmpeg for.
-# x86 is the first, because it is likely to have Text Relocations.
-# In this case the rest ABIs will not be assembled at all.
-#ABIS_TO_BUILD=( "x86" "x86_64" "armeabi-v7a" "arm64-v8a" )
-ABIS_TO_BUILD=( $1 )
-echo $ABIS_TO_BUILD
-
-for ABI in ${ABIS_TO_BUILD[@]}
+# Main build loop
+for ABI in ${FFMPEG_ABIS_TO_BUILD[@]}
 do
   # Exporting variables for the current ABI
   source ${SCRIPTS_DIR}/export-build-variables.sh ${ABI}
@@ -115,13 +112,13 @@ do
     cd ${!COMPONENT_SOURCES_DIR_VARIABLE}
 
     # and executing the component-specific build script
-    ${SCRIPTS_DIR}/${COMPONENT}/build.sh
+    source ${SCRIPTS_DIR}/${COMPONENT}/build.sh || exit 1
 
     # Returning to the root directory. Just in case.
     cd ${BASE_DIR}
   done
 
-  checkTextRelocations
+  checkTextRelocations || exit 1
 
   prepareOutput
 done

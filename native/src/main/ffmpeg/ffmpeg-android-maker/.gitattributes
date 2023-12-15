@@ -1,0 +1,2 @@
+# Set always lf for shell file
+*.sh text eol=lf

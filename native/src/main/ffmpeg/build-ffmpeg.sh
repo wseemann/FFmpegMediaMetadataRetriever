@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #cd src/main/ffmpeg
 
@@ -21,7 +21,7 @@ build_target() {
         ./build_openssl.sh $1
         ./build_ffmpeg_with_ssl.sh $1
     else
-        ./ffmpeg-android-maker/ffmpeg-android-maker.sh $1
+        ./ffmpeg-android-maker/ffmpeg-android-maker.sh
         export OUTPUT_DIR=${WORKING_DIR}/ffmpeg-android-maker/output/$1
         cp -r $OUTPUT_DIR $WORKING_DIR/../jni/ffmpeg/ffmpeg/
     fi
@@ -46,24 +46,32 @@ fi
 if [ ! -d $TARGET_ARMEABIV7A_DIR ]; then
     # Build FFmpeg from ARM v7 architecture and copy to the JNI folder
     cd $WORKING_DIR
+    export FFMPEG_ABIS_TO_BUILD=( "armeabi-v7a" )
+    echo $FFMPEG_ABIS_TO_BUILD
     build_target "armeabi-v7a"
 fi
 
 if [ ! -d $TARGET_X86_DIR ]; then
     # Build FFmpeg from x86 architecture and copy to the JNI folder
     cd $WORKING_DIR
+    export FFMPEG_ABIS_TO_BUILD=( "x86" )
+    echo $FFMPEG_ABIS_TO_BUILD
     build_target "x86"
 fi
 
 if [ ! -d $TARGET_X86_64_DIR ]; then
     # Build FFmpeg from x86_64 architecture and copy to the JNI folder
     cd $WORKING_DIR
+    export FFMPEG_ABIS_TO_BUILD=( "x86_64" )
+    echo $FFMPEG_ABIS_TO_BUILD
     build_target x86_64
 fi
 
 if [ ! -d $TARGET_ARMEABI_64_DIR ]; then
     # Build FFmpeg from arneabi_64 architecture and copy to the JNI folder
     cd $WORKING_DIR
+    export FFMPEG_ABIS_TO_BUILD=( "arm64-v8a" )
+    echo $FFMPEG_ABIS_TO_BUILD
     build_target arm64-v8a
 fi
 

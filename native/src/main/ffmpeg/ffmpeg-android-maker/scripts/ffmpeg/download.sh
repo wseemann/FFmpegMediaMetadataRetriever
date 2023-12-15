@@ -9,17 +9,11 @@
 # Getting sources of a particular FFmpeg release.
 # Same argument (FFmpeg version) produces the same source set.
 function ensureSourcesTar() {
-  FFMPEG_SOURCES=ffmpeg-${FFMPEG_SOURCE_VALUE}
+  source ${SCRIPTS_DIR}/common-functions.sh
 
-  if [[ ! -d "$FFMPEG_SOURCES" ]]; then
-    TARGET_FILE_NAME=ffmpeg-${FFMPEG_SOURCE_VALUE}.tar.bz2
-
-    curl https://www.ffmpeg.org/releases/${TARGET_FILE_NAME} --output ${TARGET_FILE_NAME}
-    tar xf ${TARGET_FILE_NAME} -C .
-    rm ${TARGET_FILE_NAME}
-  fi
-
-  export SOURCES_DIR_ffmpeg=$(pwd)/${FFMPEG_SOURCES}
+  downloadTarArchive \
+    "ffmpeg" \
+    "https://www.ffmpeg.org/releases/ffmpeg-${FFMPEG_SOURCE_VALUE}.tar.bz2"
 }
 
 # Getting sources of a particular branch or a tag of FFmpeg's git repository.

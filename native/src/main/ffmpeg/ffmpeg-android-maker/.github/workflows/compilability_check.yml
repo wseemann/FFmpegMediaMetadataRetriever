@@ -1,0 +1,22 @@
+name: Compilability check
+on: [ push, pull_request ]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        abi: [ "armeabi-v7a", "arm64-v8a", "x86", "x86_64" ]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup the environment
+        run: |
+          sudo pip3 install meson==1.2.2
+          sudo apt-get install nasm ninja-build
+
+      - name: Executing the script
+        run: |
+          export ANDROID_SDK_HOME=$ANDROID_HOME
+          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
+          ./ffmpeg-android-maker.sh -all-free -all-gpl -android=24 -abis=${{ matrix.abi }}

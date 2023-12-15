@@ -26,12 +26,14 @@ export HOST_TAG=$HOST_TAG
 export HOST_NPROC=$HOST_NPROC
 
 # Using CMake from the Android SDK
-export CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.10.2.4988404/bin/cmake
-# Using Build machine's Make, because Android NDK's Make (before r21) doesn't work properly in MSYS2 on Windows
-export MAKE_EXECUTABLE=$(which make)
+export CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.22.1/bin/cmake
+# Using Make from the Android SDK
+export MAKE_EXECUTABLE=${ANDROID_NDK_HOME}/prebuilt/${HOST_TAG}/bin/make
 # Using Build machine's Ninja. It is used for libdav1d building. Needs to be installed
 export NINJA_EXECUTABLE=$(which ninja)
 # Meson is used for libdav1d building. Needs to be installed
 export MESON_EXECUTABLE=$(which meson)
-# Nasm is used for libdav1d building. Needs to be installed
+# Nasm is used for libdav1d and libx264 building. Needs to be installed
 export NASM_EXECUTABLE=$(which nasm)
+# A utility to properly pick shared libraries by FFmpeg's configure script. Needs to be installed
+export PKG_CONFIG_EXECUTABLE=$(which pkg-config)

@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
 case $ANDROID_ABI in
-  armeabi-v7a)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--enable-thumb
-    ;;
   x86)
     # Disabling assembler optimizations, because they have text relocations
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --disable-asm"
     ;;
   x86_64)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${FAM_YASM}
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --x86asmexe=${FAM_YASM}"
     ;;
 esac
+
+if [ "$FFMPEG_GPL_ENABLED" = true ] ; then
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-gpl"
+fi
 
 # Preparing flags for enabling requested libraries
 ADDITIONAL_COMPONENTS=
@@ -41,14 +42,20 @@ echo $PATH
   --prefix=${BUILD_DIR_FFMPEG}/${ANDROID_ABI} \
   --enable-cross-compile \
   --target-os=android \
-  --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
+  --arch=${TARGET_TRIPLE_MACHINE_ARCH} \
   --sysroot=${SYSROOT_PATH} \
-  --cross-prefix=${CROSS_PREFIX_WITH_PATH} \
   --cc=${FAM_CC} \
+  --cxx=${FAM_CXX} \
+  --ld=${FAM_LD} \
+  --ar=${FAM_AR} \
+  --as=${FAM_CC} \
+  --nm=${FAM_NM} \
+  --ranlib=${FAM_RANLIB} \
+  --strip=${FAM_STRIP} \
   --extra-cflags="-O3 -fPIC $DEP_CFLAGS $SSL_EXTRA_CFLAGS" \
   --extra-ldflags="$DEP_LD_FLAGS $SSL_EXTRA_LDFLAGS -DOPENSSL_API_COMPAT=0x00908000L" \
   --enable-shared \
-  --pkg-config=$(which pkg-config) \
+  --pkg-config=${PKG_CONFIG_EXECUTABLE} \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
   --enable-small \
   --disable-ffplay \
@@ -76,7 +83,7 @@ echo $PATH
   --disable-debug \
   --disable-asm \
   --enable-openssl \
-  $ADDITIONAL_COMPONENTS
+  $ADDITIONAL_COMPONENTS || exit 1
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}

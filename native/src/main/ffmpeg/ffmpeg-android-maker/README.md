@@ -1,16 +1,19 @@
 # ffmpeg-android-maker
 
-[![Build Status](https://travis-ci.org/Javernaut/ffmpeg-android-maker.svg?branch=master)](https://travis-ci.org/Javernaut/ffmpeg-android-maker)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b9a9fe4c6874e65a5e2a3f9beb15605)](https://app.codacy.com/manual/Javernaut/ffmpeg-android-maker)
+[![Compilability check](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml/badge.svg?branch=master)](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml)
 [![Android Weekly #378](https://androidweekly.net/issues/issue-378/badge)](https://androidweekly.net/issues/issue-378)
 [![Android Weekly #396](https://androidweekly.net/issues/issue-396/badge)](https://androidweekly.net/issues/issue-396)
 
-Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.org) library and assembles it for Android. The script produces shared libraries as well as header files. The output structure looks like this:
+<img src="https://github.com/Javernaut/ffmpeg-android-maker/blob/master/images/output_structure.png" width="280" align="right">
 
-<img src="https://github.com/Javernaut/ffmpeg-android-maker/blob/master/images/output_structure.png" width="200">
+Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.org) library and assembles it for Android. The script produces shared libraries (\*.so files) as well as header files (\*.h files). The output structure is represented in the image.
 
-The actual content of all this directories depends on how the FFmpeg was configured before assembling. For my purpose I enabled only *libavcodec*, *libavformat*, *libavutil* and *libswscale*, but you can set your own configuration to make the FFmpeg you need.
+The script also produces `ffmpeg` and `ffprobe` executables that can be used in Android's terminal directly or can even be embedded into an Android app. They can be found in `build` directory after the successful build.
 
-The version of FFmpeg here by default is **4.2.2** (but can be overridden). And the script expects to use **at least** Android NDK **r19** (both *r20* and *r21* also work ok).
+The main focus of ffmpeg-android-maker is to prepare shared libraries for seamless integration into an Android project. The script prepares the `output` directory that is meant to be used. And it's not the only thing this project does.
+
+By default this script downloads and builds the FFmpeg **6.1**, but the version can be overridden.
 
 The details of how this script is implemented are described in this series of posts:
 * [Part 1](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-i-compilation-898e4a249422)
@@ -19,7 +22,15 @@ The details of how this script is implemented are described in this series of po
 
 The [WIKI](https://github.com/Javernaut/ffmpeg-android-maker/wiki) contains a lot of useful information.
 
-Actual Android app that uses the output of the script can be found [here](https://github.com/Javernaut/WhatTheCodec).
+## Customization
+
+The actual content of `output` directory depends on how the FFmpeg was configured before assembling. The [master](https://github.com/Javernaut/ffmpeg-android-maker) branch of ffmpeg-android-maker builds 'vanilla' version of FFmpeg. This means all default components and shared libraries are built (according to the image).
+
+The [media-file](https://github.com/Javernaut/ffmpeg-android-maker/tree/media-file) branch contains certain customizations in build scripts of FFmpeg and certain external libraries. These customizations are meant to be an example of how this project can be tuned to obtain the only functionality that is actually needed. What is actually customized can be seen [here](https://github.com/Javernaut/ffmpeg-android-maker/commit/734a4e98c41576b8b9fcf032e0754315b5b77a82).
+
+The [MediaFile](https://github.com/Javernaut/MediaFile) Android library uses only a subset of FFmpeg's functionality, so the redundant parts are not even compiled. This gives much smaller output binaries.
+
+Also there are a lot of arguments that you can pass to the `ffmpeg-android-maker.sh` script for tuning certain features. Check this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments) out for more info.
 
 ## Supported Android ABIs
 
@@ -28,23 +39,30 @@ Actual Android app that uses the output of the script can be found [here](https:
 * x86
 * x86_64
 
+If you need to build only some of these ABIs, you can do so by specifying a [flag](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#desired-abis-to-build).
+
+The default Android API version used to compile these binaries is **19**, as the minimum supported by the Android NDK r24. However, with NDK r23 it is still possible to have it **16**. Some external libraries (like libvpx) require to use higher API - **21**. This is explained at this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#android-platform-version) in more details.
+
 ## Supported host OS
 
-On **macOS** or **Linux** just execute the script in terminal.
+Regardless of the OS you use, you need to setup it before executing the script. Please follow the instructions in [Requirements](#Requirements) section.
 
-~~It is also possible to execute this script on a **Windows** machine with [MSYS2](https://www.msys2.org). You also need to install specific packages to it: *make*, *git*, *diffutils* and *tar*. The script supports both 32-bit and 64-bit versions of Windows. Also see Prerequisites section for necessary software.~~
+On **macOS** and **Linux** the script is supported natively. Just execute it script in the terminal.
 
-Since v2.0.0 the **Windows** support is temporary absent.
+On **Windows 10** you can use [WSL](https://docs.microsoft.com/en-us/windows/wsl/about) technology to install [Ubuntu 20.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-2004-lts/9n6svws3rx71?activetab=pivot:overviewtab) app. Then follow the Linux way of executing the script. Note that you will need to manually install exactly Linux versions of Android SDK and NDK into your Linux subsystem. The [Dockerfile](https://github.com/Javernaut/ffmpeg-android-maker/blob/master/tools/docker/Dockerfile) may help to understand how to do the setup.
 
-## Prerequisites
+Also on **any OS** you can use [Docker](https://www.docker.com) tool to execute the script.
+Check [this WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Docker-support) out to understand benefits of this approach.
 
-You have to define two environment variables:
-* `ANDROID_SDK_HOME` - path to your Android SDK
-* `ANDROID_NDK_HOME` - path to your Android NDK
+## Requirements
 
-Also, if you want to build **libaom**, then you have to install the cmake;3.10.2.4988404 package via Android SDK.
+The script assumes you have Android SDK and NDK already installed. In order to tell the script their locations you have to define 2 environment variables:
+* `ANDROID_SDK_HOME` - absolute path to your Android SDK
+* `ANDROID_NDK_HOME` - absolute path to your Android NDK
 
-For **libdav1d** building you also need to install *ninja* and *meson 0.52.1* tools.
+The script expects to use **at least** Android NDK **r23**. It doesn't matter if you use other version of NDK for you actual Android project.
+
+Certain external libraries require additional software to be installed. Check this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Supported-external-libraries) out for more info. Note that if you don't need these external libraries then you also don't need to install the additional software. These external libraries are not built by default.
 
 ## Features
 
@@ -54,4 +72,10 @@ For **libdav1d** building you also need to install *ninja* and *meson 0.52.1* to
 
 **Test your script in a cloud**. This repository has CI integration and you can use it too for your own configurations. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Build-automation).
 
-**Text relocations monitoring**. After an assembling is finished you can look into stats/text-relocations.txt file. That file lists all *.so files that were built and reports if any of them have text relocations. If you don't see any mentioning of 'TEXTREL' in the file, you are good. Otherwise, you will see exact binaries that have this problem.
+**Text relocations monitoring**. After an assembling is finished you can look into stats/text-relocations.txt file. This file lists all \*.so files that were built and reports if any of them has text relocations. If you don't see any mentioning of 'TEXTREL' in the file, you are good. Otherwise, you will see exact binaries that have this problem. The Github Actions' Compilability check build will automatically fail if text relocations occur.
+
+## License
+
+The ffmpeg-android-maker's source code is available under the MIT license. See the `LICENSE.txt` file for more details.
+
+However, the binaries that are produced have different license. The FFmpeg itself is under [LGPL 2.1](http://ffmpeg.org/legal.html). Enabling certain external libraries (like libx264) changes the license to be GPL 2 or later.

@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 
+CC=${FAM_CC} \
+AR=${FAM_AR} \
+AS=${FAM_AS} \
+RANLIB=${FAM_RANLIB} \
 ./configure \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
     --with-sysroot=${SYSROOT_PATH} \
     --disable-shared \
     --enable-static \
+    --disable-examples \
     --with-pic \
-    --disable-fast-install \
-    --disable-analyzer-hooks \
-    --disable-gtktest \
-    --disable-frontend \
-    CC=${FAM_CC} \
-    AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB} || exit 1
+    --without-libxml2 \
+    --without-freetype \
+    --without-fontconfig \
+    --disable-bdjava-jar || exit 1
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}

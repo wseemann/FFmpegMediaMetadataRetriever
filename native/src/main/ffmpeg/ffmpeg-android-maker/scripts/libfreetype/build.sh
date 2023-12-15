@@ -7,13 +7,22 @@
     --disable-shared \
     --enable-static \
     --with-pic \
-    --disable-fast-install \
-    --disable-analyzer-hooks \
-    --disable-gtktest \
-    --disable-frontend \
+    --with-zlib \
+    --without-bzip2 \
+    --without-png \
+    --without-harfbuzz \
+    --without-brotli \
+    --without-old-mac-fonts \
+    --without-fsspec \
+    --without-fsref \
+    --without-quickdraw-toolbox \
+    --without-quickdraw-carbon \
+    --without-ats \
     CC=${FAM_CC} \
     AR=${FAM_AR} \
     RANLIB=${FAM_RANLIB} || exit 1
+
+export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lz"
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
