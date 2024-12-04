@@ -329,6 +329,21 @@ int set_data_source_uri(State **ps, const char* path, const char* headers) {
 	return set_data_source_l(ps, path);
 }
 
+int advance_file_descriptor(int fd, int64_t offset) {
+	unsigned char buffer[1];
+	int count;
+
+	int i;
+
+	for (i = 0; i < offset; i = i + 1) {
+		count = read(fd, buffer, 1);
+
+		if (!count) {
+			break;
+		}
+	}
+}
+
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
     char path[256] = "";
 
@@ -380,21 +395,6 @@ int set_data_source_callback(State **ps, void* callback_data_source, int (*read_
 	*ps = state;
 
     return set_data_source_l(ps, path);
-}
-
-int advance_file_descriptor(int fd, int64_t offset) {
-	unsigned char buffer[1];
-	int count;
-
-	int i;
-
-	for (i = 0; i < offset; i = i + 1) {
-		count = read(fd, buffer, 1);
-
-		if (!count) {
-			break;
-		}
-	}
 }
 
 const char* extract_metadata(State **ps, const char* key) {
