@@ -161,11 +161,11 @@ int get_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *vid
 	av_dict_copy(metadata, ic->metadata, 0);
 
 	if (audio_st) {
-		av_dict_copy(metadata, audio_st->metadata, 0);
+		av_dict_copy(metadata, audio_st->metadata, AV_DICT_DONT_OVERWRITE);
 	}
 
 	if (video_st) {
-		av_dict_copy(metadata, video_st->metadata, 0);
+		av_dict_copy(metadata, video_st->metadata, AV_DICT_DONT_OVERWRITE);
 	}
 
 	return SUCCESS;
