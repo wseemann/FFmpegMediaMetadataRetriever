@@ -15,13 +15,15 @@ export ENABLE_OPENSSL=false
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
 export ANDROID_NDK_HOME=$NDK
 
+EXT_LIBS="--enable-libopus"
+
 build_target() {
     if [ "$ENABLE_OPENSSL" = true ] ; then
         echo 'Build FFmpeg with openssl support'
         ./build_openssl.sh $1
         ./build_ffmpeg_with_ssl.sh $1
     else
-        ./ffmpeg-android-maker/ffmpeg-android-maker.sh
+        ./ffmpeg-android-maker/ffmpeg-android-maker.sh $EXT_LIBS
         export OUTPUT_DIR=${WORKING_DIR}/ffmpeg-android-maker/output/$1
         cp -r $OUTPUT_DIR $WORKING_DIR/../jni/ffmpeg/ffmpeg/
     fi
