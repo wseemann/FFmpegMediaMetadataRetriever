@@ -134,6 +134,7 @@ size_t av_strlcatf(char *dst, size_t size, const char *fmt, ...) av_printf_forma
 /**
  * Get the count of continuous non zero chars starting from the beginning.
  *
+ * @param s   the string whose length to count
  * @param len maximum number of characters to check in the string, that
  *            is the maximum value which is returned by the function
  */
@@ -154,11 +155,6 @@ static inline size_t av_strnlen(const char *s, size_t len)
  * @note You have to free the string yourself with av_free().
  */
 char *av_asprintf(const char *fmt, ...) av_printf_format(1, 2);
-
-/**
- * Convert a number to an av_malloced string.
- */
-char *av_d2str(double d);
 
 /**
  * Unescape the given string until a non escaped terminating char,
@@ -268,7 +264,7 @@ int av_strncasecmp(const char *a, const char *b, size_t n);
 
 /**
  * Locale-independent strings replace.
- * @note This means only ASCII-range characters are replace
+ * @note This means only ASCII-range characters are replaced.
  */
 char *av_strireplace(const char *str, const char *from, const char *to);
 
@@ -319,6 +315,7 @@ enum AVEscapeMode {
     AV_ESCAPE_MODE_AUTO,      ///< Use auto-selected escaping mode.
     AV_ESCAPE_MODE_BACKSLASH, ///< Use backslash escaping.
     AV_ESCAPE_MODE_QUOTE,     ///< Use single-quote escaping.
+    AV_ESCAPE_MODE_XML,       ///< Use XML non-markup character data escaping.
 };
 
 /**
@@ -337,6 +334,19 @@ enum AVEscapeMode {
  * special by av_get_token(), such as the single quote.
  */
 #define AV_ESCAPE_FLAG_STRICT (1 << 1)
+
+/**
+ * Within AV_ESCAPE_MODE_XML, additionally escape single quotes for single
+ * quoted attributes.
+ */
+#define AV_ESCAPE_FLAG_XML_SINGLE_QUOTES (1 << 2)
+
+/**
+ * Within AV_ESCAPE_MODE_XML, additionally escape double quotes for double
+ * quoted attributes.
+ */
+#define AV_ESCAPE_FLAG_XML_DOUBLE_QUOTES (1 << 3)
+
 
 /**
  * Escape string in src, and put the escaped string in an allocated
