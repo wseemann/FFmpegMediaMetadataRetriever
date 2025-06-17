@@ -9,7 +9,7 @@
 ABIS_TO_BUILD=()
 API_LEVEL=21
 SOURCE_TYPE=TAR
-SOURCE_VALUE=4.3.1
+SOURCE_VALUE=7.1.1
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 
@@ -27,6 +27,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libfribidi"
   "mbedtls"
   "libbluray"
+  "libxml2"
 )
 
 # All GPL libraries that are supported
@@ -124,6 +125,9 @@ for argument in "$@"; do
   --enable-libbluray | -bluray)
     EXTERNAL_LIBRARIES+=("libbluray")
     ;; 
+  --enable-libxml2 | -xml2)
+    EXTERNAL_LIBRARIES+=("libxml2")
+    ;;
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
     ;;

@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-source ${SCRIPTS_DIR}/common-functions.sh
+MBEDTLS_VERSION=v3.6.3
 
-export MBEDTLS_VERSION=3.5.1
-downloadTarArchive \
-  "mbedtls" \
-  "https://github.com/Mbed-TLS/mbedtls/archive/refs/tags/v${MBEDTLS_VERSION}.tar.gz" \
-  true
+git clone \
+ --depth 1 \
+ --branch $MBEDTLS_VERSION \
+ --recursive \
+ https://github.com/Mbed-TLS/mbedtls.git \
+ $MBEDTLS_VERSION
+
+LIBRARY_NAME=mbedtls
+export SOURCES_DIR_${LIBRARY_NAME}=$(pwd)/${MBEDTLS_VERSION}

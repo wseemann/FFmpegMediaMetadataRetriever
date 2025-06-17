@@ -13,7 +13,7 @@ The script also produces `ffmpeg` and `ffprobe` executables that can be used in 
 
 The main focus of ffmpeg-android-maker is to prepare shared libraries for seamless integration into an Android project. The script prepares the `output` directory that is meant to be used. And it's not the only thing this project does.
 
-By default this script downloads and builds the FFmpeg **6.1**, but the version can be overridden.
+By default this script downloads and builds the FFmpeg **7.1.1**, but the version can be overridden.
 
 The details of how this script is implemented are described in this series of posts:
 * [Part 1](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-i-compilation-898e4a249422)

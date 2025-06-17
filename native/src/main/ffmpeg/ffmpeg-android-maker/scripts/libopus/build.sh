@@ -15,7 +15,6 @@
     --disable-extra-programs \
     CC=${FAM_CC} \
     CCLD=${FAM_LD} \
-    CCAS=${FAM_AS} \
     RANLIB=${FAM_RANLIB} \
     AR=${FAM_AR}
 
