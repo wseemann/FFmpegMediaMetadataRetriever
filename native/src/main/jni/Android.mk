@@ -1,11 +1,11 @@
 include $(call all-subdir-makefiles)
 
 ifeq ($(TARGET_ARCH),arm)
-    APP_PLATFORM=16
+    APP_PLATFORM=21
 endif
 
 ifeq ($(TARGET_ARCH),x86)
-    APP_PLATFORM=16
+    APP_PLATFORM=21
 endif
 
 ifeq ($(TARGET_ARCH),x86_64)
