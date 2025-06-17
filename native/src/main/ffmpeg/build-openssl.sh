@@ -65,11 +65,11 @@ remove_openssl() {
 
 
 get_openssl
-export MIN_SDK_VERSION=16
+export MIN_SDK_VERSION=21
 build_target arm-linux-androideabi armeabi-v7a android-arm
 export MIN_SDK_VERSION=21
 build_target aarch64-linux-android arm64-v8a android-arm64
-export MIN_SDK_VERSION=16
+export MIN_SDK_VERSION=21
 build_target i686-linux-android x86 android-x86
 export MIN_SDK_VERSION=21
 build_target x86_64-linux-android x86_64 android-x86_64
