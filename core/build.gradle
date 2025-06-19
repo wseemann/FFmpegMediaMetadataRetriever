@@ -45,7 +45,7 @@ afterEvaluate {
 
                 groupId = 'com.github.wseemann'
                 artifactId = 'FFmpegMediaMetadataRetriever-core'
-                version = "$project.android.defaultConfig.versionName"
+                version = versions.get("versionName")
 
                 pom {
                     name = 'FFmpegMediaMetadataRetriever-core'

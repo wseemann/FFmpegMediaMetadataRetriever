@@ -6,6 +6,7 @@ pluginManagement {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        mavenLocal()
     }
 }
 /*dependencyResolutionManagement {

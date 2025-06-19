@@ -13,8 +13,8 @@ android {
         minSdkVersion versions.get("minSdkVersion")
         targetSdkVersion versions.get("targetSdkVersion")
         ndkVersion versions.get("ndkVersion")
-        versionCode 43
-        versionName "1.0.20"
+        versionCode versions.get("versionCode")
+        versionName versions.get("versionName")
     }
 
     buildTypes {
@@ -51,15 +51,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.19'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.19'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.19'
-    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.19'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.20'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.20'
+    // implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.19'
+    // implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.19'
+    // implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.19'
+    // implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.19'
 
-    implementation project(':native')
-    implementation project(':core')
+    // implementation project(':native')
+    // implementation project(':core')
 
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"

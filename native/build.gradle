@@ -4,8 +4,7 @@ apply from: "$rootProject.projectDir/publishing.gradle"
 def mkfile = ''
 def aarname = ''
 def pomName = ''
-
-def pomArtifactId = ""
+def pomArtifactId = ''
 
 android {
     namespace 'wseemann.media'
@@ -135,7 +134,7 @@ afterEvaluate {
 
                 groupId = 'com.github.wseemann'
                 artifactId = "$pomArtifactId"
-                version = "$project.android.defaultConfig.versionName"
+                version = versions.get("versionName")
 
                 pom {
                     name = "$pomName"
