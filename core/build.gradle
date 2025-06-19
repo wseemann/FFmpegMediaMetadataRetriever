@@ -2,13 +2,14 @@ apply plugin: 'com.android.library'
 apply from: "$rootProject.projectDir/publishing.gradle"
 
 android {
+    namespace 'wseemann.media'
+
     compileSdk versions.get("compileSdkVersion")
 
     defaultConfig {
         minSdkVersion versions.get("minSdkVersion")
         targetSdkVersion versions.get("targetSdkVersion")
-        versionCode versions.get("versionCode")
-        versionName versions.get("versionName")
+        ndkVersion versions.get("ndkVersion")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -22,6 +23,17 @@ android {
 
     publishing {
         singleVariant('release')
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
     }
 }
 
@@ -65,8 +77,8 @@ afterEvaluate {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }

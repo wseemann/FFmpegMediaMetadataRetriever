@@ -8,11 +8,21 @@ def pomName = ''
 def pomArtifactId = ""
 
 android {
-    buildFeatures {
-        buildConfig = false
-    }
+    namespace 'wseemann.media'
 
     compileSdk versions.get("compileSdkVersion")
+
+    defaultConfig {
+        minSdkVersion versions.get("minSdkVersion")
+        targetSdkVersion versions.get("targetSdkVersion")
+        ndkVersion versions.get("ndkVersion")
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 
     mkfile = "NDK_APPLICATION_MK=Application.mk"
     aarname = "all-fmmr"
@@ -35,20 +45,6 @@ android {
     //pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
 
     pomArtifactId = "$pomName"
-
-    defaultConfig {
-        minSdkVersion versions.get("minSdkVersion")
-        targetSdkVersion versions.get("targetSdkVersion")
-        ndkVersion versions.get("ndkVersion")
-        versionCode versions.get("versionCode")
-        versionName versions.get("versionName")
-
-        ndk {
-            abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
-        }
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
     buildTypes {
         debug {
@@ -108,13 +104,20 @@ android {
     // buildNative.dependsOn 'buildFFmpeg'
     preBuild.dependsOn 'buildNative'
 
-    //tasks.withType(JavaCompile) {
-    //    compileTask -> compileTask.dependsOn buildNative
-    //}
-
     android.libraryVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "${aarname}.aar"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
         }
     }
 }
@@ -166,7 +169,7 @@ afterEvaluate {
 dependencies {
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.annotation:annotation:1.5.0'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.9.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
 }
