@@ -35,10 +35,6 @@ Additional support for:
 
 - ICY Metadata (SHOUTcast metadata)
 
-## Demo Application
-
-If you would like to try FFmpegMediaMetadataRetriever you can do so using the [Demo Application](https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk)
-
 ## Using FMMR in your application (Android Studio)
 
 Add the following maven dependency to your project's `build.gradle` file:
@@ -66,26 +62,12 @@ or, if your application supports individual architectures extract the appropriat
 
 A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk?raw=true). Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
 
-## Installation
+## Requirements
 
-FFmpegMediaMetadataRetriever relies on FFmpeg and native code. The build process
-is complex and may be confusing for those unfamiliar the Android NDK. For this
-reason I've precompiled AARs created by the build process and checked them
-in [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.19/prebuilt-aars.zip).
-The modules are also included with the library. If you don't want to build the modules
-you can simple unzip the prebuilt ones and copy them to your projects "libs" folder. (Note:
-copy them to YOUR projects "libs" folder, NOT the "libs" folder located in
-FFmpegMediaMetadataRetriever/fmmr-library. Once this step is complete you can use the
-library (See: Installation in Eclipse (Kepler)). If you want to compile the modules yourself
-follow the Ant instructions listed below before attempting to use the library.
+- [Android Studio](http://developer.android.com/sdk/index.html) Meerkat 2024.3.2 Patch 1 or higher
+- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) r27 or higher
 
-Download and install the [Android SDK](http://developer.android.com/sdk/index.html).
-Download the [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html).
-Clone/Download/Fork the repo through GitHub or via (read-only)
-
-    git clone https://github.com/wseemann/FFmpegMediaMetadataRetriever.git
-
-### Android Studio (Gradle)
+## Android Studio (Gradle)
 
 Note: The build instructions and scripts assume you are running Unix or Linux. Building
 on other operating systems is currently not supported.
