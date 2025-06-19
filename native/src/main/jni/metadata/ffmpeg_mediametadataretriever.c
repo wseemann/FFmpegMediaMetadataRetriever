@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2016 William Seemann
+ * Copyright 2025 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +20,17 @@
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
+#include <libavutil/imgutils.h>
 #include <libavutil/opt.h>
-#include <ffmpeg_mediametadataretriever.h>
-#include <ffmpeg_utils.h>
+#include "ffmpeg_mediametadataretriever.h"
+#include "ffmpeg_utils.h"
 
 #include <stdio.h>
 #include <unistd.h>
 
 #include <android/log.h>
 
-const int TARGET_IMAGE_FORMAT = AV_PIX_FMT_RGBA; //AV_PIX_FMT_RGB24;
+const int TARGET_IMAGE_FORMAT = AV_PIX_FMT_RGBA;
 const int TARGET_IMAGE_CODEC = AV_CODEC_ID_PNG;
 
 void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height);
@@ -46,7 +47,7 @@ int is_supported_format(int codec_id, int pix_fmt) {
 }
 
 int get_scaled_context(State *s, AVCodecContext *pCodecCtx, int width, int height) {
-	AVCodec *targetCodec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
+	const AVCodec *targetCodec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
 	if (!targetCodec) {
 		printf("avcodec_find_decoder() failed to find encoder\n");
 		return FAILURE;
@@ -58,22 +59,23 @@ int get_scaled_context(State *s, AVCodecContext *pCodecCtx, int width, int heigh
 		return FAILURE;
 	}
 
-	s->scaled_codecCtx->bit_rate = s->video_st->codec->bit_rate;
+	AVCodecParameters *codecpar = s->video_st->codecpar;
+	s->scaled_codecCtx->bit_rate = codecpar->bit_rate;
 	s->scaled_codecCtx->width = width;
 	s->scaled_codecCtx->height = height;
 	s->scaled_codecCtx->pix_fmt = TARGET_IMAGE_FORMAT;
 	s->scaled_codecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
-	s->scaled_codecCtx->time_base.num = s->video_st->codec->time_base.num;
-	s->scaled_codecCtx->time_base.den = s->video_st->codec->time_base.den;
+	s->scaled_codecCtx->time_base = s->video_st->time_base;
 
 	if (!targetCodec || avcodec_open2(s->scaled_codecCtx, targetCodec, NULL) < 0) {
 		printf("avcodec_open2() failed\n");
+		avcodec_free_context(&s->scaled_codecCtx);
 		return FAILURE;
 	}
 
-	s->scaled_sws_ctx = sws_getContext(s->video_st->codec->width,
-			s->video_st->codec->height,
-			s->video_st->codec->pix_fmt,
+	s->scaled_sws_ctx = sws_getContext(codecpar->width,
+			codecpar->height,
+			codecpar->format,
 			width,
 			height,
 			TARGET_IMAGE_FORMAT,
@@ -87,74 +89,84 @@ int get_scaled_context(State *s, AVCodecContext *pCodecCtx, int width, int heigh
 
 int stream_component_open(State *s, int stream_index) {
 	AVFormatContext *pFormatCtx = s->pFormatCtx;
-	AVCodecContext *codecCtx;
-	AVCodec *codec;
+	AVCodecContext *codecCtx = NULL;
 
 	if (stream_index < 0 || stream_index >= pFormatCtx->nb_streams) {
 		return FAILURE;
 	}
 
 	// Get a pointer to the codec context for the stream
-	codecCtx = pFormatCtx->streams[stream_index]->codec;
+	AVCodecParameters *codecpar = pFormatCtx->streams[stream_index]->codecpar;
 
-    const AVCodecDescriptor *codesc = avcodec_descriptor_get(codecCtx->codec_id);
-    if (codesc) {
-        printf("avcodec_find_decoder %s\n", codesc->name);
+    // Find the decoder for the audio stream
+    const AVCodec *codec = avcodec_find_decoder(codecpar->codec_id);
+    if (!codec) {
+        printf("avcodec_find_decoder() failed to find decoder\n");
+        return FAILURE;
     }
 
-	// Find the decoder for the audio stream
-	codec = avcodec_find_decoder(codecCtx->codec_id);
+    // Allocate the codec context
+    codecCtx = avcodec_alloc_context3(codec);
+    if (!codecCtx) {
+        printf("avcodec_alloc_context3 failed\n");
+        return FAILURE;
+    }
 
-	if (codec == NULL) {
-	    printf("avcodec_find_decoder() failed to find audio decoder\n");
-	    return FAILURE;
-	}
+    // Copies codec settings
+    if (avcodec_parameters_to_context(codecCtx, codecpar) < 0) {
+        printf("avcodec_parameters_to_context failed\n");
+        avcodec_free_context(&codecCtx);
+        return FAILURE;
+    }
 
 	// Open the codec
     if (!codec || (avcodec_open2(codecCtx, codec, NULL) < 0)) {
-	  	printf("avcodec_open2() failed\n");
-		return FAILURE;
+    	printf("avcodec_open2() failed\n");
+    	avcodec_free_context(&codecCtx);
+        return FAILURE;
 	}
 
 	switch(codecCtx->codec_type) {
 		case AVMEDIA_TYPE_AUDIO:
 			s->audio_stream = stream_index;
 		    s->audio_st = pFormatCtx->streams[stream_index];
+		    s->audioDecoderCodecCtx = codecCtx;
 			break;
 		case AVMEDIA_TYPE_VIDEO:
 			s->video_stream = stream_index;
 		    s->video_st = pFormatCtx->streams[stream_index];
+		    s->videoDecoderCodecCtx = codecCtx;
 
-			AVCodec *targetCodec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
+			const AVCodec *targetCodec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
 			if (!targetCodec) {
-			    printf("avcodec_find_decoder() failed to find encoder\n");
+			    printf("avcodec_find_encoder() failed to find encoder\n");
 				return FAILURE;
 			}
 
-		    s->codecCtx = avcodec_alloc_context3(targetCodec);
-			if (!s->codecCtx) {
+		    s->videoEncoderCodecCtx = avcodec_alloc_context3(targetCodec);
+			if (!s->videoEncoderCodecCtx) {
 				printf("avcodec_alloc_context3 failed\n");
 				return FAILURE;
 			}
 
-			s->codecCtx->bit_rate = s->video_st->codec->bit_rate;
-			s->codecCtx->width = s->video_st->codec->width;
-			s->codecCtx->height = s->video_st->codec->height;
-			s->codecCtx->pix_fmt = TARGET_IMAGE_FORMAT;
-			s->codecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
-			s->codecCtx->time_base.num = s->video_st->codec->time_base.num;
-			s->codecCtx->time_base.den = s->video_st->codec->time_base.den;
+			s->videoEncoderCodecCtx->bit_rate = s->video_st->codecpar->bit_rate;
+			s->videoEncoderCodecCtx->width = s->video_st->codecpar->width;
+			s->videoEncoderCodecCtx->height = s->video_st->codecpar->height;
+			s->videoEncoderCodecCtx->pix_fmt = TARGET_IMAGE_FORMAT;
+			s->videoEncoderCodecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
+			s->videoEncoderCodecCtx->time_base = s->video_st->time_base;
 
-			if (!targetCodec || avcodec_open2(s->codecCtx, targetCodec, NULL) < 0) {
+			if (!targetCodec || avcodec_open2(s->videoEncoderCodecCtx, targetCodec, NULL) < 0) {
 			  	printf("avcodec_open2() failed\n");
+				avcodec_free_context(&s->videoEncoderCodecCtx);
 				return FAILURE;
 			}
 
-		    s->sws_ctx = sws_getContext(s->video_st->codec->width,
-		    		s->video_st->codec->height,
-		    		s->video_st->codec->pix_fmt,
-		    		s->video_st->codec->width,
-		    		s->video_st->codec->height,
+		    s->sws_ctx = sws_getContext(s->video_st->codecpar->width,
+		    		s->video_st->codecpar->height,
+		    		s->video_st->codecpar->format,
+		    		s->video_st->codecpar->width,
+		    		s->video_st->codecpar->height,
 		    		TARGET_IMAGE_FORMAT,
 		    		SWS_BILINEAR,
 		    		NULL,
@@ -236,11 +248,11 @@ int set_data_source_l(State **ps, const char* path) {
 	
     // Find the first audio and video stream
 	for (i = 0; i < state->pFormatCtx->nb_streams; i++) {
-		if (state->pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO && video_index < 0) {
+		if (state->pFormatCtx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO && video_index < 0) {
 			video_index = i;
 		}
 
-		if (state->pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO && audio_index < 0) {
+		if (state->pFormatCtx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_AUDIO && audio_index < 0) {
 			audio_index = i;
 		}
 
@@ -298,6 +310,9 @@ void init(State **ps) {
 	state->video_stream = -1;
 	state->audio_st = NULL;
 	state->video_st = NULL;
+    state->audioDecoderCodecCtx = NULL;
+    state->videoDecoderCodecCtx = NULL;
+    state->videoEncoderCodecCtx = NULL;
 	state->fd = -1;
 	state->offset = 0;
 	state->headers = NULL;
@@ -327,6 +342,21 @@ int set_data_source_uri(State **ps, const char* path, const char* headers) {
 	*ps = state;
 	
 	return set_data_source_l(ps, path);
+}
+
+void advance_file_descriptor(int fd, int64_t offset) {
+	unsigned char buffer[1];
+	int count;
+
+	int i;
+
+	for (i = 0; i < offset; i = i + 1) {
+		count = read(fd, buffer, 1);
+
+		if (!count) {
+			break;
+		}
+	}
 }
 
 int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length) {
@@ -382,20 +412,6 @@ int set_data_source_callback(State **ps, void* callback_data_source, int (*read_
     return set_data_source_l(ps, path);
 }
 
-int advance_file_descriptor(int fd, int64_t offset) {
-	unsigned char buffer[1];
-	int count;
-
-	int i;
-
-	for (i = 0; i < offset; i = i + 1) {
-		count = read(fd, buffer, 1);
-
-		if (!count) {
-			break;
-		}
-	}
-}
 
 const char* extract_metadata(State **ps, const char* key) {
 	printf("extract_metadata\n");
@@ -442,234 +458,249 @@ int get_metadata(State **ps, AVDictionary **metadata) {
 }
 
 int get_embedded_picture(State **ps, AVPacket *pkt) {
-	printf("get_embedded_picture\n");
-	int i = 0;
-	int got_packet = 0;
-	AVFrame *frame = NULL;
-	
-	State *state = *ps;
+    printf("get_embedded_picture\n");
+    int i = 0;
+    int got_packet = 0;
+    AVFrame *frame = NULL;
 
-	if (!state || !state->pFormatCtx) {
-		return FAILURE;
-	}
+    State *state = *ps;
 
-    // TODO commented out 5/31/16, do we actully need this since the context
-    // has been initialized
-    // read the format headers
-    /*if (state->pFormatCtx->iformat->read_header(state->pFormatCtx) < 0) {
-    	printf("Could not read the format header\n");
-    	return FAILURE;
-    }*/
+    // Clear the packet which was passed in
+    if (pkt) {
+        av_packet_unref(pkt);
+    }
+
+    if (!state || !state->pFormatCtx) {
+        return FAILURE;
+    }
 
     // find the first attached picture, if available
     for (i = 0; i < state->pFormatCtx->nb_streams; i++) {
         if (state->pFormatCtx->streams[i]->disposition & AV_DISPOSITION_ATTACHED_PIC) {
-        	printf("Found album art\n");
-        	if (pkt) {
-        		av_packet_unref(pkt);
-        		av_init_packet(pkt);
-        	}
-            av_copy_packet(pkt, &state->pFormatCtx->streams[i]->attached_pic);
-			// TODO is this right
-			got_packet = 1;
-        	
-        	// Is this a packet from the video stream?
-        	if (pkt->stream_index == state->video_stream) {
-        		int codec_id = state->video_st->codec->codec_id;
-				int pix_fmt = state->video_st->codec->pix_fmt;
+            printf("Found album art\n");
 
-        		// If the image isn't already in a supported format convert it to one
-        		if (!is_supported_format(codec_id, pix_fmt)) {
-        			int got_frame = 0;
-        			
-   			        frame = av_frame_alloc();
-        			    	
-   			        if (!frame) {
-   			        	break;
-        			}
-   			        
-        			if (avcodec_decode_video2(state->video_st->codec, frame, &got_frame, pkt) <= 0) {
-        				break;
-        			}
+            av_packet_ref(pkt, &state->pFormatCtx->streams[i]->attached_pic);
+            got_packet = 1;
 
-        			// Did we get a video frame?
-        			if (got_frame) {
-        				AVPacket convertedPkt;
-        	            av_init_packet(&convertedPkt);
-        	            convertedPkt.size = 0;
-        	            convertedPkt.data = NULL;
+            // Is this a packet from the video stream?
+            if (pkt->stream_index == state->video_stream) {
+            	int codec_id = state->videoDecoderCodecCtx->codec_id;
+            	int pix_fmt = state->videoDecoderCodecCtx->pix_fmt;
 
-        	            convert_image(state, state->video_st->codec, frame, &convertedPkt, &got_packet, -1, -1);
+            	// If the image isn't already in a supported format convert it to one
+                if (!is_supported_format(codec_id, pix_fmt)) {
 
-        				av_packet_unref(pkt);
-        				av_init_packet(pkt);
-        				av_copy_packet(pkt, &convertedPkt);
+                    frame = av_frame_alloc();
+                    if (!frame) {
+                        break;
+                    }
 
-        				av_packet_unref(&convertedPkt);
+                    if (avcodec_send_packet(state->videoDecoderCodecCtx, pkt) < 0) {
+                        av_frame_free(&frame);
+                        break;
+                    }
 
-        				break;
-        			}
-        		} else {
-        			av_packet_unref(pkt);
-                	av_init_packet(pkt);
-                    av_copy_packet(pkt, &state->pFormatCtx->streams[i]->attached_pic);
-        			
-        			got_packet = 1;
-        			break;
-        		}
-        	}
+                    if (avcodec_receive_frame(state->videoDecoderCodecCtx, frame) < 0) {
+                        av_frame_free(&frame);
+                        break;
+                    }
+
+                    AVPacket *convertedPkt = av_packet_alloc();
+                    if (!convertedPkt) {
+                        av_frame_free(&frame);
+                        break;
+                    }
+
+                    convert_image(state, state->videoDecoderCodecCtx, frame, convertedPkt, &got_packet, -1, -1);
+
+                    av_packet_unref(pkt);
+                    av_packet_ref(pkt, convertedPkt);
+                    av_packet_free(&convertedPkt);
+                } else {
+                	av_packet_unref(pkt);
+                	av_packet_ref(pkt, &state->pFormatCtx->streams[i]->attached_pic);
+                	got_packet = 1;
+                }
+
+                break;
+            }
         }
     }
 
-	av_frame_free(&frame);
+    av_frame_free(&frame);
 
-	if (got_packet) {
-		return SUCCESS;
-	} else {
-		return FAILURE;
-	}
+    return got_packet ? SUCCESS : FAILURE;
 }
 
 void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVPacket *avpkt, int *got_packet_ptr, int width, int height) {
-	AVCodecContext *codecCtx;
-	struct SwsContext *scalerCtx;
-	AVFrame *frame;
-	
-	*got_packet_ptr = 0;
+    AVCodecContext *codecCtx;
+    struct SwsContext *scalerCtx;
+    AVFrame *frame = NULL;
 
-	if (width != -1 && height != -1) {
-		if (state->scaled_codecCtx == NULL ||
-				state->scaled_sws_ctx == NULL) {
-			get_scaled_context(state, pCodecCtx, width, height);
-		}
+    *got_packet_ptr = 0;
 
-		codecCtx = state->scaled_codecCtx;
-		scalerCtx = state->scaled_sws_ctx;
-	} else {
-		codecCtx = state->codecCtx;
-		scalerCtx = state->sws_ctx;
-	}
-
-	if (width == -1) {
-		width = pCodecCtx->width;
-	}
-
-	if (height == -1) {
-		height = pCodecCtx->height;
-	}
-
-	frame = av_frame_alloc();
-	
-	// Determine required buffer size and allocate buffer
-	int numBytes = avpicture_get_size(TARGET_IMAGE_FORMAT, codecCtx->width, codecCtx->height);
-	void * buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
-
-	// set the frame parameters
-	frame->format = TARGET_IMAGE_FORMAT;
-	frame->width = codecCtx->width;
-	frame->height = codecCtx->height;
-
-	avpicture_fill(((AVPicture *)frame),
-			buffer,
-			TARGET_IMAGE_FORMAT,
-			codecCtx->width,
-			codecCtx->height);
-    
-    sws_scale(scalerCtx,
-    		(const uint8_t * const *) pFrame->data,
-    		pFrame->linesize,
-    		0,
-    		pFrame->height,
-    		frame->data,
-            frame->linesize);
-
-	int ret = avcodec_encode_video2(codecCtx, avpkt, frame, got_packet_ptr);
-	
-	if (ret >= 0 && state->native_window) {
-		ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
-
-		ANativeWindow_Buffer windowBuffer;
-
-		if (ANativeWindow_lock(state->native_window, &windowBuffer, NULL) == 0) {
-			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "width %d", windowBuffer.width);
-			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "height %d", windowBuffer.height);
-
-			int h = 0;
-
-			for (h = 0; h < height; h++)  {
-			  memcpy(windowBuffer.bits + h * windowBuffer.stride * 4,
-			         buffer + h * frame->linesize[0],
-			         width*4);
-			}
-
-			ANativeWindow_unlockAndPost(state->native_window);
-		}
-	}
-	
-	if (ret < 0) {
-		*got_packet_ptr = 0;
-	}
-	
-    av_frame_free(&frame);
-	
-    if (buffer) {
-    	free(buffer);
+    // Clear the packet which was passed in
+    if (avpkt) {
+    	av_packet_unref(avpkt);
     }
 
-	if (ret < 0 || !*got_packet_ptr) {
-		av_packet_unref(avpkt);
-	}
+    if (width != -1 && height != -1) {
+        if (state->scaled_codecCtx == NULL || state->scaled_sws_ctx == NULL) {
+            get_scaled_context(state, pCodecCtx, width, height);
+        }
+
+        codecCtx = state->scaled_codecCtx;
+        scalerCtx = state->scaled_sws_ctx;
+    } else {
+        codecCtx = state->videoEncoderCodecCtx;
+        scalerCtx = state->sws_ctx;
+    }
+
+    if (width == -1) {
+    	width = pCodecCtx->width;
+    }
+
+    if (height == -1) {
+    	height = pCodecCtx->height;
+    }
+
+    frame = av_frame_alloc();
+    if (!frame) {
+        return;
+    }
+
+    // Determine required buffer size and allocate buffer
+    int size = av_image_get_buffer_size(TARGET_IMAGE_FORMAT, width, height, 1);
+    void * buffer = (uint8_t *) av_malloc(size * sizeof(uint8_t));
+
+    // Set the frame parameters
+    frame->format = TARGET_IMAGE_FORMAT;
+    frame->width = codecCtx->width;
+    frame->height = codecCtx->height;
+
+    int ret = av_image_alloc(frame->data, frame->linesize, codecCtx->width, codecCtx->height, TARGET_IMAGE_FORMAT, 32);
+    if (ret < 0) {
+        av_frame_free(&frame);
+        av_free(buffer);
+        return;
+    }
+
+    sws_scale(scalerCtx,
+              (const uint8_t * const *)pFrame->data,
+              pFrame->linesize,
+              0,
+              pFrame->height,
+              frame->data,
+              frame->linesize);
+
+    // Send frame to encoder
+    ret = avcodec_send_frame(codecCtx, frame);
+    if (ret < 0) {
+        av_freep(&frame->data[0]);
+        av_frame_free(&frame);
+        av_free(buffer);
+        return;
+    }
+
+    // Receive encoded packet
+    ret = avcodec_receive_packet(codecCtx, avpkt);
+    if (ret == 0) {
+    	// Send the frame to the native surface
+    	if (state->native_window) {
+    		ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
+
+    		ANativeWindow_Buffer windowBuffer;
+
+    		if (ANativeWindow_lock(state->native_window, &windowBuffer, NULL) == 0) {
+    			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "width %d", windowBuffer.width);
+    			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "height %d", windowBuffer.height);
+
+    			int h = 0;
+
+    			for (h = 0; h < height; h++)  {
+    				memcpy(windowBuffer.bits + h * windowBuffer.stride * 4,
+    						buffer + h * frame->linesize[0],
+							width*4);
+    			}
+
+    			ANativeWindow_unlockAndPost(state->native_window);
+    		}
+    	}
+
+        *got_packet_ptr = 1;
+    } else {
+        *got_packet_ptr = 0;
+        av_packet_unref(avpkt);
+    }
+
+    av_freep(&frame->data[0]);
+    av_frame_free(&frame);
+    av_free(buffer);
 }
 
 void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number, int width, int height) {
+    *got_frame = 0;
+
+    // Clear the packet which was passed in
+    if (pkt) {
+    	av_packet_unref(pkt);
+    }
+
 	// Allocate video frame
-	AVFrame *frame = av_frame_alloc();
+    AVFrame *frame = av_frame_alloc();
+    if (!frame || !state->videoDecoderCodecCtx) {
+        av_frame_free(&frame);
+        return;
+    }
 
-	*got_frame = 0;
-	
-	if (!frame) {
-	    return;
-	}
-	
-	// Read frames and return the first one found
-	while (av_read_frame(state->pFormatCtx, pkt) >= 0) {
+    // Read frames and return the first one found
+    while (av_read_frame(state->pFormatCtx, pkt) >= 0) {
 
-		// Is this a packet from the video stream?
-		if (pkt->stream_index == state->video_stream) {
-			int codec_id = state->video_st->codec->codec_id;
-			int pix_fmt = state->video_st->codec->pix_fmt;
-			        		
-			// If the image isn't already in a supported format convert it to one
-			if (!is_supported_format(codec_id, pix_fmt)) {
-	            *got_frame = 0;
-	            
-				// Decode video frame
-				if (avcodec_decode_video2(state->video_st->codec, frame, got_frame, pkt) <= 0) {
-					*got_frame = 0;
-					break;
-				}
+    	// Is this a packet from the video stream?
+        if (pkt->stream_index == state->video_stream) {
+        	int codec_id = state->videoDecoderCodecCtx->codec_id;
+        	int pix_fmt = state->videoDecoderCodecCtx->pix_fmt;
 
-				// Did we get a video frame?
-				if (*got_frame) {
-					if (desired_frame_number == -1 ||
-							(desired_frame_number != -1 && frame->pkt_pts >= desired_frame_number)) {
-						if (pkt->data) {
-							av_packet_unref(pkt);
-						}
-					    av_init_packet(pkt);
-						convert_image(state, state->video_st->codec, frame, pkt, got_frame, width, height);
-						break;
-					}
-				}
-			} else {
-				*got_frame = 1;
-	        	break;
-			}
-		}
-	}
-	
+        	// If the image isn't already in a supported format convert it to one
+            if (!is_supported_format(codec_id, pix_fmt)) {
+            	 *got_frame = 0;
+
+                if (avcodec_send_packet(state->videoDecoderCodecCtx, pkt) < 0) {
+                    break;
+                }
+
+                int ret = avcodec_receive_frame(state->videoDecoderCodecCtx, frame);
+                if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+                    continue;
+                } else if (ret < 0) {
+                    break;
+                }
+
+                if (desired_frame_number == -1 || (frame->pts >= desired_frame_number)) {
+                    AVPacket *convertedPkt = av_packet_alloc();
+                    if (!convertedPkt) {
+                    	break;
+                    }
+
+                    convert_image(state, state->videoDecoderCodecCtx, frame, convertedPkt, got_frame, width, height);
+
+                    av_packet_unref(pkt);
+                    av_packet_move_ref(pkt, convertedPkt);
+                    av_packet_free(&convertedPkt);
+
+                    break;
+                }
+            } else {
+                *got_frame = 1;
+                break;
+            }
+        }
+
+        av_packet_unref(pkt);
+    }
+
 	// Free the frame
-	av_frame_free(&frame);
+    av_frame_free(&frame);
 }
 
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
@@ -677,18 +708,23 @@ int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt) {
 }
 
 int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt, int width, int height) {
-	printf("get_frame_at_time\n");
-	int got_packet = 0;
+    printf("get_frame_at_time\n");
+    int got_packet = 0;
     int64_t desired_frame_number = -1;
-	
+
     State *state = *ps;
 
     Options opt = option;
-    
-	if (!state || !state->pFormatCtx || state->video_stream < 0) {
-		return FAILURE;
-	}
-	
+
+    // Clear the packet which was passed in
+    if (pkt) {
+    	av_packet_unref(pkt);
+    }
+
+    if (!state || !state->pFormatCtx || state->video_stream < 0) {
+        return FAILURE;
+    }
+
     if (timeUs > -1) {
         int stream_index = state->video_stream;
         int64_t seek_time = av_rescale_q(timeUs, AV_TIME_BASE_Q, state->pFormatCtx->streams[stream_index]->time_base);
@@ -696,58 +732,55 @@ int get_scaled_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *p
 
         int flags = 0;
         int ret = -1;
-        
+
         // For some reason the seek_stream_duration is sometimes a negative value,
         // make sure to check that it is greater than 0 before adjusting the
         // seek_time
         if (seek_stream_duration > 0 && seek_time > seek_stream_duration) {
-        	seek_time = seek_stream_duration;
+            seek_time = seek_stream_duration;
         }
-        
+
         if (seek_time < 0) {
-        	return FAILURE;
-       	}
-        
-        if (opt == OPTION_CLOSEST) {
-        	desired_frame_number = seek_time;
-        	flags = AVSEEK_FLAG_BACKWARD; 
-        } else if (opt == OPTION_CLOSEST_SYNC) {
-        	flags = 0;
-        } else if (opt == OPTION_NEXT_SYNC) {
-        	flags = 0;
-        } else if (opt == OPTION_PREVIOUS_SYNC) {
-        	flags = AVSEEK_FLAG_BACKWARD;
+            return FAILURE;
         }
-        
+
+        switch (opt) {
+            case OPTION_CLOSEST:
+                desired_frame_number = seek_time;
+                flags = AVSEEK_FLAG_BACKWARD;
+                break;
+            case OPTION_CLOSEST_SYNC:
+            case OPTION_NEXT_SYNC:
+                flags = 0;
+                break;
+            case OPTION_PREVIOUS_SYNC:
+                flags = AVSEEK_FLAG_BACKWARD;
+                break;
+        }
+
         ret = av_seek_frame(state->pFormatCtx, stream_index, seek_time, flags);
-        
-    	if (ret < 0) {
-    		return FAILURE;
-    	} else {
-            if (state->audio_stream >= 0) {
-            	avcodec_flush_buffers(state->audio_st->codec);
-            }
-    		
-            if (state->video_stream >= 0) {
-            	avcodec_flush_buffers(state->video_st->codec);
-            }
-    	}
+        if (ret < 0) {
+        	return FAILURE;
+        } else {
+        	if (state->audio_stream >= 0) {
+        		avcodec_flush_buffers(state->audioDecoderCodecCtx);
+        	}
+
+        	if (state->video_stream >= 0) {
+        		avcodec_flush_buffers(state->videoDecoderCodecCtx);
+        	}
+        }
     }
-    
+
     decode_frame(state, pkt, &got_packet, desired_frame_number, width, height);
-    
+
     if (got_packet) {
-    	//const char *filename = "/Users/wseemann/Desktop/one.png";
-    	//FILE *picture = fopen(filename, "wb");
-    	//fwrite(pkt->data, pkt->size, 1, picture);
-    	//fclose(picture);
+        // FILE *picture = fopen("/Users/wseemann/Desktop/frame.png", "wb");
+        // fwrite(pkt->data, pkt->size, 1, picture);
+        // fclose(picture);
     }
-    
-	if (got_packet) {
-		return SUCCESS;
-	} else {
-		return FAILURE;
-	}
+
+    return got_packet ? SUCCESS : FAILURE;
 }
 
 int set_native_window(State **ps, ANativeWindow* native_window) {
@@ -776,14 +809,14 @@ void release(State **ps) {
 	State *state = *ps;
 	
     if (state) {
-        if (state->audio_st && state->audio_st->codec) {
-            avcodec_close(state->audio_st->codec);
-        }
-        
-        if (state->video_st && state->video_st->codec) {
-            avcodec_close(state->video_st->codec);
-        }
-        
+    	if (state->audioDecoderCodecCtx) {
+    	    avcodec_free_context(&state->audioDecoderCodecCtx);
+    	}
+
+    	if (state->videoDecoderCodecCtx) {
+    		avcodec_free_context(&state->videoDecoderCodecCtx);
+    	}
+
         if (state->pFormatCtx->pb) {
         	avio_context_free(&state->pFormatCtx->pb);
         }
@@ -801,18 +834,12 @@ void release(State **ps) {
     		state->sws_ctx = NULL;
 	    }
 
-    	if (state->codecCtx) {
-    		avcodec_close(state->codecCtx);
-    	    av_free(state->codecCtx);
-    	}
-
-    	if (state->sws_ctx) {
-    		sws_freeContext(state->sws_ctx);
+    	if (state->videoEncoderCodecCtx) {
+    		avcodec_free_context(&state->videoEncoderCodecCtx);
     	}
 
     	if (state->scaled_codecCtx) {
-    		avcodec_close(state->scaled_codecCtx);
-    	    av_free(state->scaled_codecCtx);
+    		avcodec_free_context(&state->scaled_codecCtx);
     	}
 
     	if (state->scaled_sws_ctx) {
