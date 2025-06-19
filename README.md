@@ -40,18 +40,18 @@ Additional support for:
 Add the following maven dependency to your project's `build.gradle` file:
 
     dependencies {
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.20'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.20'
     }
 
 Optionally, to support individual ABIs:
 
     dependencies {
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.19'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.19'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.19'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.19'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.20'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.20'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.20'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.20'
+        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.20'
     }
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
