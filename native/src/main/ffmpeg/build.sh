@@ -3,7 +3,6 @@ set -e
 set -x
 
 # cd to the build script directory
-cd $1
 cd ../
 export SSL_LD=`pwd`/jni/openssl/openssl
 cd ffmpeg
