@@ -38,6 +38,7 @@ get_openssl() {
 build_target() {
     export TARGET_HOST=$1
     export ANDROID_ARCH=$2
+    export LDFLAGS="-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
 
     ./Configure $3 shared \
     -D__ANDROID_API__=$MIN_SDK_VERSION \

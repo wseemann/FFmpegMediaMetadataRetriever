@@ -16,6 +16,8 @@ export NDK=`grep ndk_build.dir $PROPS | cut -d'=' -f2`
 export ANDROID_NDK_HOME=$NDK
 
 build_target() {
+    export LDFLAGS="-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
+
     if [ "$ENABLE_OPENSSL" = true ] ; then
         echo 'Build FFmpeg with openssl support'
         ./build_openssl.sh $1
