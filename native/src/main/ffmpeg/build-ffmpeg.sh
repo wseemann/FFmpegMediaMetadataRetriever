@@ -12,7 +12,7 @@ TARGET_ARMEABI_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/arm64-v8a
 
 export ENABLE_OPENSSL=false
 
-export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
+export NDK=`grep ndk_build.dir $PROPS | cut -d'=' -f2`
 export ANDROID_NDK_HOME=$NDK
 
 build_target() {

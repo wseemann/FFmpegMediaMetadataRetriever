@@ -11,7 +11,7 @@ export SCRIPTPATH=`pwd`
 export PROPS=$SCRIPTPATH/../../../../local.properties
 OPENSSL_DIR=$SCRIPTPATH/openssl-$OPENSSL_VERSION
 
-export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
+export NDK=`grep ndk_build.dir $PROPS | cut -d'=' -f2`
 export HOST_TAG=darwin-x86_64
 export MIN_SDK_VERSION=16
 
