@@ -1,4 +1,4 @@
-prefix=/Users/wseemann/Android/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1i/build/x86_64
+prefix=/Users/wseemann/workspace/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1i/build/x86_64
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
