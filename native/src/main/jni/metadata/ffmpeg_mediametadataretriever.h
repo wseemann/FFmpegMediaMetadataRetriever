@@ -68,6 +68,7 @@ int set_data_source_fd(State **ps, int fd, int64_t offset, int64_t length);
 int set_data_source_callback(State **ps, void* callbackDataSource, int (*read_packet) (void *, uint8_t *, int), int64_t (*seek)(void *, int64_t, int));
 const char* extract_metadata(State **ps, const char* key);
 const char* extract_metadata_from_chapter(State **ps, const char* key, int chapter);
+int advance_file_descriptor(int fd, int64_t offset);
 int get_metadata(State **ps, AVDictionary **metadata);
 int get_embedded_picture(State **ps, AVPacket *pkt);
 int get_frame_at_time(State **ps, int64_t timeUs, int option, AVPacket *pkt);
