@@ -8,6 +8,7 @@ def pomName = ''
 def pomArtifactId = ""
 
 android {
+    namespace 'wseemann.fmmr.nativelib'
     buildFeatures {
         buildConfig = false
     }
@@ -48,6 +49,11 @@ android {
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     buildTypes {

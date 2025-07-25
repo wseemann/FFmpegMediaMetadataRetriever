@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'wseemann.media.demo'
     compileSdk versions.get("compileSdkVersion")
 
     defaultConfig {
@@ -12,6 +13,20 @@ android {
         targetSdkVersion versions.get("targetSdkVersion")
         versionCode 42
         versionName "1.0.12"
+        ndkVersion versions.get("ndkVersion")
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
     }
 
     buildTypes {
@@ -33,15 +48,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
-    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19'
+//    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19'
+//    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19'
     //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.19'
     //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.19'
     //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.19'
     //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.19'
 
-    //implementation project(':native')
-    //implementation project(':core')
+    implementation project(':native')
+    implementation project(':core')
 
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
