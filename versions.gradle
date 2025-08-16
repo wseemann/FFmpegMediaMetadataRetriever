@@ -1,8 +1,0 @@
-def versions = [:]
-versions.minSdkVersion = 21
-versions.compileSdkVersion = 35
-versions.targetSdkVersion = 35
-versions.versionCode = 43
-versions.versionName = "1.0.20"
-versions.ndkVersion = "27.1.12297006"
-ext.versions = versions
