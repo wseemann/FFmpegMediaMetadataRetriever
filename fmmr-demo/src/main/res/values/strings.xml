@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FMMR Demo</string>
     <string name="uri_hint">Enter a URI (http/mmsh/file/etc.)</string>
     <string name="uri_error">Enter a valid URI</string>
     <string name="go">Go</string>
     <string name="no_metadata">No metadata</string>
-    <string name="error_message">Metadata could not be retrieved</string>
+    <string name="error_message">Error:</string>
     <string name="artwork">Artwork</string>
     <string name="image_display_type">Image Display View</string>
+    <string name="select_frame">Select frame</string>
+    <string name="close">Close</string>
 </resources>

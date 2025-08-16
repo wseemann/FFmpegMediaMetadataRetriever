@@ -1,9 +1,9 @@
 /*
- * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
+ * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame
  * and meta data from an input media file.
  *
  * Copyright 2025 William Seemann
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-package wseemann.media.demo
+package wseemann.media.demo.constants
 
 import wseemann.media.FFmpegMediaMetadataRetriever
 
-object Constants {
-    val METADATA_KEYS = arrayOf(
+object MetadataConstants {
+    val METADATA_KEYS = listOf(
         FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM,
         FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM_ARTIST,
         FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST,

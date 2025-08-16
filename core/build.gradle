@@ -4,12 +4,12 @@ apply from: "$rootProject.projectDir/publishing.gradle"
 android {
     namespace 'wseemann.media'
 
-    compileSdk versions.get("compileSdkVersion")
+    compileSdk Integer.parseInt(libs.versions.compileSdk.get())
 
     defaultConfig {
-        minSdkVersion versions.get("minSdkVersion")
-        targetSdkVersion versions.get("targetSdkVersion")
-        ndkVersion versions.get("ndkVersion")
+        minSdkVersion Integer.parseInt(libs.versions.minSdk.get())
+        targetSdkVersion Integer.parseInt(libs.versions.targetSdk.get())
+        ndkVersion libs.versions.ndk.get()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -45,7 +45,7 @@ afterEvaluate {
 
                 groupId = 'com.github.wseemann'
                 artifactId = 'FFmpegMediaMetadataRetriever-core'
-                version = versions.get("versionName")
+                version = libs.versions.versionName.get()
 
                 pom {
                     name = 'FFmpegMediaMetadataRetriever-core'
@@ -79,6 +79,6 @@ afterEvaluate {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.6.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
 }

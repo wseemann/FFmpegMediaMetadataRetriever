@@ -1,9 +1,9 @@
 /*
- * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
+ * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame
  * and meta data from an input media file.
  *
  * Copyright 2025 William Seemann
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,9 +17,22 @@
  * limitations under the License.
  */
 
-package wseemann.media.demo
+package wseemann.media.demo.ui.composables
 
-data class Metadata(
-    val key: String,
-    var value: Any
-)
+import android.graphics.Bitmap
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+
+@Composable
+fun MetadataListImageHeader(
+    bitmap: Bitmap,
+    modifier: Modifier = Modifier
+) {
+    Image(
+        modifier = modifier,
+        bitmap = bitmap.asImageBitmap(),
+        contentDescription = "Frame bitmap"
+    )
+}

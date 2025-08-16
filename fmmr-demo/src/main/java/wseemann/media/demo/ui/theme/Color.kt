@@ -1,9 +1,9 @@
 /*
- * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
+ * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame
  * and meta data from an input media file.
  *
  * Copyright 2025 William Seemann
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,20 +17,14 @@
  * limitations under the License.
  */
 
-package wseemann.media.demo
+package wseemann.media.demo.ui.theme
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import wseemann.media.demo.databinding.ActivityMainBinding
+import androidx.compose.ui.graphics.Color
 
-class FMMRDemo : AppCompatActivity() {
+val Purple80 = Color(0xFFD0BCFF)
+val PurpleGrey80 = Color(0xFFCCC2DC)
+val Pink80 = Color(0xFFEFB8C8)
 
-    private lateinit var binding: ActivityMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-    }
-}
+val Purple40 = Color(0xFF6650a4)
+val PurpleGrey40 = Color(0xFF625b71)
+val Pink40 = Color(0xFF7D5260)
