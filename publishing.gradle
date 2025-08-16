@@ -11,6 +11,10 @@ publishing {
                 password = project.properties["sonatype_password"]
             }
         }
+        maven {
+            name "local"
+            url = uri("${rootProject.projectDir}/build/repo")
+        }
     }
 }
 
