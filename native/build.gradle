@@ -9,12 +9,12 @@ def pomArtifactId = ''
 android {
     namespace 'wseemann.media'
 
-    compileSdk versions.get("compileSdkVersion")
+    compileSdk Integer.parseInt(libs.versions.compileSdk.get())
 
     defaultConfig {
-        minSdkVersion versions.get("minSdkVersion")
-        targetSdkVersion versions.get("targetSdkVersion")
-        ndkVersion versions.get("ndkVersion")
+        minSdkVersion Integer.parseInt(libs.versions.minSdk.get())
+        targetSdkVersion Integer.parseInt(libs.versions.targetSdk.get())
+        ndkVersion libs.versions.ndk.get()
 
         ndk {
             abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
@@ -134,7 +134,7 @@ afterEvaluate {
 
                 groupId = 'com.github.wseemann'
                 artifactId = "$pomArtifactId"
-                version = versions.get("versionName")
+                version = libs.versions.versionName.get()
 
                 pom {
                     name = "$pomName"

@@ -20,6 +20,7 @@
 package wseemann.media.demo.usecase
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import wseemann.media.FFmpegMediaMetadataRetriever
 import wseemann.media.demo.api.FFmpegMediaMetadataRetrieverSingleton
 import wseemann.media.demo.constants.MetadataConstants
@@ -40,6 +41,7 @@ class RetrieveMetadataUseCase {
             metadata.putAll(extractAllMetadata(ffmpegMediaMetadataRetriever))
             extractChapterMetadata(ffmpegMediaMetadataRetriever).forEach { metadata.putAll(it) }
             val frameBitmap = getFrameAtTime(ffmpegMediaMetadataRetriever)
+            // val frameBitmap = getBitmapFromEmbeddedPicture(ffmpegMediaMetadataRetriever)
             ffmpegMediaMetadataRetriever.release()
 
             return Result.success(
@@ -110,5 +112,23 @@ class RetrieveMetadataUseCase {
         }
 
         return bitmap
+    }
+
+    private fun getBitmapFromEmbeddedPicture(retriever: FFmpegMediaMetadataRetriever): Bitmap? {
+        val bytes = retriever.embeddedPicture
+
+        return if (bytes != null && bytes.isNotEmpty()) {
+            try {
+                BitmapFactory.decodeByteArray(
+                    bytes,
+                    0,
+                    bytes.size
+                )
+            } catch (_: Exception) {
+                null
+            }
+        } else {
+            null
+        }
     }
 }

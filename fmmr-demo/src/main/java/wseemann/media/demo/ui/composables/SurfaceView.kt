@@ -48,7 +48,7 @@ fun SurfaceView(
         }
     }
 
-    Box(modifier = modifier) { // Use Box to potentially overlay controls later
+    Box(modifier = modifier) {
         AndroidView(
             factory = { ctx ->
                 SurfaceView(ctx).apply {
@@ -56,7 +56,6 @@ fun SurfaceView(
                         override fun surfaceCreated(holder: SurfaceHolder) {
                             surface = holder.surface
                             isSurfaceAvailable = true
-                            println("Surface created: ${holder.surface}")
                         }
 
                         override fun surfaceChanged(
@@ -64,24 +63,19 @@ fun SurfaceView(
                             format: Int,
                             width: Int,
                             height: Int
-                        ) {
-                            println("Surface changed: $width x $height")
-                        }
+                        ) = Unit
 
                         override fun surfaceDestroyed(holder: SurfaceHolder) {
                             isSurfaceAvailable = false
                             surface = null // Invalidate the surface state
-                            println("Surface destroyed")
                         }
                     })
                 }
             },
-            modifier = Modifier.fillMaxSize(), // Make SurfaceView fill the Box
+            modifier = Modifier.fillMaxSize(),
             update = { surfaceView ->
                 // This block is called when the AndroidView is recomposed.
                 // You can update the SurfaceView here if needed, based on state changes.
-                // For simple MediaPlayer playback tied to the surface's existence,
-                // often not much is needed here once the callback is set.
             }
         )
     }

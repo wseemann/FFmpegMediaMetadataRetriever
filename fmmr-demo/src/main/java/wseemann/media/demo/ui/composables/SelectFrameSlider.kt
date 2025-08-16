@@ -35,13 +35,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToLong
 
 @Composable
 fun SelectFrameSlider(
-    totalDurationMs: Long, // Total duration in milliseconds
-    onFrameSelectedMillis: (timeUs: Long) -> Unit, // Callback with selected time in millis
+    totalDurationMs: Long,
+    onFrameSelectedMillis: (timeUs: Long) -> Unit,
     modifier: Modifier = Modifier,
     initialPositionMillis: Long = 0L
 ) {
@@ -50,10 +51,7 @@ fun SelectFrameSlider(
         return
     }
 
-    // Slider position is a float from 0.0 to totalDurationMillis.toFloat()
     var sliderPosition by remember { mutableFloatStateOf(initialPositionMillis.toFloat()) }
-
-    // Derived state for the currently selected time in milliseconds
     val selectedTimeMillis by remember { derivedStateOf { sliderPosition.roundToLong() } }
 
     Column(
@@ -66,12 +64,10 @@ fun SelectFrameSlider(
             onValueChange = { newValue ->
                 sliderPosition = newValue
             },
-            valueRange = 0f..totalDurationMs.toFloat(), // Range from 0 to duration
+            valueRange = 0f..totalDurationMs.toFloat(),
             onValueChangeFinished = {
                 onFrameSelectedMillis(selectedTimeMillis * 1000)
             }
-            // Optional: Add steps if you want discrete frame selection
-            // steps = (totalDurationMillis / 1000).toInt() - 1 // Example: 1 step per second
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
@@ -90,14 +86,8 @@ private fun formatMillisToTimestamp(millis: Long): String {
     val seconds = TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1)
 
     return if (hours > 0) {
-        String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
     } else {
-        String.format("%02d:%02d", minutes, seconds)
+        String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
     }
-}
-
-// Optional: Helper function to convert millis to an approximate frame number
-private fun millisToFrame(millis: Long, fps: Int): Long {
-    if (fps <= 0) return 0
-    return (millis / 1000.0 * fps).roundToLong()
 }
