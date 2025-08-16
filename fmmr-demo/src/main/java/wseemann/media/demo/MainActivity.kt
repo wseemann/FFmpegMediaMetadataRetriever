@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,10 +50,6 @@ class MainActivity : ComponentActivity() {
             FmmrdemoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val uiState = mainViewModel.uiState.collectAsState()
-
-                    LaunchedEffect(Unit) {
-                        // mainViewModel.retrieveMetadata("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-                    }
 
                     MainScreen(
                         modifier = Modifier.padding(innerPadding),
