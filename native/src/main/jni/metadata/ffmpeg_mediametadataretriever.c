@@ -46,7 +46,7 @@ int is_supported_format(int codec_id, int pix_fmt) {
 	return 0;
 }
 
-int get_scaled_context(State *s, AVCodecContext *pCodecCtx, int width, int height) {
+int get_scaled_context(State *s, int width, int height) {
 	const AVCodec *targetCodec = avcodec_find_encoder(TARGET_IMAGE_CODEC);
 	if (!targetCodec) {
 		printf("avcodec_find_decoder() failed to find encoder\n");
@@ -546,7 +546,7 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 
     if (width != -1 && height != -1) {
         if (state->scaled_codecCtx == NULL || state->scaled_sws_ctx == NULL) {
-            get_scaled_context(state, pCodecCtx, width, height);
+            get_scaled_context(state, width, height);
         }
 
         codecCtx = state->scaled_codecCtx;
@@ -569,10 +569,6 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
         return;
     }
 
-    // Determine required buffer size and allocate buffer
-    int size = av_image_get_buffer_size(TARGET_IMAGE_FORMAT, width, height, 1);
-    void * buffer = (uint8_t *) av_malloc(size * sizeof(uint8_t));
-
     // Set the frame parameters
     frame->format = TARGET_IMAGE_FORMAT;
     frame->width = codecCtx->width;
@@ -581,7 +577,6 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
     int ret = av_image_alloc(frame->data, frame->linesize, codecCtx->width, codecCtx->height, TARGET_IMAGE_FORMAT, 32);
     if (ret < 0) {
         av_frame_free(&frame);
-        av_free(buffer);
         return;
     }
 
@@ -598,7 +593,6 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
     if (ret < 0) {
         av_freep(&frame->data[0]);
         av_frame_free(&frame);
-        av_free(buffer);
         return;
     }
 
@@ -607,23 +601,29 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
     if (ret == 0) {
     	// Send the frame to the native surface
     	if (state->native_window) {
-    		ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
-
-    		ANativeWindow_Buffer windowBuffer;
+            ANativeWindow_Buffer windowBuffer;
+            ANativeWindow_setBuffersGeometry(state->native_window, width, height, WINDOW_FORMAT_RGBA_8888);
 
     		if (ANativeWindow_lock(state->native_window, &windowBuffer, NULL) == 0) {
     			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "width %d", windowBuffer.width);
     			//__android_log_print(ANDROID_LOG_VERBOSE, "LOG_TAG", "height %d", windowBuffer.height);
 
-    			int h = 0;
+                uint8_t *dst = (uint8_t *)windowBuffer.bits;
+                const uint8_t *src = frame->data[0];
 
-    			for (h = 0; h < height; h++)  {
-    				memcpy(windowBuffer.bits + h * windowBuffer.stride * 4,
-    						buffer + h * frame->linesize[0],
-							width*4);
-    			}
+                // Strides: windowBuffer.stride is in pixels; linesize[0] is in bytes
+                const int dstStrideBytes = windowBuffer.stride * 4; // RGBA8888
+                const int srcStrideBytes = frame->linesize[0];
+                const int copyWidthBytes = width * 4;
+                const int copyHeight = height;
 
-    			ANativeWindow_unlockAndPost(state->native_window);
+                for (int h = 0; h < copyHeight; ++h) {
+                    memcpy(dst + h * dstStrideBytes,
+                           src + h * srcStrideBytes,
+                           copyWidthBytes);
+                }
+
+                ANativeWindow_unlockAndPost(state->native_window);
     		}
     	}
 
@@ -635,7 +635,6 @@ void convert_image(State *state, AVCodecContext *pCodecCtx, AVFrame *pFrame, AVP
 
     av_freep(&frame->data[0]);
     av_frame_free(&frame);
-    av_free(buffer);
 }
 
 void decode_frame(State *state, AVPacket *pkt, int *got_frame, int64_t desired_frame_number, int width, int height) {

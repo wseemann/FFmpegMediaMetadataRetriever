@@ -20,20 +20,23 @@
 package wseemann.media.demo.api
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.Surface
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 object FFmpegMediaMetadataRetrieverSingleton {
-    private val ffmpegMediaMetadataRetriever = FFmpegMediaMetadataRetriever()
-    private var initialized = false
+    private var ffmpegMediaMetadataRetriever = FFmpegMediaMetadataRetriever()
+    private var surfaceSet = false
 
     fun setSurface(surface: Surface) {
-        ffmpegMediaMetadataRetriever.setSurface(surface)
+        if (!surfaceSet) {
+            ffmpegMediaMetadataRetriever.setSurface(surface)
+            surfaceSet = true
+        }
     }
 
     fun setDataSource(uri: String) {
         ffmpegMediaMetadataRetriever.setDataSource(uri)
-        initialized = true
     }
 
     fun getFrameAtTime(timeUs: Long): Bitmap? {
@@ -41,9 +44,8 @@ object FFmpegMediaMetadataRetrieverSingleton {
     }
 
     fun release() {
-        if (initialized) {
-            ffmpegMediaMetadataRetriever.release()
-            initialized = false
-        }
+        ffmpegMediaMetadataRetriever.release()
+        ffmpegMediaMetadataRetriever = FFmpegMediaMetadataRetriever()
+        surfaceSet = false
     }
 }
