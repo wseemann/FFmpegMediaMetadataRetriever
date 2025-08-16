@@ -21,7 +21,10 @@ package wseemann.media.demo.ui.composables
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 
@@ -30,9 +33,13 @@ fun MetadataListImageHeader(
     bitmap: Bitmap,
     modifier: Modifier = Modifier
 ) {
-    Image(
-        modifier = modifier,
-        bitmap = bitmap.asImageBitmap(),
-        contentDescription = "Frame bitmap"
-    )
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            bitmap = bitmap.asImageBitmap(),
+            contentDescription = "Frame bitmap"
+        )
+    }
 }
