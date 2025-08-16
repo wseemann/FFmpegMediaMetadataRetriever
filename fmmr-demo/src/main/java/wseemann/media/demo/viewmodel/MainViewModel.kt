@@ -19,6 +19,7 @@
 
 package wseemann.media.demo.viewmodel
 
+import android.content.Context
 import android.view.Surface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,11 +39,11 @@ class MainViewModel(
     private val _uiState = MutableStateFlow<UiState>(UiState.Success(MetadataModel()))
     val uiState = _uiState.asStateFlow()
 
-    fun retrieveMetadata(uri: String) {
+    fun retrieveMetadata(context: Context, uri: String) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
 
-            val metadataModel = retrieveMetadataUseCase(uri).getOrElse {
+            val metadataModel = retrieveMetadataUseCase(context = context, uri = uri).getOrElse {
                 _uiState.value = UiState.Error(it)
                 return@launch
             }

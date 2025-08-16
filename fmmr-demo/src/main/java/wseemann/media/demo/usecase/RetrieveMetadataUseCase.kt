@@ -19,21 +19,27 @@
 
 package wseemann.media.demo.usecase
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import wseemann.media.FFmpegMediaMetadataRetriever
 import wseemann.media.demo.api.FFmpegMediaMetadataRetrieverSingleton
 import wseemann.media.demo.constants.MetadataConstants
 import wseemann.media.demo.model.MetadataModel
+import androidx.core.net.toUri
 
 class RetrieveMetadataUseCase {
 
-    operator fun invoke(uri: String): Result<MetadataModel> {
+    operator fun invoke(context: Context, uri: String): Result<MetadataModel> {
         val metadata = hashMapOf<String, String>()
         val ffmpegMediaMetadataRetriever = FFmpegMediaMetadataRetriever()
 
         try {
-            ffmpegMediaMetadataRetriever.setDataSource(uri)
+            if (uri.toUri().scheme == CONTENT_SCHEME) {
+                ffmpegMediaMetadataRetriever.setDataSource(context, uri.toUri())
+            } else {
+                ffmpegMediaMetadataRetriever.setDataSource(uri)
+            }
 
             FFmpegMediaMetadataRetrieverSingleton.release()
             FFmpegMediaMetadataRetrieverSingleton.setDataSource(uri)
@@ -130,5 +136,9 @@ class RetrieveMetadataUseCase {
         } else {
             null
         }
+    }
+
+    private companion object {
+        const val CONTENT_SCHEME = "content"
     }
 }
