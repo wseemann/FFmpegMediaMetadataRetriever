@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2016 William Seemann
+ * Copyright 2025 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -273,13 +273,12 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
        return NULL;
    }
 
-   AVPacket packet;
-   av_init_packet(&packet);
+   AVPacket *packet = av_packet_alloc();
    jbyteArray array = NULL;
 
-   if (retriever->getFrameAtTime(timeUs, option, &packet) == 0) {
-	   int size = packet.size;
-       uint8_t* data = packet.data;
+   if (retriever->getFrameAtTime(timeUs, option, packet) == 0) {
+	   int size = packet->size;
+       uint8_t* data = packet->data;
 	   array = env->NewByteArray(size);
 	   if (!array) {  // OutOfMemoryError exception has already been thrown.
 		   __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "getFrameAtTime: OutOfMemoryError is thrown.");
@@ -293,7 +292,8 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getFrameAtTime(JNI
        }
    }
 
-   av_packet_unref(&packet);
+   av_packet_unref(packet);
+   av_packet_free(&packet);
 
    return array;
 }
@@ -307,13 +307,12 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTi
         return NULL;
     }
     
-    AVPacket packet;
-    av_init_packet(&packet);
+	AVPacket *packet = av_packet_alloc();
     jbyteArray array = NULL;
     
-    if (retriever->getScaledFrameAtTime(timeUs, option, &packet, width, height) == 0) {
-        int size = packet.size;
-        uint8_t* data = packet.data;
+    if (retriever->getScaledFrameAtTime(timeUs, option, packet, width, height) == 0) {
+        int size = packet->size;
+        uint8_t* data = packet->data;
         array = env->NewByteArray(size);
         if (!array) {  // OutOfMemoryError exception has already been thrown.
             __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "getFrameAtTime: OutOfMemoryError is thrown.");
@@ -327,7 +326,8 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getScaledFrameAtTi
         }
     }
     
-    av_packet_unref(&packet);
+    av_packet_unref(packet);
+	av_packet_free(&packet);
     
     return array;
 }
@@ -341,13 +341,12 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture
        return NULL;
    }
 
-   AVPacket packet;
-   av_init_packet(&packet);
+   AVPacket *packet = av_packet_alloc();
    jbyteArray array = NULL;
 
-   if (retriever->extractAlbumArt(&packet) == 0) {
-	   int size = packet.size;
-	   uint8_t* data = packet.data;
+   if (retriever->extractAlbumArt(packet) == 0) {
+	   int size = packet->size;
+	   uint8_t* data = packet->data;
 	   array = env->NewByteArray(size);
 	   if (!array) {  // OutOfMemoryError exception has already been thrown.
 		   //__android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "getEmbeddedPicture: OutOfMemoryError is thrown.");
@@ -361,7 +360,8 @@ static jbyteArray wseemann_media_FFmpegMediaMetadataRetriever_getEmbeddedPicture
        }
    }
 
-   av_packet_unref(&packet);
+   av_packet_unref(packet);
+   av_packet_free(&packet);
    
    return array;
 }

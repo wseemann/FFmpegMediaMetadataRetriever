@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2016 William Seemann
+ * Copyright 2025 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 //#define LOG_NDEBUG 0
 #define LOG_TAG "MediaMetadataRetriever"
 
-#include <mediametadataretriever.h>
+#include "mediametadataretriever.h"
 
 extern "C" {
 	#include "ffmpeg_mediametadataretriever.h"

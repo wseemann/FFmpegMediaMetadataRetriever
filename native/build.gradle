@@ -4,15 +4,24 @@ apply from: "$rootProject.projectDir/publishing.gradle"
 def mkfile = ''
 def aarname = ''
 def pomName = ''
-
-def pomArtifactId = ""
+def pomArtifactId = ''
 
 android {
-    buildFeatures {
-        buildConfig = false
-    }
+    namespace 'wseemann.media'
 
-    compileSdk versions.get("compileSdkVersion")
+    compileSdk Integer.parseInt(libs.versions.compileSdk.get())
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(libs.versions.minSdk.get())
+        targetSdkVersion Integer.parseInt(libs.versions.targetSdk.get())
+        ndkVersion libs.versions.ndk.get()
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 
     mkfile = "NDK_APPLICATION_MK=Application.mk"
     aarname = "all-fmmr"
@@ -35,20 +44,6 @@ android {
     //pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
 
     pomArtifactId = "$pomName"
-
-    defaultConfig {
-        minSdkVersion versions.get("minSdkVersion")
-        targetSdkVersion versions.get("targetSdkVersion")
-        ndkVersion versions.get("ndkVersion")
-        versionCode versions.get("versionCode")
-        versionName versions.get("versionName")
-
-        ndk {
-            abiFilters 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
-        }
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
     buildTypes {
         debug {
@@ -108,13 +103,20 @@ android {
     // buildNative.dependsOn 'buildFFmpeg'
     preBuild.dependsOn 'buildNative'
 
-    //tasks.withType(JavaCompile) {
-    //    compileTask -> compileTask.dependsOn buildNative
-    //}
-
     android.libraryVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "${aarname}.aar"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
         }
     }
 }
@@ -132,7 +134,7 @@ afterEvaluate {
 
                 groupId = 'com.github.wseemann'
                 artifactId = "$pomArtifactId"
-                version = "$project.android.defaultConfig.versionName"
+                version = libs.versions.versionName.get()
 
                 pom {
                     name = "$pomName"
@@ -164,9 +166,8 @@ afterEvaluate {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13.2'
-
-    androidTestImplementation 'androidx.annotation:annotation:1.5.0'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.annotation)
+    androidTestImplementation(libs.androidx.runner.v162)
+    androidTestImplementation(libs.androidx.rules)
 }

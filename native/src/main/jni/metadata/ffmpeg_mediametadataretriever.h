@@ -2,7 +2,7 @@
  * FFmpegMediaMetadataRetriever: A unified interface for retrieving frame 
  * and meta data from an input media file.
  *
- * Copyright 2016 William Seemann
+ * Copyright 2025 William Seemann
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,14 +40,16 @@ typedef enum {
 typedef struct State {
 	AVFormatContext *pFormatCtx;
 	int             audio_stream;
+	AVCodecContext  *audioDecoderCodecCtx;
 	int             video_stream;
+	AVCodecContext  *videoDecoderCodecCtx;
 	AVStream        *audio_st;
 	AVStream        *video_st;
 	int             fd;
 	int64_t         offset;
 	const char      *headers;
 	struct SwsContext *sws_ctx;
-	AVCodecContext  *codecCtx;
+	AVCodecContext  *videoEncoderCodecCtx;
 
 	struct SwsContext *scaled_sws_ctx;
 	AVCodecContext  *scaled_codecCtx;

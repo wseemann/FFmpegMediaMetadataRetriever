@@ -6,4 +6,4 @@ TWOLAME_VERSION=0.4.0
 
 downloadTarArchive \
   "libtwolame" \
-  "https://netix.dl.sourceforge.net/project/twolame/twolame/${TWOLAME_VERSION}/twolame-${TWOLAME_VERSION}.tar.gz"
+  "https://downloads.videolan.org/pub/contrib/twolame/twolame-${TWOLAME_VERSION}.tar.gz"

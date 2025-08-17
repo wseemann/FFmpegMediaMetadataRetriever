@@ -26,7 +26,7 @@ export HOST_TAG=$HOST_TAG
 export HOST_NPROC=$HOST_NPROC
 
 # Using CMake from the Android SDK
-export CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.22.1/bin/cmake
+export CMAKE_EXECUTABLE=$(which cmake)
 # Using Make from the Android SDK
 export MAKE_EXECUTABLE=${ANDROID_NDK_HOME}/prebuilt/${HOST_TAG}/bin/make
 # Using Build machine's Ninja. It is used for libdav1d building. Needs to be installed
