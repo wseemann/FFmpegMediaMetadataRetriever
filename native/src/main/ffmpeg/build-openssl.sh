@@ -2,7 +2,7 @@
 set -e
 set -x
 
-export OPENSSL_VERSION="1.1.1i"
+export OPENSSL_VERSION="1.1.1w"
 
 # Set directory
 export SCRIPTPATH=`pwd`
@@ -38,6 +38,9 @@ get_openssl() {
 build_target() {
     export TARGET_HOST=$1
     export ANDROID_ARCH=$2
+    # Enables 16kb page sizes on Android
+    # See: https://developer.android.com/guide/practices/page-sizes
+    LDFLAGS="-Wl,-z,max-page-size=16384"
 
     ./Configure $3 shared \
     -D__ANDROID_API__=$MIN_SDK_VERSION \
