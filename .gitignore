@@ -19,3 +19,6 @@ build/
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+
+# Project specific files
+native/src/main/ffmpeg/openssl-*.tar.gz
