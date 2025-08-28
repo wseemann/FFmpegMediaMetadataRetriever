@@ -2,7 +2,7 @@
 set -e
 set -x
 
-export OPENSSL_VERSION="1.1.1i"
+export OPENSSL_VERSION="1.1.1w"
 
 # Set directory
 export SCRIPTPATH=`pwd`
@@ -20,6 +20,10 @@ export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
 # openssl refers to the host specific toolchain as "ANDROID_NDK_HOME"
 export ANDROID_NDK_HOME=$NDK
 PATH=$TOOLCHAIN/bin:$PATH
+# Enables 16kb page sizes on Android
+# See: https://developer.android.com/guide/practices/page-sizes
+# This can safely be removed in NDK r28+
+export LDFLAGS="-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
 
 mkdir -p build/openssl
 

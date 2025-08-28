@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#cd src/main/ffmpeg
-
 export WORKING_DIR=`pwd`
 export PROPS=$WORKING_DIR/../../../../local.properties
 
@@ -10,31 +8,18 @@ TARGET_X86_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86
 TARGET_X86_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/x86_64
 TARGET_ARMEABI_64_DIR=$WORKING_DIR/../jni/ffmpeg/ffmpeg/arm64-v8a
 
-export ENABLE_OPENSSL=false
-
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
 export ANDROID_NDK_HOME=$NDK
 
 build_target() {
-    if [ "$ENABLE_OPENSSL" = true ] ; then
-        echo 'Build FFmpeg with openssl support'
-        ./build_openssl.sh $1
-        ./build_ffmpeg_with_ssl.sh $1
-    else
-        ./ffmpeg-android-maker/ffmpeg-android-maker.sh
-        export OUTPUT_DIR=${WORKING_DIR}/ffmpeg-android-maker/output/$1
-        cp -r $OUTPUT_DIR $WORKING_DIR/../jni/ffmpeg/ffmpeg/
-    fi
+    ./ffmpeg-android-maker/ffmpeg-android-maker.sh
+    export OUTPUT_DIR=${WORKING_DIR}/ffmpeg-android-maker/output/$1
+    cp -r $OUTPUT_DIR $WORKING_DIR/../jni/ffmpeg/ffmpeg/
 }
 
 if [ "$NDK" = "" ] || [ ! -d $NDK ]; then
 	echo "NDK variable not set or path to NDK is invalid, exiting..."
 	exit 1
-fi
-
-if [ "$#" -eq 1 ] && [ "$1" = "--with-openssl" ]; then
-    ENABLE_OPENSSL=true
-    #rm -rf $WORKING_DIR/../jni/ffmpeg/ffmpeg/*
 fi
 
 # Make the target JNI folder if it doesn't exist
@@ -75,5 +60,5 @@ if [ ! -d $TARGET_ARMEABI_64_DIR ]; then
     build_target arm64-v8a
 fi
 
-echo Native build complete, exiting...
+echo FFmpeg build complete, exiting...
 exit

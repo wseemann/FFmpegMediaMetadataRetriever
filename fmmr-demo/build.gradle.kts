@@ -45,15 +45,15 @@ android {
 
 dependencies {
 
-    /*implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.19")
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.19")
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.19")
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.19")
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.19")
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.19")*/
+    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.21")
+    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.21")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.21")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.21")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.21")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.21")
 
-    implementation(project(":native"))
-    implementation(project(":core"))
+    //implementation(project(":native"))
+    //implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
