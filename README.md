@@ -56,11 +56,11 @@ Optionally, to support individual ABIs:
 
 or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
 
-[Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.19/prebuilt-aars.zip)
+[Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.21/prebuilt-aars.zip)
 
 ## Demo Application
 
-A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/blob/master/FMMRDemo.apk?raw=true). Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
+A sample application that makes use of FFmpegMediaMetadataRetriever can be downloaded [here](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/latest). Note: The sample application is compiled with support for ALL available formats. This results in a larger library and APK. FFmpeg can be recompiled with a subset of codecs enabled for those wanting a smaller size.
 
 ## Requirements
 
