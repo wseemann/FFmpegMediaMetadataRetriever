@@ -13,7 +13,7 @@
 # and add symbolic links to their hash values.
 
 my $dir = "";
-my $prefix = "/Users/wseemann/Desktop/poop/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1w/build/arm64-v8a";
+my $prefix = "/Users/wseemann/Desktop/FFmpegMediaMetadataRetriever/native/src/main/ffmpeg/openssl-1.1.1w/build/arm64-v8a";
 
 my $errorcount = 0;
 my $openssl = $ENV{OPENSSL} || "openssl";
