@@ -20,6 +20,10 @@ export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
 # openssl refers to the host specific toolchain as "ANDROID_NDK_HOME"
 export ANDROID_NDK_HOME=$NDK
 PATH=$TOOLCHAIN/bin:$PATH
+# Enables 16kb page sizes on Android
+# See: https://developer.android.com/guide/practices/page-sizes
+# This can safely be removed in NDK r28+
+export LDFLAGS="-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384"
 
 mkdir -p build/openssl
 
@@ -38,9 +42,6 @@ get_openssl() {
 build_target() {
     export TARGET_HOST=$1
     export ANDROID_ARCH=$2
-    # Enables 16kb page sizes on Android
-    # See: https://developer.android.com/guide/practices/page-sizes
-    LDFLAGS="-Wl,-z,max-page-size=16384"
 
     ./Configure $3 shared \
     -D__ANDROID_API__=$MIN_SDK_VERSION \

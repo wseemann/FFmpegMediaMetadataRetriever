@@ -168,6 +168,6 @@ afterEvaluate {
 dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.annotation)
-    androidTestImplementation(libs.androidx.runner.v162)
+    androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)
 }

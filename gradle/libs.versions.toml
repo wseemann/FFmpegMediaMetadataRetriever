@@ -7,19 +7,18 @@ coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.2"
+lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
-composeBom = "2025.08.00"
+composeBom = "2025.08.01"
 
 # Build versions
 compileSdk = "36"
 minSdk = "21"
 runner = "1.7.0"
-runnerVersion = "1.6.2"
 targetSdk = "36"
 ndk = "27.1.12297006"
-versionCode = "43"
-versionName = "1.0.20"
+versionCode = "44"
+versionName = "1.0.21"
 
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
@@ -27,7 +26,6 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "runner" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
-androidx-runner-v162 = { module = "androidx.test:runner", version.ref = "runnerVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

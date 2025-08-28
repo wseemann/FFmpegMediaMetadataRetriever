@@ -17,5 +17,5 @@ export ANDROID_SDK_HOME=`grep sdk.dir $PROPS | cut -d'=' -f2`
 ./build-openssl.sh
 ./build-ffmpeg.sh
 
-#echo Native build complete, exiting...
+echo Native build complete, exiting...
 exit
