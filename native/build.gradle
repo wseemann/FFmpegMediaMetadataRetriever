@@ -1,10 +1,20 @@
 apply plugin: 'com.android.library'
 apply from: "$rootProject.projectDir/publishing.gradle"
 
-def mkfile = ''
-def aarname = ''
-def pomName = ''
-def pomArtifactId = ''
+def abiConfigs = [
+    'all':    [mkfile: 'NDK_APPLICATION_MK=Application.mk',       aarname: 'all-fmmr',    pomName: 'FFmpegMediaMetadataRetriever-native'],
+    'armv7':  [mkfile: 'NDK_APPLICATION_MK=ARMv7Application.mk',  aarname: 'armv7-fmmr',  pomName: 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'],
+    'x86':    [mkfile: 'NDK_APPLICATION_MK=x86Application.mk',    aarname: 'x86-fmmr',    pomName: 'FFmpegMediaMetadataRetriever-native-x86'],
+    'x86_64': [mkfile: 'NDK_APPLICATION_MK=x86_64Application.mk', aarname: 'x86_64-fmmr', pomName: 'FFmpegMediaMetadataRetriever-native-x86_64'],
+    'arm64':  [mkfile: 'NDK_APPLICATION_MK=ARM_64Application.mk', aarname: 'arm_64-fmmr', pomName: 'FFmpegMediaMetadataRetriever-native-arm64-v8a'],
+]
+
+def selectedAbi = project.findProperty('abi') ?: 'all'
+def config = abiConfigs[selectedAbi]
+def mkfile = config.mkfile
+def aarname = config.aarname
+def pomName = config.pomName
+def pomArtifactId = pomName
 
 android {
     namespace 'wseemann.media.ffmpeg'
@@ -22,28 +32,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    mkfile = "NDK_APPLICATION_MK=Application.mk"
-    aarname = "all-fmmr"
-    pomName = 'FFmpegMediaMetadataRetriever-native'
-
-    //mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
-    //aarname = "armv7-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'
-
-    //mkfile = "NDK_APPLICATION_MK=x86Application.mk"
-    //aarname = "x86-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-x86'
-
-    //mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
-    //aarname = "x86_64-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-x86_64'
-
-    //mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
-    //aarname = "arm_64-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
-
-    pomArtifactId = "$pomName"
 
     buildTypes {
         debug {
