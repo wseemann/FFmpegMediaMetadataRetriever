@@ -1,5 +1,5 @@
 [versions]
-agp = "8.12.0"
+agp = "9.0.1"
 annotation = "1.9.1"
 appcompat = "1.7.1"
 kotlin = "2.2.10"
@@ -18,7 +18,7 @@ runner = "1.7.0"
 targetSdk = "36"
 ndk = "27.1.12297006"
 versionCode = "44"
-versionName = "1.0.21"
+versionName = "1.0.22"
 
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
@@ -42,6 +42,5 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 

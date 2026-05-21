@@ -1,13 +1,23 @@
 apply plugin: 'com.android.library'
 apply from: "$rootProject.projectDir/publishing.gradle"
 
-def mkfile = ''
-def aarname = ''
-def pomName = ''
-def pomArtifactId = ''
+def abiConfigs = [
+    'all':    [mkfile: 'NDK_APPLICATION_MK=Application.mk',       aarname: 'all-fmmr',    pomName: 'FFmpegMediaMetadataRetriever-native'],
+    'armv7':  [mkfile: 'NDK_APPLICATION_MK=ARMv7Application.mk',  aarname: 'armv7-fmmr',  pomName: 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'],
+    'x86':    [mkfile: 'NDK_APPLICATION_MK=x86Application.mk',    aarname: 'x86-fmmr',    pomName: 'FFmpegMediaMetadataRetriever-native-x86'],
+    'x86_64': [mkfile: 'NDK_APPLICATION_MK=x86_64Application.mk', aarname: 'x86_64-fmmr', pomName: 'FFmpegMediaMetadataRetriever-native-x86_64'],
+    'arm64':  [mkfile: 'NDK_APPLICATION_MK=ARM_64Application.mk', aarname: 'arm_64-fmmr', pomName: 'FFmpegMediaMetadataRetriever-native-arm64-v8a'],
+]
+
+def selectedAbi = project.findProperty('abi') ?: 'all'
+def config = abiConfigs[selectedAbi]
+def mkfile = config.mkfile
+def aarname = config.aarname
+def pomName = config.pomName
+def pomArtifactId = pomName
 
 android {
-    namespace 'wseemann.media'
+    namespace 'wseemann.media.ffmpeg'
 
     compileSdk Integer.parseInt(libs.versions.compileSdk.get())
 
@@ -22,28 +32,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    mkfile = "NDK_APPLICATION_MK=Application.mk"
-    aarname = "all-fmmr"
-    pomName = 'FFmpegMediaMetadataRetriever-native'
-
-    //mkfile = "NDK_APPLICATION_MK=ARMv7Application.mk"
-    //aarname = "armv7-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-armeabi-v7a'
-
-    //mkfile = "NDK_APPLICATION_MK=x86Application.mk"
-    //aarname = "x86-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-x86'
-
-    //mkfile = "NDK_APPLICATION_MK=x86_64Application.mk"
-    //aarname = "x86_64-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-x86_64'
-
-    //mkfile = "NDK_APPLICATION_MK=ARM_64Application.mk"
-    //aarname = "arm_64-fmmr"
-    //pomName = 'FFmpegMediaMetadataRetriever-native-arm64-v8a'
-
-    pomArtifactId = "$pomName"
 
     buildTypes {
         debug {
@@ -60,71 +48,58 @@ android {
     }
 
     sourceSets.main {
-        jni.srcDirs = [] // This prevents the auto generation of Android.mk, disables automatic ndk-build
         jniLibs.srcDir 'src/main/libs' // This is not necessary unless you have precompiled libraries in your project.
     }
 
-    task buildFFmpeg(type: Exec, description: 'Compile FFmpeg source via NDK') {
-        def pwd = "$rootProject.projectDir/native/src/main/ffmpeg"
-        def dir = file('src/main/ffmpeg/build.sh').absolutePath
-        commandLine "$dir", "$pwd"
-    }
-
-    task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def ndkDir = properties.getProperty('ndk.dir')
-        // def ndkDir = android.ndkDirectory
-        println mkfile
-        commandLine "$ndkDir/ndk-build",
-                mkfile,
-                'NDK_LIBS_OUT=../jniLibs', // Output .so files to jniLibs
-                '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
-                '-j', Runtime.runtime.availableProcessors(),
-                'all',
-                'NDK_DEBUG=1'
-    }
-
-    task cleanNative(type: Exec, description: 'Clean JNI object files') {
-        delete "$project.projectDir/src/main/libs"
-        delete "$project.projectDir/src/main/jniLibs"
-        delete "$project.projectDir/src/main/obj"
-        delete project.buildDir
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def ndkDir = properties.getProperty('ndk.dir')
-        // def ndkDir = android.ndkDirectory
-        commandLine "$ndkDir/ndk-build",
-                '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
-                'clean'
-    }
-
-    clean.dependsOn 'cleanNative'
-    // buildNative.dependsOn 'buildFFmpeg'
-    preBuild.dependsOn 'buildNative'
-
-    android.libraryVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "${aarname}.aar"
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-    }
 }
 
 println "$mkfile"
 println "$aarname"
 println "$pomName"
 println "$pomArtifactId"
+
+task buildFFmpeg(type: Exec, description: 'Compile FFmpeg source via NDK') {
+    def pwd = "$rootProject.projectDir/native/src/main/ffmpeg"
+    def dir = file('src/main/ffmpeg/build.sh').absolutePath
+    commandLine "$dir", "$pwd"
+}
+
+task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def ndkDir = properties.getProperty('ndk.dir')
+    // def ndkDir = android.ndkDirectory
+    println mkfile
+    commandLine "$ndkDir/ndk-build",
+            mkfile,
+            'NDK_LIBS_OUT=../jniLibs', // Output .so files to jniLibs
+            '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
+            '-j', Runtime.runtime.availableProcessors(),
+            'all',
+            'NDK_DEBUG=1'
+}
+
+task cleanNative(type: Exec, description: 'Clean JNI object files') {
+    delete "$project.projectDir/src/main/libs"
+    delete "$project.projectDir/src/main/jniLibs"
+    delete "$project.projectDir/src/main/obj"
+    delete project.buildDir
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def ndkDir = properties.getProperty('ndk.dir')
+    // def ndkDir = android.ndkDirectory
+    commandLine "$ndkDir/ndk-build",
+            '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
+            'clean'
+}
+
+clean.dependsOn 'cleanNative'
+// buildNative.dependsOn 'buildFFmpeg'
+preBuild.dependsOn 'buildNative'
+
+base {
+    archivesName = aarname
+}
 
 afterEvaluate {
     publishing {
