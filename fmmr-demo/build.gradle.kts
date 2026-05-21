@@ -8,7 +8,6 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        // applicationId = "wseemann.media.demo"
         applicationId = "wseemann.media.fmpdemo"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
