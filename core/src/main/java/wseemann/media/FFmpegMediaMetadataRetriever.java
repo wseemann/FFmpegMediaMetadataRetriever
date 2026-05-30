@@ -735,6 +735,23 @@ public class FFmpegMediaMetadataRetriever
      * The metadata key to retrieve the video height.
      */
     public static final String METADATA_KEY_VIDEO_HEIGHT = "video_height";
+    /**
+     * The metadata key to retrieve the audio sample rate in Hz.
+     */
+    public static final String METADATA_KEY_SAMPLE_RATE = "sample_rate";
+    /**
+     * The metadata key to retrieve the number of bits per audio sample.
+     * May be 0 for formats that do not signal bit depth (e.g. AAC, MP3).
+     */
+    public static final String METADATA_KEY_BITS_PER_SAMPLE = "bits_per_sample";
+    /**
+     * The metadata key to retrieve the number of audio channels.
+     */
+    public static final String METADATA_KEY_CHANNEL_COUNT = "channel_count";
+    /**
+     * The metadata key to retrieve the audio stream bitrate in bits per second.
+     */
+    public static final String METADATA_KEY_AUDIO_BITRATE = "audio_bitrate";
 
     /**
      Class to hold the media's metadata.  Metadata are used

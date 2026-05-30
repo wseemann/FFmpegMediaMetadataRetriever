@@ -37,6 +37,10 @@ static const char *CHAPTER_COUNT = "chapter_count";
 static const char *FILESIZE = "filesize";
 static const char *VIDEO_WIDTH = "video_width";
 static const char *VIDEO_HEIGHT = "video_height";
+static const char *SAMPLE_RATE = "sample_rate";
+static const char *BITS_PER_SAMPLE = "bits_per_sample";
+static const char *CHANNEL_COUNT = "channel_count";
+static const char *AUDIO_BITRATE = "audio_bitrate";
 
 static const int SUCCESS = 0;
 static const int FAILURE = -1;
@@ -49,6 +53,7 @@ void set_framerate(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st);
 void set_filesize(AVFormatContext *ic);
 void set_chapter_count(AVFormatContext *ic);
 void set_video_dimensions(AVFormatContext *ic, AVStream *video_st);
+void set_audio_properties(AVFormatContext *ic, AVStream *audio_st);
 const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key);
 int get_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, AVDictionary **metadata);
 const char* extract_metadata_from_chapter_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key, int chapter);    

@@ -131,6 +131,32 @@ void set_video_dimensions(AVFormatContext *ic, AVStream *video_st) {
 	}
 }
 
+void set_audio_properties(AVFormatContext *ic, AVStream *audio_st) {
+	char value[30] = "0";
+
+	if (audio_st && audio_st->codecpar) {
+		sprintf(value, "%d", audio_st->codecpar->sample_rate);
+		av_dict_set(&ic->metadata, SAMPLE_RATE, value, 0);
+
+		int bps = audio_st->codecpar->bits_per_raw_sample;
+		if (bps == 0) {
+			bps = audio_st->codecpar->bits_per_coded_sample;
+		}
+		sprintf(value, "%d", bps);
+		av_dict_set(&ic->metadata, BITS_PER_SAMPLE, value, 0);
+
+		sprintf(value, "%d", audio_st->codecpar->ch_layout.nb_channels);
+		av_dict_set(&ic->metadata, CHANNEL_COUNT, value, 0);
+
+		int64_t bitrate = audio_st->codecpar->bit_rate;
+		if (bitrate == 0) {
+			bitrate = ic->bit_rate;
+		}
+		sprintf(value, "%lld", (long long) bitrate);
+		av_dict_set(&ic->metadata, AUDIO_BITRATE, value, 0);
+	}
+}
+
 const char* extract_metadata_internal(AVFormatContext *ic, AVStream *audio_st, AVStream *video_st, const char* key) {
     char* value = NULL;
     

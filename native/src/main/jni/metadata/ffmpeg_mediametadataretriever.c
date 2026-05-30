@@ -278,6 +278,7 @@ int set_data_source_l(State **ps, const char* path) {
     set_filesize(state->pFormatCtx);
     set_chapter_count(state->pFormatCtx);
     set_video_dimensions(state->pFormatCtx, state->video_st);
+    set_audio_properties(state->pFormatCtx, state->audio_st);
     
 	/*printf("Found metadata\n");
 	AVDictionaryEntry *tag = NULL;
