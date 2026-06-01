@@ -19,13 +19,13 @@ FFmpegMediaMetadataRetriever is a reimplementation of Android's MediaMetadataRet
 Key Features:
 
 - Built using FFmpeg version 7.1.1
-- ARMv7, x86, x86_64 and ARM_64 support (Note: ARM and MIPS aren't supported as of version 1.0.14)
+- ARMv7, x86, x86_64, and ARM_64 support (Note: ARM and MIPS aren't supported as of version 1.0.14)
 - Support for API 21+ and 16 KB page sizes
 - URL support (Unlike MediaMetadataRetriever, see: http://code.google.com/p/android/issues/detail?id=35794)
 
 Supported protocols:
 
-- file, http, https, mms, mmsh and rtmp
+- file, http, https, mms, mmsh, and rtmp
 
 Supported formats (audio and video):
 
@@ -37,24 +37,28 @@ Additional support for:
 
 ## Using FMMR in your application (Android Studio)
 
-Add the following maven dependency to your project's `build.gradle` file:
+Add the following Maven dependency to your project's `build.gradle` file:
 
-    dependencies {
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.22'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.22'
-    }
+```gradle
+dependencies {
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.22'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.22'
+}
+```
 
 Optionally, to support individual ABIs:
 
-    dependencies {
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.22'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.22'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.22'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.22'
-        implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.22'
-    }
+```gradle
+dependencies {
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.22'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.22'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.22'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.22'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.22'
+}
+```
 
-or, if your application supports individual architectures extract the appropriate AAR file into you projects "libs" folder:
+Or, if your application supports individual architectures, extract the appropriate AAR file into you projects "libs" folder:
 
 [Prebuilt AARs](https://github.com/wseemann/FFmpegMediaMetadataRetriever/releases/download/v1.0.22/prebuilt-aars.zip)
 
@@ -74,20 +78,28 @@ on other operating systems is currently not supported.
 
 Execute the following in the root project directory (assuming /path/to/android_sdk/tools is in your PATH):
 
-    android update project --path .
+```bash
+android update project --path .
+```
 
 Open the newly created local.properties file and add the following lines:
 
-    sdk.dir=<path to SDK>
-    ndk.dir=<path to NDK>
+```
+sdk.dir=<path to SDK>
+ndk.dir=<path to NDK>
+```
 
 where <path to SDK> is the path to your Android SDK, for example:
 
-    sdk.dir=/Users/wseemann/Library/Android/sdk
+```
+sdk.dir=/Users/wseemann/Library/Android/sdk
+```
 
 where <path to NDK> is the path to your Android NDK, for example:
 
-    ndk.dir=/Users/wseemann/Library/Android/sdk/ndk/27.1.12297006
+```
+ndk.dir=/Users/wseemann/Library/Android/sdk/ndk/27.1.12297006
+```
 
 To compile the library in Android Studio, highlight `core` in the project explorer and run Build->Make Module 'core'. This will also build the native FFmpeg binaries.
 
@@ -95,14 +107,16 @@ To compile the library in Android Studio, highlight `core` in the project explor
 
 Sample code:
 
-    FFmpegMediaMetadataRetriever mmr = new FFmpegMediaMetadataRetriever();
-    mmr.setDataSource(mUri);
-    mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
-    mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
-    Bitmap b = mmr.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
-    byte [] artwork = mmr.getEmbeddedPicture();
+```java
+FFmpegMediaMetadataRetriever mmr = new FFmpegMediaMetadataRetriever();
+mmr.setDataSource(mUri);
+mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
+mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+Bitmap b = mmr.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
+byte [] artwork = mmr.getEmbeddedPicture();
 
-    mmr.release();
+mmr.release();
+```
 
 ## FFmpeg
 
