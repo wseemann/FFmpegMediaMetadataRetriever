@@ -23,6 +23,7 @@ import android.content.Context
 import android.view.Surface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -40,7 +41,7 @@ class MainViewModel(
     val uiState = _uiState.asStateFlow()
 
     fun retrieveMetadata(context: Context, uri: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = UiState.Loading
 
             val metadataModel = retrieveMetadataUseCase(context = context, uri = uri).getOrElse {
