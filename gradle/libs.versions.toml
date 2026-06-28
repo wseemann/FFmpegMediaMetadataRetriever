@@ -17,8 +17,8 @@ minSdk = "21"
 runner = "1.7.0"
 targetSdk = "36"
 ndk = "27.1.12297006"
-versionCode = "44"
-versionName = "1.0.22"
+versionCode = "45"
+versionName = "1.0.23"
 
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
