@@ -12,7 +12,7 @@ export PROPS=$SCRIPTPATH/../../../../local.properties
 OPENSSL_DIR=$SCRIPTPATH/openssl-$OPENSSL_VERSION
 
 export NDK=`grep ndk.dir $PROPS | cut -d'=' -f2`
-export HOST_TAG=darwin-x86_64
+export HOST_TAG=$(uname -s | tr '[:upper:]' '[:lower:]')-x86_64
 export MIN_SDK_VERSION=16
 
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
@@ -79,8 +79,8 @@ export MIN_SDK_VERSION=21
 build_target x86_64-linux-android x86_64 android-x86_64
 remove_openssl
 cd ../
-rm -r ../jni/openssl/openssl/
-cp -r build/ ../jni/openssl/
+rm -rf ../jni/openssl/openssl/
+cp -r build/openssl ../jni/openssl/
 
 echo OpenSSL build complete, exiting...
 exit
