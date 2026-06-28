@@ -31,12 +31,12 @@ android {
 
 dependencies {
 
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.22")
-    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.22")
-    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.22")
-    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.22")
-    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.22")
-    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.22")
+    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.23")
+    implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.23")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-armeabi-v7a:1.0.23")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86:1.0.23")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-x86_64:1.0.23")
+    //implementation("com.github.wseemann:FFmpegMediaMetadataRetriever-native-arm64-v8a:1.0.23")
 
     //implementation(project(":native"))
     //implementation(project(":core"))
